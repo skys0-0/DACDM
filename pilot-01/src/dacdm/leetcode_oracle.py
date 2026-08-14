@@ -181,7 +181,7 @@ def register_leetcode_oracle_sources(
         source_match = dataset_index.get(slug)
         source_split: str | None = None
         source_row: dict[str, Any] | None = None
-        suite = {
+        suite: dict[str, Any] = {
             "schema_supported": False,
             "raw_case_count": 0,
             "valid_pair_count": 0,
@@ -207,6 +207,8 @@ def register_leetcode_oracle_sources(
         elif int(suite["distinct_pair_count"]) < MIN_REGISTERED_TESTS:
             status = "EXTERNAL_ORACLE_TEST_COUNT_INSUFFICIENT"
         else:
+            if source_split is None:
+                raise LeetCodeOracleError(f"source split missing for matched task {task_id}")
             status = "REGISTERED_SOURCE_SUITE_EDGE_REVIEW_REQUIRED"
             row_material = {
                 "task_id": source_row.get("task_id"),
