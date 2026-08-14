@@ -8,6 +8,7 @@ from .protocol import validate_protocol_integrity
 from .readiness import ReadinessError, prepare_readiness
 from .registries import validate_registry_files
 from .registries.benchmark_import import BenchmarkImportError, build_task_registry
+from .registries.s1_3_candidates import CandidateExtractionError, write_model_candidates
 
 
 def _report(errors: list[str], success: str) -> None:
@@ -56,6 +57,14 @@ def main() -> None:
         default=Path("backtest/s1_2_5"),
     )
 
+    candidates = sub.add_parser("extract-s1-3-model-candidates")
+    candidates.add_argument("--ai-price-csv", type=Path, required=True)
+    candidates.add_argument(
+        "--output",
+        type=Path,
+        default=Path("registries/s1_3_model_candidates.json"),
+    )
+
     args = parser.parse_args()
 
     if args.command == "validate-protocol":
@@ -91,3 +100,10 @@ def main() -> None:
             f"{manifest['price_rows']} price rows, "
             f"{manifest['hardware_months']} hardware months"
         )
+    elif args.command == "extract-s1-3-model-candidates":
+        try:
+            records = write_model_candidates(args.ai_price_csv, args.output)
+        except (CandidateExtractionError, OSError, ValueError) as exc:
+            print(f"ERROR: {exc}")
+            raise SystemExit(1) from exc
+        print(f"S1.3 model candidates extracted: {len(records)} -> {args.output}")
