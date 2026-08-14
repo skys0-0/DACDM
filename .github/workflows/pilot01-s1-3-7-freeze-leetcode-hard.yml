@@ -1,0 +1,83 @@
+name: Pilot 01 S1.3.7 Freeze LeetCode Hard Metadata
+
+on:
+  push:
+    paths:
+      - ".github/workflows/pilot01-s1-3-7-freeze-leetcode-hard.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  freeze:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout DACDM branch
+        uses: actions/checkout@v4
+        with:
+          ref: s1-task-evidence-registries
+          path: DACDM
+
+      - name: Checkout frozen LeetCode metadata mirror
+        uses: actions/checkout@v4
+        with:
+          repository: doocs/leetcode
+          ref: 9f7e84b19e5326cb542e6238ac76e86bab438f0b
+          path: leetcode-source
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: DACDM/pilot-01/requirements.lock
+
+      - name: Install locked dependencies and package
+        working-directory: DACDM/pilot-01
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.lock
+          pip install --no-deps -e .
+
+      - name: Integrity before metadata freeze
+        working-directory: DACDM/pilot-01
+        run: |
+          dacdm validate-protocol
+          dacdm validate-registries
+          ruff check src tests
+          mypy src
+          pytest
+
+      - name: Verify frozen contest metadata blob
+        working-directory: leetcode-source
+        run: |
+          actual_blob=$(git hash-object solution/contest.json)
+          expected_blob=3790f81ccf52612d98b546f23b145dbcebaf23f7
+          echo "contest.json blob: ${actual_blob}"
+          test "${actual_blob}" = "${expected_blob}"
+
+      - name: Generate S1.3.7 metadata candidate universe
+        working-directory: DACDM/pilot-01
+        run: |
+          dacdm freeze-leetcode-weekly-hard \
+            --source-root ../../leetcode-source \
+            --freeze-date 2026-08-14
+
+      - name: Freeze generated S1.3.7 outputs
+        working-directory: DACDM
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            pilot-01/registries/leetcode_weekly_hard_candidates.json \
+            pilot-01/backtest/s1_3_7
+          if git diff --cached --quiet; then
+            echo "No S1.3.7 output changes to commit"
+            exit 0
+          fi
+          git commit -m "Freeze S1.3.7 LeetCode Weekly Hard metadata candidates"
+          git push origin HEAD:s1-task-evidence-registries
+
+# Metadata discovery only. No paid model API calls are permitted.
+# Third-party mirror labels do not constitute confirmatory task admission.
