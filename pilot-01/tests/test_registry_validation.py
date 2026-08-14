@@ -15,6 +15,7 @@ def _empty(root: Path) -> None:
     for name in (
         "tasks.json",
         "models.json",
+        "model_identity_evidence.json",
         "training_cutoff_evidence.json",
         "historical_snapshot_evidence.json",
         "pricing.json",
@@ -47,6 +48,23 @@ def test_duplicate_task_id_fails(tmp_path: Path) -> None:
     assert "duplicate task_id: humaneval:0" in validate_registry_files(tmp_path)
 
 
+def _identity(evidence_id: str = "identity-1") -> dict[str, object]:
+    return {
+        "evidence_id": evidence_id,
+        "model_id": "provider:model",
+        "claim_type": "public_launch_date",
+        "claimed_provider_model_name": "model",
+        "claimed_public_launch_date": "2026-01-01",
+        "source_type": "official",
+        "source_locator": "fixture",
+        "source_title": "fixture",
+        "retrieved_at": "2026-08-14T00:00:00Z",
+        "evidence_text_or_summary": "fixture",
+        "confidence": "high",
+        "status": "supported",
+    }
+
+
 def test_unknown_cutoff_is_preserved_without_guessing(tmp_path: Path) -> None:
     _empty(tmp_path)
     model = {
@@ -56,6 +74,7 @@ def test_unknown_cutoff_is_preserved_without_guessing(tmp_path: Path) -> None:
         "model_version_or_snapshot": "snapshot",
         "access_path": "api",
         "public_launch_date": "2026-01-01",
+        "identity_evidence_ids": ["identity-1"],
         "training_cutoff_status": "unknown",
         "training_cutoff_evidence_ids": [],
         "historical_snapshot_evidence_ids": [],
@@ -101,8 +120,30 @@ def test_unknown_cutoff_is_preserved_without_guessing(tmp_path: Path) -> None:
         },
     ]
     _write(tmp_path, "models.json", [model])
+    _write(tmp_path, "model_identity_evidence.json", [_identity()])
     _write(tmp_path, "pricing.json", prices)
     assert validate_registry_files(tmp_path) == []
+
+
+def test_launch_date_requires_identity_evidence(tmp_path: Path) -> None:
+    _empty(tmp_path)
+    model = {
+        "model_id": "provider:model",
+        "provider": "provider",
+        "provider_model_name": "model",
+        "model_version_or_snapshot": "snapshot",
+        "access_path": "api",
+        "public_launch_date": "2026-01-01",
+        "identity_evidence_ids": [],
+        "training_cutoff_status": "unknown",
+        "training_cutoff_evidence_ids": [],
+        "historical_snapshot_evidence_ids": [],
+        "pricing_record_ids": [],
+        "enabled_for_pilot": False,
+    }
+    _write(tmp_path, "models.json", [model])
+    errors = validate_registry_files(tmp_path)
+    assert any("public launch date requires identity evidence" in error for error in errors)
 
 
 def test_unresolved_evidence_reference_fails(tmp_path: Path) -> None:
@@ -114,6 +155,7 @@ def test_unresolved_evidence_reference_fails(tmp_path: Path) -> None:
         "model_version_or_snapshot": "snapshot",
         "access_path": "api",
         "public_launch_date": None,
+        "identity_evidence_ids": ["missing-identity"],
         "training_cutoff_status": "supported",
         "training_cutoff_evidence_ids": ["missing-cutoff"],
         "historical_snapshot_evidence_ids": ["missing-snapshot"],
@@ -122,6 +164,7 @@ def test_unresolved_evidence_reference_fails(tmp_path: Path) -> None:
     }
     _write(tmp_path, "models.json", [model])
     errors = validate_registry_files(tmp_path)
+    assert any("unresolved model identity evidence" in error for error in errors)
     assert any("unresolved training cutoff evidence" in error for error in errors)
     assert any("unresolved historical snapshot evidence" in error for error in errors)
     assert any("unresolved pricing record" in error for error in errors)
@@ -135,7 +178,8 @@ def test_callable_exact_snapshot_requires_identifier(tmp_path: Path) -> None:
         "provider_model_name": "model",
         "model_version_or_snapshot": "snapshot",
         "access_path": "api",
-        "public_launch_date": "2024-01-01",
+        "public_launch_date": None,
+        "identity_evidence_ids": [],
         "training_cutoff_status": "unknown",
         "training_cutoff_evidence_ids": [],
         "historical_snapshot_evidence_ids": ["snap-1"],
@@ -158,4 +202,7 @@ def test_callable_exact_snapshot_requires_identifier(tmp_path: Path) -> None:
     _write(tmp_path, "models.json", [model])
     _write(tmp_path, "historical_snapshot_evidence.json", [snapshot])
     errors = validate_registry_files(tmp_path)
-    assert any("callable_exact historical snapshot requires snapshot_identifier" in error for error in errors)
+    assert any(
+        "callable_exact historical snapshot requires snapshot_identifier" in error
+        for error in errors
+    )
