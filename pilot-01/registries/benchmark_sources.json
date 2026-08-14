@@ -1,0 +1,26 @@
+[
+  {
+    "benchmark": "humaneval",
+    "expected_count": 164,
+    "source_repository": "openai/human-eval",
+    "source_revision": "6d43fb980f9fee3c892a914eda09951f772ad10d",
+    "source_path": "data/HumanEval.jsonl.gz",
+    "source_blob_sha": "998d25196e17af24daf9b6cb3a975fe752528e46",
+    "source_format": "jsonl.gz",
+    "release_date": "2021-07-07",
+    "release_evidence": "https://arxiv.org/abs/2107.03374",
+    "license_ref": "https://github.com/openai/human-eval/blob/6d43fb980f9fee3c892a914eda09951f772ad10d/LICENSE"
+  },
+  {
+    "benchmark": "mbpp",
+    "expected_count": 974,
+    "source_repository": "google-research/google-research",
+    "source_revision": "5f07ba9ae246eeb20c5306fa13b865d2fd8496ad",
+    "source_path": "mbpp/mbpp.jsonl",
+    "source_blob_sha": "96e2dc2f7dd95b7b87b38dc46e42cbed444251bb",
+    "source_format": "jsonl",
+    "release_date": "2021-08-16",
+    "release_evidence": "https://arxiv.org/abs/2108.07732",
+    "license_ref": "https://github.com/google-research/google-research/blob/5f07ba9ae246eeb20c5306fa13b865d2fd8496ad/LICENSE"
+  }
+]
