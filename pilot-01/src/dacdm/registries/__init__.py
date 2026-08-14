@@ -1,6 +1,7 @@
 """Registry schemas and validation for DACDM Pilot 01."""
 
 from .models import (
+    HistoricalSnapshotEvidenceRecord,
     ModelRegistryRecord,
     PricingEvidenceRecord,
     TaskRegistryRecord,
@@ -9,6 +10,7 @@ from .models import (
 from .validator import validate_registry_files
 
 __all__ = [
+    "HistoricalSnapshotEvidenceRecord",
     "ModelRegistryRecord",
     "PricingEvidenceRecord",
     "TaskRegistryRecord",
