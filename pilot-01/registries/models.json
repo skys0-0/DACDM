@@ -10,8 +10,10 @@
       "identity:openai:gpt-4o-2024-05-13",
       "launch:openai:gpt-4o-2024-05-13"
     ],
-    "training_cutoff_status": "unknown",
-    "training_cutoff_evidence_ids": [],
+    "training_cutoff_status": "supported",
+    "training_cutoff_evidence_ids": [
+      "cutoff:openai:gpt-4o-2024-05-13:2023-10"
+    ],
     "historical_snapshot_evidence_ids": [],
     "pricing_record_ids": [],
     "enabled_for_pilot": false
@@ -27,8 +29,10 @@
       "identity:openai:gpt-4o-mini-2024-07-18",
       "launch:openai:gpt-4o-mini-2024-07-18"
     ],
-    "training_cutoff_status": "unknown",
-    "training_cutoff_evidence_ids": [],
+    "training_cutoff_status": "supported",
+    "training_cutoff_evidence_ids": [
+      "cutoff:openai:gpt-4o-mini-2024-07-18:2023-10"
+    ],
     "historical_snapshot_evidence_ids": [],
     "pricing_record_ids": [],
     "enabled_for_pilot": false
@@ -44,8 +48,10 @@
       "identity:anthropic:claude-3-5-sonnet-20240620",
       "launch:anthropic:claude-3-5-sonnet-20240620"
     ],
-    "training_cutoff_status": "unknown",
-    "training_cutoff_evidence_ids": [],
+    "training_cutoff_status": "supported",
+    "training_cutoff_evidence_ids": [
+      "cutoff:anthropic:claude-3-5-sonnet-20240620:2024-04"
+    ],
     "historical_snapshot_evidence_ids": [],
     "pricing_record_ids": [],
     "enabled_for_pilot": false
@@ -61,8 +67,10 @@
       "identity:anthropic:claude-3-5-haiku-20241022",
       "launch:anthropic:claude-3-5-haiku-20241022"
     ],
-    "training_cutoff_status": "unknown",
-    "training_cutoff_evidence_ids": [],
+    "training_cutoff_status": "supported",
+    "training_cutoff_evidence_ids": [
+      "cutoff:anthropic:claude-3-5-haiku-20241022:2024-07"
+    ],
     "historical_snapshot_evidence_ids": [],
     "pricing_record_ids": [],
     "enabled_for_pilot": false
