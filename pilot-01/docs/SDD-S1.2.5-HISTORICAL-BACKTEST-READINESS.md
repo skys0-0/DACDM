@@ -1,13 +1,13 @@
 # S1.2.5 — Historical Backtest Readiness
 
-Status: IMPLEMENTATION STARTED / EXPLORATORY ONLY
+Status: PASSED / READY FOR S1.3 / EXPLORATORY ONLY
 Date: 2026-08-14
 
 ## 1. Purpose
 
-S1.2.5 is a short calibration stage inserted before S1.3. It verifies that Pilot 01 can reconstruct point-in-time model economics and a hardware-efficiency baseline without changing the frozen confirmatory protocol.
+S1.2.5 is a short calibration stage inserted before S1.3. It verifies that Pilot 01 can reconstruct point-in-time model economics and prepare a hardware-efficiency baseline without changing the frozen confirmatory protocol.
 
-This stage must not be used to claim that DACDM, H2, H3, or H4 is validated or falsified.
+This stage does **not** claim that DACDM, H2, H3, or H4 is validated or falsified.
 
 ## 2. Research-integrity boundary
 
@@ -17,54 +17,73 @@ All outputs from the 10-task HumanEval exercise are labelled:
 
 No threshold, kill criterion, effect-size target, contamination rule, model-tier rule, bootstrap rule, or registered regression specification may be changed because of S1.2.5 results.
 
-Historical observations remain subject to Implementation Freeze IF-01. A historical model result is admissible only when an exact historical snapshot is callable/verified or sufficient archived observation exists. Otherwise the cell is `NA` with reason `HISTORICAL_SNAPSHOT_UNAVAILABLE`.
+Historical observations remain subject to Implementation Freeze IF-01. A historical model result is admissible only when an exact historical snapshot is callable/verified or sufficient archived observation exists. Otherwise the cell is `NA` / `HISTORICAL_SNAPSHOT_UNAVAILABLE`. No current or successor model may be substituted.
 
-## 3. External datasets
+## 3. Frozen external datasets
 
 ### 3.1 AI Price Index
 
-Source: RoninForge/ai-price-index on Hugging Face.
+Source: `RoninForge/ai-price-index` on Hugging Face.
 
-Use the pinned dataset revision recorded in `registries/external_data_sources.json`, not the moving `main` branch. Preserve the raw CSV snapshot and its SHA-256 digest.
+Frozen revision:
 
-Primary use:
+`82835a9bcf888b394483fc7b41ffc17c661608bf`
 
-- point-in-time OpenAI and Anthropic input/output token prices;
-- effective-from/effective-to price windows;
-- first-party source URLs and confidence/source-kind metadata;
-- schema-gap testing for the DACDM Pricing Registry.
+Frozen CSV SHA-256:
 
-The dataset is an evidence aggregator, not unquestioned ground truth. High-impact price rows used in confirmatory analysis must retain their first-party source provenance and may require independent verification later.
+`93be1cffe6225ee3439510bb2fee50243074b0d8ef63b5e23473c9e96b1dfd9c`
+
+Snapshot size: 110,915 bytes.
+
+The S1.2.5 point-in-time filter resolves 112 OpenAI/Anthropic input/output price rows overlapping 2024–2026. The source retains effective-from/effective-to windows, first-party source URLs, source kind, validation date, and confidence fields.
+
+The dataset is an evidence aggregator, not unquestioned ground truth. Confirmatory price observations must retain first-party provenance and may require independent verification.
 
 ### 3.2 Epoch AI Machine Learning Hardware
 
 Source: Epoch AI Machine Learning Hardware CSV.
 
-Epoch publishes a live CSV rather than an immutable historical file revision. Therefore S1.2.5 freezes the exact bytes retrieved, records retrieval time, SHA-256, row count, source URL, and source page metadata.
+Frozen retrieval date: `2026-08-14`  
+Frozen live CSV URL: `https://epoch.ai/data/ml_hardware.csv`  
+Frozen CSV SHA-256:
 
-Primary use:
+`a3cb0d6d51a37b6a6baea58052d61375bc5a4cfbc9551ef9ddb92f85454f4d16`
 
-- verify availability of release date, ML/FP16/FP32 performance, release price, inflation-adjusted price, power draw, and related fields;
-- test construction of the preliminary hardware-efficiency index required by IF-07;
-- normalize the later registered hardware index to `2024-01 = 1`;
-- do not extrapolate beyond supported observations in the primary analysis.
+Snapshot size: 97,246 bytes.
 
-## 4. Deterministic 10-task micro-backtest
+The live snapshot contains fields including release date, release price, tensor-FP16/BF16 performance, FP8/FP4/FP32/FP16 performance, power draw, max performance, price-performance, and ML OP/s.
 
-Select HumanEval tasks without manual choice:
+The frozen live CSV exposes nominal `Release price (USD)` rather than the inflation-adjusted release-price series used in Epoch's published price-performance analysis. Therefore the 36-month S1.2.5 hardware series is explicitly labelled a **nominal-price readiness preview**, not the final IF-07 hardware deflator.
 
-1. take the frozen HumanEval task IDs from `registries/tasks.json`;
+## 4. Deterministic 10-task micro-backtest sample
+
+Selection was frozen before S1.3 model/evidence population:
+
+1. take frozen HumanEval task IDs from `registries/tasks.json`;
 2. compute `SHA256(task_id)`;
 3. sort ascending by digest;
 4. select the first 10.
 
-The selection must be persisted before any historical capability/cost result is examined.
+Frozen task IDs:
 
-The micro-backtest matrix spans 2024, 2025, and 2026 model observations where admissible. Missing historical capability evidence is retained as NA rather than substituted with a current or successor model.
+- `humaneval:134`
+- `humaneval:62`
+- `humaneval:117`
+- `humaneval:87`
+- `humaneval:37`
+- `humaneval:35`
+- `humaneval:66`
+- `humaneval:89`
+- `humaneval:53`
+- `humaneval:52`
 
-## 5. Minimum calculations
+A 30-cell task-year matrix is frozen for 10 tasks × {2024, 2025, 2026}.
 
-For each admissible model/task/date observation:
+Every cell is currently `UNASSESSED_PENDING_S1_3`, because model registry, historical-snapshot evidence, and admissible historical capability observations have deliberately not yet been populated. This is the correct readiness outcome: S1.2.5 must not fabricate historical minimum costs before IF-01 evidence exists.
+
+## 5. Minimum-cost calculation after S1.3 evidence population
+
+For each admissible model/task/date observation, the backtest layer will require:
 
 - task pass/fail;
 - input tokens;
@@ -75,40 +94,63 @@ For each admissible model/task/date observation:
 - provenance status;
 - historical snapshot availability status.
 
-For each task/date, calculate the minimum cost among successful admissible observations. Do not infer a missing cost from a later model or current price.
+For each task/date, minimum cost is calculated only among successful admissible observations. Missing historical capability evidence remains NA rather than being inferred from a later model or current price.
 
 ## 6. Hardware readiness calculation
 
-S1.2.5 only tests whether an index can be reproduced from the frozen Epoch snapshot. It does not run the registered H4 inference.
+S1.2.5 confirms that a 2024–2026 monthly performance-per-dollar preview can be reproduced from the frozen Epoch snapshot and normalized to `2024-01 = 1`.
 
-The later primary index must follow IF-07:
+For the current live snapshot, the preview prioritizes `Tensor-FP16/BF16 performance (FLOP/s)` for ML-oriented performance and divides by nominal release USD. This preview is physically and semantically separated from the final H4 deflator.
 
-- preferred source: Epoch AI;
-- normalize `2024-01 = 1`;
+The later primary IF-07 index must still specify and freeze:
+
+- preferred Epoch source/evidence;
+- inflation/price-deflation method;
+- normalization `2024-01 = 1`;
 - log-linear interpolation between supported anchors;
-- no primary extrapolation outside the supported interval;
-- alternatives are exploratory only.
+- no primary extrapolation outside supported observations;
+- formula/version metadata and supported date bounds.
 
-## 7. Required artifacts
+## 7. Frozen artifacts
 
 - `registries/external_data_sources.json`
-- `data/external/ai_price_index/<revision>/ai_price_index.csv`
-- `data/external/epoch_ai/<snapshot>/ml_hardware.csv`
-- `data/external/SNAPSHOT_MANIFEST.json`
-- deterministic 10-task selection artifact
-- schema-gap report before S1.3 is frozen
+- `data/external/ai_price_index/82835a9bcf888b394483fc7b41ffc17c661608bf/ai_price_index.csv`
+- `data/external/epoch_ai/2026-08-14/ml_hardware.csv`
+- `data/external/S1_2_5_SOURCE_METADATA.json`
+- `backtest/s1_2_5/snapshot_metadata.json`
+- `backtest/s1_2_5/microbacktest_tasks.json`
+- `backtest/s1_2_5/microbacktest_matrix.csv`
+- `backtest/s1_2_5/openai_anthropic_price_history.csv`
+- `backtest/s1_2_5/hardware_efficiency_preview.csv`
+- `backtest/s1_2_5/schema_gap_report.md`
 
-## 8. Exit gate
+## 8. Schema gaps carried into S1.3
 
-S1.2.5 passes only when:
+S1.2.5 establishes that S1.3 must explicitly support:
 
-- external source bytes are frozen and hashed;
-- AI Price Index revision is immutable;
-- Epoch retrieval snapshot metadata is recorded;
-- OpenAI/Anthropic historical price rows can be resolved point-in-time or explicitly marked unavailable;
-- deterministic 10-task HumanEval selection is frozen;
-- hardware-index construction is mechanically feasible from the snapshot or the exact blocking gap is documented;
-- exploratory/calibration outputs are physically separated from confirmatory Pilot 01 results;
-- CI remains green.
+- pricing variation (`input` / `output`);
+- `effective_from` / `effective_to` validity windows;
+- source kind, confidence, validation date, and first-party price source URL;
+- model public launch date;
+- historical snapshot availability and evidence status;
+- immutable external snapshot revision/SHA-256/retrieval provenance;
+- hardware index formula version, price basis, normalization month, interpolation method, and supported date bounds.
 
-Only after this gate should S1.3 Model Registry + Training-Cutoff Evidence Registry be frozen.
+The existing one-current-price-per-model shape is insufficient for historical backtesting and must be replaced before S1.3 population.
+
+## 9. Exit gate result
+
+PASSED:
+
+- external source bytes frozen and hashed;
+- Hugging Face price snapshot pinned to immutable revision;
+- Epoch live snapshot frozen by exact bytes, timestamp, and SHA-256;
+- 112 historical OpenAI/Anthropic price rows resolved for the calibration window;
+- deterministic 10-task HumanEval selection frozen;
+- 30 task-year cells frozen without historical substitution;
+- 36-month hardware readiness series generated;
+- the limitation of nominal Epoch release prices explicitly documented;
+- exploratory outputs separated from confirmatory Pilot 01 results;
+- Pilot 01 CI and the S1.2.5 freeze workflow are green.
+
+S1.3 Model Registry + Training-Cutoff / Historical-Snapshot / Pricing Evidence design may now begin. S1.2.5 does not authorize confirmatory interpretation of the calibration outputs.
