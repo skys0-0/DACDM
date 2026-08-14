@@ -1,0 +1,31 @@
+{
+  "calibration_label": "EXPLORATORY_PIPELINE_CALIBRATION_NOT_CONFIRMATORY_EVIDENCE",
+  "hardware_months": 36,
+  "inputs": {
+    "ai_price_index_sha256": "93be1cffe6225ee3439510bb2fee50243074b0d8ef63b5e23473c9e96b1dfd9c",
+    "epoch_ml_hardware_sha256": "a3cb0d6d51a37b6a6baea58052d61375bc5a4cfbc9551ef9ddb92f85454f4d16",
+    "tasks_registry_sha256": "bbe28f225537c236eab6b7d2332689cc7b3cb00a2c42515fbb34a4dd00cb2769"
+  },
+  "price_rows": 112,
+  "sources": {
+    "ai_price_index": {
+      "bytes": 110915,
+      "dataset": "RoninForge/ai-price-index",
+      "download_url": "https://huggingface.co/datasets/RoninForge/ai-price-index/resolve/82835a9bcf888b394483fc7b41ffc17c661608bf/ai_price_index.csv",
+      "local_path": "data/external/ai_price_index/82835a9bcf888b394483fc7b41ffc17c661608bf/ai_price_index.csv",
+      "revision": "82835a9bcf888b394483fc7b41ffc17c661608bf",
+      "sha256": "93be1cffe6225ee3439510bb2fee50243074b0d8ef63b5e23473c9e96b1dfd9c"
+    },
+    "epoch_ai_ml_hardware": {
+      "bytes": 97246,
+      "download_url": "https://epoch.ai/data/ml_hardware.csv",
+      "landing_page": "https://epoch.ai/data/machine-learning-hardware?view=table",
+      "local_path": "data/external/epoch_ai/2026-08-14/ml_hardware.csv",
+      "sha256": "a3cb0d6d51a37b6a6baea58052d61375bc5a4cfbc9551ef9ddb92f85454f4d16",
+      "snapshot_id": "2026-08-14"
+    },
+    "retrieved_at": "2026-08-14T12:29:38Z"
+  },
+  "task_count": 10,
+  "task_year_cells": 30
+}

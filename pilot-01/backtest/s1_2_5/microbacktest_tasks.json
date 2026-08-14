@@ -1,0 +1,62 @@
+[
+  {
+    "calibration_label": "EXPLORATORY_PIPELINE_CALIBRATION_NOT_CONFIRMATORY_EVIDENCE",
+    "content_hash": "sha256:e31f4bb67b226c707809f97179b39f829090a37620cfe203d4c8a08438fbb656",
+    "selection_sha256": "00b6414655ddd68640109926ddb45a10e58ad1d9aa998ef356e6ce7d39481da4",
+    "task_id": "humaneval:134"
+  },
+  {
+    "calibration_label": "EXPLORATORY_PIPELINE_CALIBRATION_NOT_CONFIRMATORY_EVIDENCE",
+    "content_hash": "sha256:d44eea19a034f07a67074fe37560a2d7f10aaed8c7a8ded2cfc966bca0cb67d6",
+    "selection_sha256": "00d43cbe788169f7f520b77a94a2b3744b44bbffd209195ff14b4b0fa8f35b17",
+    "task_id": "humaneval:62"
+  },
+  {
+    "calibration_label": "EXPLORATORY_PIPELINE_CALIBRATION_NOT_CONFIRMATORY_EVIDENCE",
+    "content_hash": "sha256:8179b9e3044a5eb1c50b5bf1c57e0ffe70f0a8a302abcf1c9f9dec453779c0c0",
+    "selection_sha256": "0212349d48d0e1626d01229f9d46f5afa6d11419fed1a89e83793b0da85645b8",
+    "task_id": "humaneval:117"
+  },
+  {
+    "calibration_label": "EXPLORATORY_PIPELINE_CALIBRATION_NOT_CONFIRMATORY_EVIDENCE",
+    "content_hash": "sha256:30c03d35915a69150a47491f8472ddb3ca7ddf08ae18525d06e880326ec0b9c3",
+    "selection_sha256": "043bba09fb53af53f286cf6271f6ea3d401be42e9a1b9511ea9c8cfb14315823",
+    "task_id": "humaneval:87"
+  },
+  {
+    "calibration_label": "EXPLORATORY_PIPELINE_CALIBRATION_NOT_CONFIRMATORY_EVIDENCE",
+    "content_hash": "sha256:880e84b3c8d4e386c550040cfdcff5699d69faa92ae37df6866c801c540c00f7",
+    "selection_sha256": "06cefa0a4efad7f3ddb89bcdcaa5a404aff0fd8a2f06c232319a8e190bd2d3da",
+    "task_id": "humaneval:37"
+  },
+  {
+    "calibration_label": "EXPLORATORY_PIPELINE_CALIBRATION_NOT_CONFIRMATORY_EVIDENCE",
+    "content_hash": "sha256:4f01b5c4286c08e48ec744508c5d37c4c58fdfc6499c587015d6aa3d36c07800",
+    "selection_sha256": "081d229cf75592ac7f933900f9da001a9a0201de0ef50d4e6853689491672c5f",
+    "task_id": "humaneval:35"
+  },
+  {
+    "calibration_label": "EXPLORATORY_PIPELINE_CALIBRATION_NOT_CONFIRMATORY_EVIDENCE",
+    "content_hash": "sha256:51ca37cfb70c2d6c071897719008c77b858372efe110f1020f4920ed62d66fe7",
+    "selection_sha256": "08377ab6d58f2d1b02f60eb25d22461f548b6b9a51d875d8f145c534922c065e",
+    "task_id": "humaneval:66"
+  },
+  {
+    "calibration_label": "EXPLORATORY_PIPELINE_CALIBRATION_NOT_CONFIRMATORY_EVIDENCE",
+    "content_hash": "sha256:322ec3b8f0cbd6edcbbd9d370476dbbb927708dbfdc85e259eec10f2b4301eb2",
+    "selection_sha256": "0af032559df896c71b885c8b8304ccbba3b052cb1dccff45a955aed496325490",
+    "task_id": "humaneval:89"
+  },
+  {
+    "calibration_label": "EXPLORATORY_PIPELINE_CALIBRATION_NOT_CONFIRMATORY_EVIDENCE",
+    "content_hash": "sha256:8713f0e9e96954157aee544137137a583e4a10cb8253c096a6e02eca2138fa7d",
+    "selection_sha256": "0b140be6c823e7e0ebc6ec6016131b6049642d927466f9f459b408bac83eb52b",
+    "task_id": "humaneval:53"
+  },
+  {
+    "calibration_label": "EXPLORATORY_PIPELINE_CALIBRATION_NOT_CONFIRMATORY_EVIDENCE",
+    "content_hash": "sha256:f09f144d4649320f94c5d9c4ca0e455742102634e36253486a4f9dc920181cd4",
+    "selection_sha256": "0fc85349c32dd51973cc458918f9a87e7c7c80c52ace0af1b03d6477885ee0e5",
+    "task_id": "humaneval:52"
+  }
+]
