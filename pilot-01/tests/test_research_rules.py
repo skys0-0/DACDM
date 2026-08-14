@@ -2,7 +2,14 @@ from datetime import date
 
 import pytest
 
-from dacdm.research import agent_overhead_alpha, contamination_eligible, downward_transition, kill_criteria, minimum_cost
+from dacdm.research import (
+    agent_overhead_alpha,
+    contamination_eligible,
+    downward_transition,
+    kill_criteria,
+    minimum_cost,
+    subtract_calendar_months,
+)
 
 
 def test_known_cutoff_excludes_older_task() -> None:
@@ -24,6 +31,31 @@ def test_unknown_cutoff_uses_conservative_window() -> None:
     assert eligible is False
 
 
+def test_unknown_cutoff_exact_six_calendar_month_boundary_is_eligible() -> None:
+    eligible, reason = contamination_eligible(
+        task_release_date=date(2024, 8, 28),
+        training_cutoff_date=None,
+        model_launch_date=date(2025, 2, 28),
+    )
+    assert eligible is True
+    assert reason == "UNKNOWN_CUTOFF_WITHIN_SIX_MONTH_WINDOW"
+
+
+def test_unknown_cutoff_one_day_before_boundary_is_excluded() -> None:
+    eligible, reason = contamination_eligible(
+        task_release_date=date(2024, 8, 27),
+        training_cutoff_date=None,
+        model_launch_date=date(2025, 2, 28),
+    )
+    assert eligible is False
+    assert reason == "UNKNOWN_CUTOFF_CONSERVATIVE_EXCLUSION"
+
+
+def test_subtract_calendar_months_clamps_end_of_month() -> None:
+    assert subtract_calendar_months(date(2024, 8, 31), 6) == date(2024, 2, 29)
+    assert subtract_calendar_months(date(2025, 8, 31), 6) == date(2025, 2, 28)
+
+
 def test_agent_overhead_is_observed_ratio() -> None:
     assert agent_overhead_alpha(c_base=2.0, c_sub=1.0, c_tool=0.5) == pytest.approx(0.75)
     assert agent_overhead_alpha(c_base=0, c_sub=1, c_tool=0) is None
@@ -41,7 +73,17 @@ def test_only_downward_tier_moves_count_as_compression() -> None:
 
 
 def test_k4_is_strictly_more_than_30_percent() -> None:
-    assert kill_criteria(beta1=-1, p_value=0.01, two_year_hardware_not_beaten=False,
-                         frontier_share_declined=True, contamination_fraction=0.30)["K4"] is False
-    assert kill_criteria(beta1=-1, p_value=0.01, two_year_hardware_not_beaten=False,
-                         frontier_share_declined=True, contamination_fraction=0.301)["K4"] is True
+    assert kill_criteria(
+        beta1=-1,
+        p_value=0.01,
+        two_year_hardware_not_beaten=False,
+        frontier_share_declined=True,
+        contamination_fraction=0.30,
+    )["K4"] is False
+    assert kill_criteria(
+        beta1=-1,
+        p_value=0.01,
+        two_year_hardware_not_beaten=False,
+        frontier_share_declined=True,
+        contamination_fraction=0.301,
+    )["K4"] is True
