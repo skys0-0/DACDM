@@ -20,7 +20,7 @@ class TaskRegistryRecord(StrictRecord):
     language: str = Field(min_length=1)
     split: str = Field(min_length=1)
     license_or_terms_ref: str = Field(min_length=1)
-    release_date: date | None = None
+    release_date: date | None = Field(default=None, strict=False)
     eligible: bool
     exclusion_reason: str | None = None
 
@@ -41,11 +41,11 @@ class TrainingCutoffEvidenceRecord(StrictRecord):
     evidence_id: str = Field(min_length=1)
     model_id: str = Field(min_length=1)
     claim_type: Literal["training_cutoff"]
-    claimed_cutoff: date | None = None
+    claimed_cutoff: date | None = Field(default=None, strict=False)
     source_type: Literal["official", "model_card", "paper", "other"]
     source_locator: str = Field(min_length=1)
     source_title: str = Field(min_length=1)
-    retrieved_at: datetime
+    retrieved_at: datetime = Field(strict=False)
     evidence_text_or_summary: str = Field(min_length=1)
     confidence: Literal["high", "medium", "low", "unknown"]
     status: Literal["supported", "conflicting", "unknown"]
@@ -59,6 +59,6 @@ class PricingEvidenceRecord(StrictRecord):
     input_unit_price: float = Field(ge=0)
     output_unit_price: float = Field(ge=0)
     unit_basis: Literal["1M_tokens"]
-    effective_or_observed_at: datetime
+    effective_or_observed_at: datetime = Field(strict=False)
     source_locator: str = Field(min_length=1)
-    retrieved_at: datetime
+    retrieved_at: datetime = Field(strict=False)
