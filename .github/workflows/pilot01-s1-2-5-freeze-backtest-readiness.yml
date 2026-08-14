@@ -1,0 +1,175 @@
+name: Freeze S1.2.5 Backtest Readiness
+
+on:
+  push:
+    branches:
+      - s1-task-evidence-registries
+    paths:
+      - ".github/workflows/pilot01-s1-2-5-freeze-backtest-readiness.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  freeze-readiness:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: pilot-01
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: s1-task-evidence-registries
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pilot-01/requirements.lock
+      - name: Install dependencies and package
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.lock
+          pip install --no-deps -e .
+      - name: Resolve and freeze external datasets
+        id: freeze
+        run: |
+          python - <<'PY'
+          from __future__ import annotations
+
+          import hashlib
+          import json
+          import re
+          import urllib.parse
+          import urllib.request
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          def fetch(url: str) -> bytes:
+              request = urllib.request.Request(url, headers={"User-Agent": "DACDM-Pilot01/1.0 research snapshot"})
+              with urllib.request.urlopen(request, timeout=60) as response:
+                  return response.read()
+
+          def sha256(data: bytes) -> str:
+              return hashlib.sha256(data).hexdigest()
+
+          now = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+
+          hf_api = "https://huggingface.co/api/datasets/RoninForge/ai-price-index"
+          hf_meta = json.loads(fetch(hf_api).decode("utf-8"))
+          hf_sha = hf_meta.get("sha")
+          if not isinstance(hf_sha, str) or len(hf_sha) < 7:
+              raise SystemExit("Could not resolve immutable Hugging Face dataset revision SHA")
+          hf_url = f"https://huggingface.co/datasets/RoninForge/ai-price-index/resolve/{hf_sha}/ai_price_index.csv"
+          hf_bytes = fetch(hf_url)
+          hf_path = Path("data/external/ai_price_index") / hf_sha / "ai_price_index.csv"
+          hf_path.parent.mkdir(parents=True, exist_ok=True)
+          hf_path.write_bytes(hf_bytes)
+
+          epoch_page = "https://epoch.ai/data/machine-learning-hardware?view=table"
+          page_text = fetch(epoch_page).decode("utf-8", errors="replace")
+          normalised = page_text.replace("\\u0026", "&").replace("\\/", "/")
+          matches = re.findall(r"(?:https://epoch\.ai)?/[^\"'<> ]+\.csv(?:\?[^\"'<> ]*)?", normalised)
+          candidates: list[str] = []
+          for match in matches:
+              url = urllib.parse.urljoin("https://epoch.ai", match)
+              if url not in candidates:
+                  candidates.append(url)
+          fallback = [
+              "https://epoch.ai/data/machine_learning_hardware.csv",
+              "https://epoch.ai/data/machine-learning-hardware.csv",
+              "https://epoch.ai/data/ml_hardware.csv",
+          ]
+          for url in fallback:
+              if url not in candidates:
+                  candidates.append(url)
+
+          epoch_url = None
+          epoch_bytes = None
+          errors: list[str] = []
+          for url in candidates:
+              try:
+                  candidate = fetch(url)
+              except Exception as exc:
+                  errors.append(f"{url}: {type(exc).__name__}")
+                  continue
+              first_line = candidate[:1000].decode("utf-8", errors="replace").lower()
+              if "release" in first_line and ("performance" in first_line or "top/s" in first_line):
+                  epoch_url = url
+                  epoch_bytes = candidate
+                  break
+          if epoch_url is None or epoch_bytes is None:
+              raise SystemExit("Could not resolve Epoch ML Hardware CSV. Tried: " + "; ".join(errors))
+
+          snapshot_id = now[:10]
+          epoch_path = Path("data/external/epoch_ai") / snapshot_id / "ml_hardware.csv"
+          epoch_path.parent.mkdir(parents=True, exist_ok=True)
+          epoch_path.write_bytes(epoch_bytes)
+
+          source_metadata = {
+              "retrieved_at": now,
+              "ai_price_index": {
+                  "dataset": "RoninForge/ai-price-index",
+                  "revision": hf_sha,
+                  "download_url": hf_url,
+                  "sha256": sha256(hf_bytes),
+                  "bytes": len(hf_bytes),
+                  "local_path": str(hf_path),
+              },
+              "epoch_ai_ml_hardware": {
+                  "landing_page": epoch_page,
+                  "download_url": epoch_url,
+                  "snapshot_id": snapshot_id,
+                  "sha256": sha256(epoch_bytes),
+                  "bytes": len(epoch_bytes),
+                  "local_path": str(epoch_path),
+              },
+          }
+          metadata_path = Path("data/external/S1_2_5_SOURCE_METADATA.json")
+          metadata_path.parent.mkdir(parents=True, exist_ok=True)
+          metadata_path.write_text(json.dumps(source_metadata, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+          output = Path(__import__("os").environ["GITHUB_OUTPUT"])
+          with output.open("a", encoding="utf-8") as handle:
+              handle.write(f"hf_path={hf_path}\n")
+              handle.write(f"epoch_path={epoch_path}\n")
+              handle.write(f"metadata_path={metadata_path}\n")
+          print(json.dumps(source_metadata, indent=2))
+          PY
+      - name: Generate exploratory readiness artifacts
+        run: |
+          dacdm prepare-backtest-readiness \
+            --ai-price-csv "${{ steps.freeze.outputs.hf_path }}" \
+            --epoch-hardware-csv "${{ steps.freeze.outputs.epoch_path }}" \
+            --source-metadata "${{ steps.freeze.outputs.metadata_path }}" \
+            --output-root backtest/s1_2_5
+          python - <<'PY'
+          import csv
+          import json
+          from pathlib import Path
+
+          tasks = json.loads(Path("backtest/s1_2_5/microbacktest_tasks.json").read_text(encoding="utf-8"))
+          with Path("backtest/s1_2_5/microbacktest_matrix.csv").open(encoding="utf-8") as handle:
+              matrix = list(csv.DictReader(handle))
+          assert len(tasks) == 10
+          assert len(matrix) == 30
+          assert {row["status"] for row in matrix} == {"UNASSESSED_PENDING_S1_3"}
+          print("Verified deterministic 10-task / 30-cell exploratory matrix")
+          PY
+      - name: Run integrity and tests
+        run: |
+          dacdm validate-protocol
+          dacdm validate-registries
+          ruff check src tests
+          mypy src
+          pytest
+      - name: Commit frozen S1.2.5 artifacts
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/external backtest/s1_2_5
+          if git diff --cached --quiet; then
+            echo "S1.2.5 artifacts already match frozen sources."
+            exit 0
+          fi
+          git commit -m "Freeze S1.2.5 historical backtest readiness artifacts"
+          git push origin HEAD:s1-task-evidence-registries
