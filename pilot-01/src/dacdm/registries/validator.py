@@ -48,6 +48,18 @@ def _duplicates(values: list[str]) -> set[str]:
     return duplicates
 
 
+def _pricing_windows_overlap(left: PricingEvidenceRecord, right: PricingEvidenceRecord) -> bool:
+    if left.model_id != right.model_id or left.variation != right.variation:
+        return False
+    left_end = left.effective_to
+    right_end = right.effective_to
+    if left_end is not None and left_end <= right.effective_from:
+        return False
+    if right_end is not None and right_end <= left.effective_from:
+        return False
+    return True
+
+
 def validate_registry_files(root: Path = REGISTRY_ROOT) -> list[str]:
     tasks, errors = _load(root / "tasks.json", TaskRegistryRecord)
     models, model_errors = _load(root / "models.json", ModelRegistryRecord)
@@ -77,12 +89,14 @@ def validate_registry_files(root: Path = REGISTRY_ROOT) -> list[str]:
             errors.append(f"duplicate {label}: {duplicate}")
 
     model_ids = {record.model_id for record in models}
+    models_by_id = {record.model_id: record for record in models}
     identity_ids = {record.evidence_id for record in identities}
     identities_by_id = {record.evidence_id: record for record in identities}
     cutoff_ids = {record.evidence_id for record in cutoffs}
     cutoffs_by_id = {record.evidence_id: record for record in cutoffs}
     snapshot_ids = {record.evidence_id for record in snapshots}
     pricing_ids = {record.pricing_record_id for record in prices}
+    pricing_by_id = {record.pricing_record_id: record for record in prices}
 
     for model in models:
         referenced_identities: list[ModelIdentityEvidenceRecord] = []
@@ -166,10 +180,32 @@ def validate_registry_files(root: Path = REGISTRY_ROOT) -> list[str]:
                 errors.append(
                     f"model {model.model_id}: unresolved historical snapshot evidence {evidence_id}"
                 )
+
+        referenced_prices: list[PricingEvidenceRecord] = []
         for pricing_record_id in model.pricing_record_ids:
             if pricing_record_id not in pricing_ids:
                 errors.append(
                     f"model {model.model_id}: unresolved pricing record {pricing_record_id}"
+                )
+                continue
+            price = pricing_by_id[pricing_record_id]
+            referenced_prices.append(price)
+            if price.model_id != model.model_id:
+                errors.append(
+                    f"model {model.model_id}: pricing record {pricing_record_id} belongs to "
+                    f"{price.model_id}"
+                )
+            if price.provider != model.provider:
+                errors.append(
+                    f"model {model.model_id}: pricing record {pricing_record_id} provider "
+                    f"{price.provider} does not match {model.provider}"
+                )
+
+        if referenced_prices:
+            variations = {price.variation for price in referenced_prices}
+            if variations != {"input", "output"}:
+                errors.append(
+                    f"model {model.model_id}: pricing evidence must include both input and output"
                 )
 
     for identity_evidence in identities:
@@ -195,5 +231,21 @@ def validate_registry_files(root: Path = REGISTRY_ROOT) -> list[str]:
     for price in prices:
         if price.model_id not in model_ids:
             errors.append(f"pricing {price.pricing_record_id}: unknown model {price.model_id}")
+            continue
+        model = models_by_id[price.model_id]
+        if price.provider != model.provider:
+            errors.append(
+                f"pricing {price.pricing_record_id}: provider {price.provider} does not match "
+                f"model provider {model.provider}"
+            )
+
+    for index, left in enumerate(prices):
+        for right in prices[index + 1 :]:
+            if _pricing_windows_overlap(left, right):
+                errors.append(
+                    "overlapping pricing windows for "
+                    f"{left.model_id} {left.variation}: {left.pricing_record_id} and "
+                    f"{right.pricing_record_id}"
+                )
 
     return errors
