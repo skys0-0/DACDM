@@ -2,8 +2,10 @@ from __future__ import annotations
 
 import argparse
 import json
+from datetime import date
 from pathlib import Path
 
+from .leetcode_freeze import LeetCodeFreezeError, freeze_leetcode_weekly_hard
 from .preinference import PreInferenceAuditError, audit_preinference_admissibility
 from .protocol import validate_protocol_integrity
 from .readiness import ReadinessError, prepare_readiness
@@ -91,6 +93,37 @@ def main() -> None:
         default=Path("backtest/s1_3_6"),
     )
 
+    leetcode = sub.add_parser("freeze-leetcode-weekly-hard")
+    leetcode.add_argument("--source-root", type=Path, required=True)
+    leetcode.add_argument(
+        "--source-manifest",
+        type=Path,
+        default=Path("registries/leetcode_weekly_hard_source.json"),
+    )
+    leetcode.add_argument("--models", type=Path, default=Path("registries/models.json"))
+    leetcode.add_argument(
+        "--cutoffs",
+        type=Path,
+        default=Path("registries/training_cutoff_evidence.json"),
+    )
+    leetcode.add_argument("--tasks", type=Path, default=Path("registries/tasks.json"))
+    leetcode.add_argument(
+        "--candidate-output",
+        type=Path,
+        default=Path("registries/leetcode_weekly_hard_candidates.json"),
+    )
+    leetcode.add_argument(
+        "--output-root",
+        type=Path,
+        default=Path("backtest/s1_3_7"),
+    )
+    leetcode.add_argument(
+        "--freeze-date",
+        type=date.fromisoformat,
+        default=date(2026, 8, 14),
+    )
+    leetcode.add_argument("--source-archive-sha256")
+
     args = parser.parse_args()
 
     if args.command == "validate-protocol":
@@ -152,4 +185,26 @@ def main() -> None:
             f"{summary['sample_task_year_cells']} cells, "
             f"{summary['ready_for_paid_inference_cells']} ready, "
             f"paid inference gate={summary['paid_inference_gate']}"
+        )
+    elif args.command == "freeze-leetcode-weekly-hard":
+        try:
+            summary = freeze_leetcode_weekly_hard(
+                source_root=args.source_root,
+                source_manifest_path=args.source_manifest,
+                models_path=args.models,
+                cutoffs_path=args.cutoffs,
+                static_tasks_path=args.tasks,
+                candidate_output_path=args.candidate_output,
+                output_root=args.output_root,
+                freeze_date=args.freeze_date,
+                source_archive_sha256=args.source_archive_sha256,
+            )
+        except (LeetCodeFreezeError, OSError, ValueError, json.JSONDecodeError) as exc:
+            print(f"ERROR: {exc}")
+            raise SystemExit(1) from exc
+        print(
+            "S1.3.7 LeetCode metadata freeze: "
+            f"{summary['selected_weekly_contest_count']} contests, "
+            f"{summary['hard_metadata_candidate_count']} Hard metadata candidates, "
+            f"oracle={summary['oracle_status']}"
         )
