@@ -4,6 +4,7 @@ import argparse
 import json
 from pathlib import Path
 
+from .preinference import PreInferenceAuditError, audit_preinference_admissibility
 from .protocol import validate_protocol_integrity
 from .readiness import ReadinessError, prepare_readiness
 from .registries import validate_registry_files
@@ -65,6 +66,31 @@ def main() -> None:
         default=Path("registries/s1_3_model_candidates.json"),
     )
 
+    audit = sub.add_parser("audit-preinference-admissibility")
+    audit.add_argument("--tasks", type=Path, default=Path("registries/tasks.json"))
+    audit.add_argument(
+        "--sample",
+        type=Path,
+        default=Path("backtest/s1_2_5/microbacktest_tasks.json"),
+    )
+    audit.add_argument("--models", type=Path, default=Path("registries/models.json"))
+    audit.add_argument(
+        "--cutoffs",
+        type=Path,
+        default=Path("registries/training_cutoff_evidence.json"),
+    )
+    audit.add_argument(
+        "--snapshots",
+        type=Path,
+        default=Path("registries/historical_snapshot_evidence.json"),
+    )
+    audit.add_argument("--pricing", type=Path, default=Path("registries/pricing.json"))
+    audit.add_argument(
+        "--output-root",
+        type=Path,
+        default=Path("backtest/s1_3_6"),
+    )
+
     args = parser.parse_args()
 
     if args.command == "validate-protocol":
@@ -107,3 +133,23 @@ def main() -> None:
             print(f"ERROR: {exc}")
             raise SystemExit(1) from exc
         print(f"S1.3 model candidates extracted: {len(records)} -> {args.output}")
+    elif args.command == "audit-preinference-admissibility":
+        try:
+            summary = audit_preinference_admissibility(
+                tasks_path=args.tasks,
+                sample_path=args.sample,
+                models_path=args.models,
+                cutoff_path=args.cutoffs,
+                snapshot_path=args.snapshots,
+                pricing_path=args.pricing,
+                output_root=args.output_root,
+            )
+        except (PreInferenceAuditError, OSError, ValueError, json.JSONDecodeError) as exc:
+            print(f"ERROR: {exc}")
+            raise SystemExit(1) from exc
+        print(
+            "S1.3.6 pre-inference audit: "
+            f"{summary['sample_task_year_cells']} cells, "
+            f"{summary['ready_for_paid_inference_cells']} ready, "
+            f"paid inference gate={summary['paid_inference_gate']}"
+        )
