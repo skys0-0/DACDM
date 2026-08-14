@@ -1,0 +1,20 @@
+[
+  {
+    "source_id": "roninforge-ai-price-index",
+    "provider": "RoninForge",
+    "purpose": "historical_api_pricing_calibration",
+    "landing_page": "https://huggingface.co/datasets/RoninForge/ai-price-index",
+    "resolution": "Resolve the Hugging Face dataset API revision SHA at snapshot time, then download ai_price_index.csv from that immutable revision.",
+    "license": "CC BY 4.0",
+    "confirmatory_status": "evidence_aggregator_requires_first_party_provenance"
+  },
+  {
+    "source_id": "epoch-ai-ml-hardware",
+    "provider": "Epoch AI",
+    "purpose": "hardware_efficiency_calibration",
+    "landing_page": "https://epoch.ai/data/machine-learning-hardware?view=table",
+    "resolution": "Resolve the CSV download URL from the Epoch Machine Learning Hardware page at snapshot time; freeze exact retrieved bytes with SHA-256 and retrieval timestamp.",
+    "license": "CC BY",
+    "confirmatory_status": "preferred_hardware_source_per_IF_07"
+  }
+]
