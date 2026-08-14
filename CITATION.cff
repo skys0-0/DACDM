@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use or discuss DACDM, please cite the Zenodo working paper."
+title: "Dynamic AI Compute Demand Model (DACDM): Complexity Migration, Cognitive Commoditization, and the Dynamics of AI Infrastructure Demand"
+type: article
+authors:
+  - family-names: "SAN"
+    given-names: "CHAU HUNG"
+version: "1.0"
+date-released: "2026-08-14"
+doi: "10.5281/zenodo.21930795"
+url: "https://doi.org/10.5281/zenodo.21930795"
+license: "CC-BY-4.0"
+keywords:
+  - "Artificial Intelligence"
+  - "AI Compute Demand"
+  - "AI Economics"
+  - "Complexity Migration"
+  - "Cognitive Commoditization"
+  - "Compute Efficiency"
+  - "AI Infrastructure"
+  - "Inference Economics"
+  - "Technology Economics"
+  - "DACDM"
+abstract: >-
+  The Dynamic AI Compute Demand Model (DACDM) is a conceptual research framework
+  for analyzing AI compute demand as a dynamic interaction between workload growth,
+  task complexity, model and hardware efficiency, complexity migration, and
+  substitution across execution pathways. Version 1.0 is a conceptual working-paper
+  framework and has not been empirically validated.
