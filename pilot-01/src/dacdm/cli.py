@@ -5,6 +5,11 @@ import json
 from datetime import date
 from pathlib import Path
 
+from .leetcode_admission import (
+    LeetCodeAdmissionError,
+    audit_leetcode_admission_readiness,
+    fetch_official_problem_metadata,
+)
 from .leetcode_freeze import LeetCodeFreezeError, freeze_leetcode_weekly_hard
 from .preinference import PreInferenceAuditError, audit_preinference_admissibility
 from .protocol import validate_protocol_integrity
@@ -124,6 +129,42 @@ def main() -> None:
     )
     leetcode.add_argument("--source-archive-sha256")
 
+    official = sub.add_parser("fetch-leetcode-official-metadata")
+    official.add_argument(
+        "--candidates",
+        type=Path,
+        default=Path("registries/leetcode_weekly_hard_candidates.json"),
+    )
+    official.add_argument(
+        "--output",
+        type=Path,
+        default=Path("registries/leetcode_official_problem_metadata.json"),
+    )
+    official.add_argument("--retrieved-at")
+
+    admission = sub.add_parser("audit-leetcode-admission-readiness")
+    admission.add_argument("--source-root", type=Path, required=True)
+    admission.add_argument(
+        "--candidates",
+        type=Path,
+        default=Path("registries/leetcode_weekly_hard_candidates.json"),
+    )
+    admission.add_argument(
+        "--official-metadata",
+        type=Path,
+        default=Path("registries/leetcode_official_problem_metadata.json"),
+    )
+    admission.add_argument(
+        "--difficulty-evidence-output",
+        type=Path,
+        default=Path("registries/leetcode_difficulty_evidence.json"),
+    )
+    admission.add_argument(
+        "--output-root",
+        type=Path,
+        default=Path("backtest/s1_3_8"),
+    )
+
     args = parser.parse_args()
 
     if args.command == "validate-protocol":
@@ -207,4 +248,33 @@ def main() -> None:
             f"{summary['selected_weekly_contest_count']} contests, "
             f"{summary['hard_metadata_candidate_count']} Hard metadata candidates, "
             f"oracle={summary['oracle_status']}"
+        )
+    elif args.command == "fetch-leetcode-official-metadata":
+        try:
+            records = fetch_official_problem_metadata(
+                candidates_path=args.candidates,
+                output_path=args.output,
+                retrieved_at=args.retrieved_at,
+            )
+        except (LeetCodeAdmissionError, OSError, ValueError, json.JSONDecodeError) as exc:
+            print(f"ERROR: {exc}")
+            raise SystemExit(1) from exc
+        print(f"S1.3.8 official LeetCode metadata fetched: {len(records)} records")
+    elif args.command == "audit-leetcode-admission-readiness":
+        try:
+            summary = audit_leetcode_admission_readiness(
+                candidates_path=args.candidates,
+                official_metadata_path=args.official_metadata,
+                source_root=args.source_root,
+                difficulty_evidence_output_path=args.difficulty_evidence_output,
+                output_root=args.output_root,
+            )
+        except (LeetCodeAdmissionError, OSError, ValueError, json.JSONDecodeError) as exc:
+            print(f"ERROR: {exc}")
+            raise SystemExit(1) from exc
+        print(
+            "S1.3.8 LeetCode admission audit: "
+            f"{summary['candidate_count']} candidates, "
+            f"admitted={summary['confirmatory_admitted_task_count']}, "
+            f"next={summary['next_gate']}"
         )
