@@ -1,1 +1,54 @@
-[]
+[
+  {
+    "evidence_id": "snapshot:openai:gpt-4o-2024-05-13:2026-08-14",
+    "model_id": "openai:gpt-4o-2024-05-13",
+    "observation_date": "2026-08-14",
+    "snapshot_identifier": "gpt-4o-2024-05-13",
+    "availability_status": "callable_exact",
+    "source_type": "official",
+    "source_locator": "https://developers.openai.com/api/docs/models/gpt-4o",
+    "source_title": "GPT-4o Model | OpenAI API",
+    "retrieved_at": "2026-08-14T13:28:00Z",
+    "evidence_text_or_summary": "OpenAI's current model documentation says the snapshot list contains all available GPT-4o snapshots and includes gpt-4o-2024-05-13. The snapshot is exact and immutable for IF-01 purposes; the page also marks it deprecated, so this record establishes current exact availability but not future availability.",
+    "confidence": "high"
+  },
+  {
+    "evidence_id": "snapshot:openai:gpt-4o-mini-2024-07-18:2026-08-14",
+    "model_id": "openai:gpt-4o-mini-2024-07-18",
+    "observation_date": "2026-08-14",
+    "snapshot_identifier": "gpt-4o-mini-2024-07-18",
+    "availability_status": "callable_exact",
+    "source_type": "official",
+    "source_locator": "https://developers.openai.com/api/docs/models/gpt-4o-mini",
+    "source_title": "GPT-4o mini Model | OpenAI API",
+    "retrieved_at": "2026-08-14T13:28:00Z",
+    "evidence_text_or_summary": "OpenAI's current model documentation says the snapshot list contains all available GPT-4o mini snapshots and lists gpt-4o-mini-2024-07-18. This supports exact current callability under IF-01.",
+    "confidence": "high"
+  },
+  {
+    "evidence_id": "snapshot:anthropic:claude-3-5-sonnet-20240620:2026-08-14",
+    "model_id": "anthropic:claude-3-5-sonnet-20240620",
+    "observation_date": "2026-08-14",
+    "snapshot_identifier": "claude-3-5-sonnet-20240620",
+    "availability_status": "historical_snapshot_unavailable",
+    "source_type": "official",
+    "source_locator": "https://platform.claude.com/docs/en/about-claude/model-deprecations",
+    "source_title": "Model deprecations | Claude Platform Docs",
+    "retrieved_at": "2026-08-14T13:28:00Z",
+    "evidence_text_or_summary": "Anthropic states that claude-3-5-sonnet-20240620 was retired on October 28, 2025. Retired models are no longer available for use and requests fail. Therefore a current re-run of this exact snapshot is unavailable; archived historical observations, if independently found later, remain a separate admissible IF-01 path.",
+    "confidence": "high"
+  },
+  {
+    "evidence_id": "snapshot:anthropic:claude-3-5-haiku-20241022:2026-08-14",
+    "model_id": "anthropic:claude-3-5-haiku-20241022",
+    "observation_date": "2026-08-14",
+    "snapshot_identifier": "claude-3-5-haiku-20241022",
+    "availability_status": "historical_snapshot_unavailable",
+    "source_type": "official",
+    "source_locator": "https://platform.claude.com/docs/en/about-claude/model-deprecations",
+    "source_title": "Model deprecations | Claude Platform Docs",
+    "retrieved_at": "2026-08-14T13:28:00Z",
+    "evidence_text_or_summary": "Anthropic states that claude-3-5-haiku-20241022 was retired on February 19, 2026. Retired models are no longer available for use and requests fail. Therefore a current re-run of this exact snapshot is unavailable; archived historical observations, if independently found later, remain a separate admissible IF-01 path.",
+    "confidence": "high"
+  }
+]
