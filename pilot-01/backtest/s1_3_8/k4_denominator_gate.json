@@ -1,0 +1,10 @@
+{
+  "candidate_count": 163,
+  "confirmatory_admitted_task_count": 0,
+  "difficulty_supported_count": 163,
+  "frozen_k4_threshold": 0.3,
+  "paid_inference_permitted": false,
+  "phase_label": "S1.3.8_DIFFICULTY_VERIFICATION_AND_IF09_ORACLE_FEASIBILITY",
+  "rule": "S1.3.8 MUST NOT choose a K4 denominator after observing model outcomes. A denominator interpretation must be frozen before formal K4 evaluation, without changing the frozen 30% criterion itself.",
+  "status": "K4_DENOMINATOR_INTERPRETATION_UNRESOLVED_NO_FORMAL_K4_DECISION"
+}
