@@ -1,0 +1,24 @@
+[
+  {
+    "observation_id": "fixture-001",
+    "task_id": "humaneval:0",
+    "date": "2026-08-14",
+    "model": "synthetic-small",
+    "exact_model_id": "synthetic-small-v1",
+    "model_tier": "T1",
+    "pass_1": 1.0,
+    "input_tokens": 100,
+    "output_tokens": 50,
+    "reasoning_tokens": null,
+    "tool_calls": 0,
+    "retries": 0,
+    "latency_sec": 0.1,
+    "api_cost_usd": 0.001,
+    "agent_overhead_alpha": 0.0,
+    "meets_threshold": true,
+    "hardware_perf_index": 1.0,
+    "exclude_contamination": false,
+    "prompt_template_version": "coding-direct-v1.0",
+    "raw_response_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  }
+]

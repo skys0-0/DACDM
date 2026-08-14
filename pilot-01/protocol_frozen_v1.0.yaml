@@ -1,0 +1,48 @@
+schema_version: 1
+protocol:
+  version: "1.0"
+  frozen_date: "2026-08-14"
+  path: "../protocols/DACDM_Pilot_01_Protocol_v1.0.md"
+  git_blob_sha: "389901146b70684b6c952a8606a5063b972645d4"
+implementation_freeze:
+  version: "1.0"
+  path: "DACDM_Pilot_01_Implementation_Freeze_v1.0.md"
+  git_blob_sha: "6fd4ff6c7f368710c21ed5b3d6433b0677383ff1"
+sdd:
+  version: "1.0"
+  path: "DACDM_Pilot_01_SDD_v1.0.md"
+  git_blob_sha: "f157652d8d58427f730bb30798a924fee650a222"
+registered_constants:
+  quality_thresholds:
+    humaneval: 0.80
+    mbpp: 0.75
+    leetcode_hard: 0.60
+  ccr_rolling_window_months: 6
+  h4_minimum_annual_deflated_decline: 0.15
+  contamination_k4_threshold: 0.30
+  bootstrap:
+    replications: 1000
+    seed: 20260814
+    ci_method: percentile
+    confidence_level: 0.95
+    p_values: two_sided
+  inference:
+    n: 1
+    temperature: 0
+    top_p: 1
+    max_infrastructure_retries: 2
+    retry_backoff_seconds: [2, 8]
+  prompt_template_version: "coding-direct-v1.0"
+  hardware_index:
+    base_period: "2024-01"
+    base_value: 1.0
+    interpolation: log_linear
+    extrapolation: forbidden
+  leetcode_oracle:
+    minimum_distinct_tests: 20
+    task_pass_fraction: 1.0
+  fixed_effects:
+    estimator: "linearmodels.PanelOLS"
+    entity_effects: true
+    cluster: task_id
+    inference: two_sided
