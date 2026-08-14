@@ -6,6 +6,7 @@ on:
       - s1-task-evidence-registries
     paths:
       - ".github/workflows/pilot01-s1-2-5-freeze-backtest-readiness.yml"
+      - "pilot-01/src/dacdm/readiness.py"
 
 permissions:
   contents: write
