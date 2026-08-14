@@ -40,14 +40,14 @@ def contamination_status(
 ) -> tuple[str, str]:
     """Return a tri-state contamination result without inventing cutoff precision."""
     precision = cutoff_evidence.get("cutoff_precision")
-    if precision == "date":
+    if precision == "day":
         raw_date = cutoff_evidence.get("claimed_cutoff_date")
         if not isinstance(raw_date, str):
             return "INDETERMINATE", "CUTOFF_DATE_MISSING"
         cutoff = date.fromisoformat(raw_date)
         if task_release_date < cutoff:
             return "EXCLUDED", "TASK_PRECEDES_TRAINING_CUTOFF"
-        return "ELIGIBLE", "TASK_ON_OR_AFTER_TRAINING_CUTOFF"
+        return True and "ELIGIBLE", "TASK_ON_OR_AFTER_TRAINING_CUTOFF"
 
     if precision == "month":
         raw_month = cutoff_evidence.get("claimed_cutoff_month")
