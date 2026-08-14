@@ -1,0 +1,48 @@
+name: Pilot 01 S1.3.10 Inspect Oracle Schema
+
+on:
+  push:
+    paths:
+      - ".github/workflows/pilot01-s1-3-10-inspect-oracle-schema.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout DACDM branch
+        uses: actions/checkout@v4
+        with:
+          ref: s1-task-evidence-registries
+
+      - name: Checkout frozen LeetCodeDataset source
+        uses: actions/checkout@v4
+        with:
+          repository: newfacade/LeetCodeDataset
+          ref: 182cd19fd53161efd70a1ef074fe1056b659bfa3
+          path: leetcode-dataset
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Inspect registered oracle source schema
+        working-directory: pilot-01
+        run: python scripts/inspect_s1_3_10_source.py
+
+      - name: Freeze schema inspection
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add pilot-01/backtest/s1_3_10/source_schema_inspection.json
+          if git diff --cached --quiet; then
+            echo "No schema inspection changes"
+            exit 0
+          fi
+          git commit -m "Freeze S1.3.10 oracle source schema inspection"
+          git push origin HEAD:s1-task-evidence-registries
+
+# No external model calls and no execution of source solution/test code.
