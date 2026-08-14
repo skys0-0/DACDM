@@ -2,6 +2,7 @@
 
 from .models import (
     HistoricalSnapshotEvidenceRecord,
+    ModelIdentityEvidenceRecord,
     ModelRegistryRecord,
     PricingEvidenceRecord,
     TaskRegistryRecord,
@@ -11,6 +12,7 @@ from .validator import validate_registry_files
 
 __all__ = [
     "HistoricalSnapshotEvidenceRecord",
+    "ModelIdentityEvidenceRecord",
     "ModelRegistryRecord",
     "PricingEvidenceRecord",
     "TaskRegistryRecord",
