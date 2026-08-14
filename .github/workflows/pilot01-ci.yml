@@ -36,6 +36,8 @@ jobs:
           pip install --no-deps -e .
       - name: Protocol integrity
         run: dacdm validate-protocol
+      - name: Registry integrity
+        run: dacdm validate-registries
       - name: Lint
         run: ruff check src tests
       - name: Type check
@@ -43,4 +45,4 @@ jobs:
       - name: Unit and fixture tests
         run: pytest
 
-# Deliberately no paid model API calls in S0 CI.
+# No paid model API calls are permitted in S0 or S1 CI.
