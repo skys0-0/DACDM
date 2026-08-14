@@ -80,6 +80,7 @@ def validate_registry_files(root: Path = REGISTRY_ROOT) -> list[str]:
     identity_ids = {record.evidence_id for record in identities}
     identities_by_id = {record.evidence_id: record for record in identities}
     cutoff_ids = {record.evidence_id for record in cutoffs}
+    cutoffs_by_id = {record.evidence_id: record for record in cutoffs}
     snapshot_ids = {record.evidence_id for record in snapshots}
     pricing_ids = {record.pricing_record_id for record in prices}
 
@@ -127,11 +128,39 @@ def validate_registry_files(root: Path = REGISTRY_ROOT) -> list[str]:
                     "supported public_launch_date evidence"
                 )
 
+        referenced_cutoffs: list[TrainingCutoffEvidenceRecord] = []
         for evidence_id in model.training_cutoff_evidence_ids:
             if evidence_id not in cutoff_ids:
                 errors.append(
                     f"model {model.model_id}: unresolved training cutoff evidence {evidence_id}"
                 )
+                continue
+            cutoff = cutoffs_by_id[evidence_id]
+            referenced_cutoffs.append(cutoff)
+            if cutoff.model_id != model.model_id:
+                errors.append(
+                    f"model {model.model_id}: training cutoff evidence {evidence_id} belongs to "
+                    f"{cutoff.model_id}"
+                )
+
+        if model.training_cutoff_status == "unknown":
+            if model.training_cutoff_evidence_ids:
+                errors.append(
+                    f"model {model.model_id}: unknown cutoff must not reference affirmative evidence"
+                )
+        elif model.training_cutoff_status == "supported":
+            if not any(evidence.status == "supported" for evidence in referenced_cutoffs):
+                errors.append(
+                    f"model {model.model_id}: supported cutoff requires supported "
+                    "training cutoff evidence"
+                )
+        elif model.training_cutoff_status == "conflicting":
+            if not any(evidence.status == "conflicting" for evidence in referenced_cutoffs):
+                errors.append(
+                    f"model {model.model_id}: conflicting cutoff requires conflicting "
+                    "training cutoff evidence"
+                )
+
         for evidence_id in model.historical_snapshot_evidence_ids:
             if evidence_id not in snapshot_ids:
                 errors.append(
@@ -142,10 +171,6 @@ def validate_registry_files(root: Path = REGISTRY_ROOT) -> list[str]:
                 errors.append(
                     f"model {model.model_id}: unresolved pricing record {pricing_record_id}"
                 )
-        if model.training_cutoff_status == "unknown" and model.training_cutoff_evidence_ids:
-            errors.append(
-                f"model {model.model_id}: unknown cutoff must not reference affirmative evidence"
-            )
 
     for identity_evidence in identities:
         if identity_evidence.model_id not in model_ids:
