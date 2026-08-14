@@ -29,7 +29,11 @@ def deterministic_humaneval_sample(tasks_path: Path, n: int = 10) -> list[dict[s
     raw = json.loads(tasks_path.read_text(encoding="utf-8"))
     if not isinstance(raw, list):
         raise ReadinessError("tasks registry must be a JSON array")
-    humaneval = [row for row in raw if isinstance(row, dict) and row.get("benchmark") == "humaneval"]
+    humaneval = [
+        row
+        for row in raw
+        if isinstance(row, dict) and row.get("benchmark") == "humaneval"
+    ]
     if len(humaneval) < n:
         raise ReadinessError(f"need at least {n} HumanEval tasks, found {len(humaneval)}")
 
@@ -111,7 +115,9 @@ def filter_ai_price_history(path: Path) -> list[dict[str, str]]:
                 else None
             )
         except ValueError as exc:
-            raise ReadinessError(f"invalid AI price validity date for {row['model_id']}") from exc
+            raise ReadinessError(
+                f"invalid AI price validity date for {row['model_id']}"
+            ) from exc
         if effective_from >= end:
             continue
         if effective_to is not None and effective_to <= start:
@@ -124,7 +130,8 @@ def filter_ai_price_history(path: Path) -> list[dict[str, str]]:
 
 
 def _normalise_header(value: str) -> str:
-    return " ".join(value.lower().replace("_", " ").split())
+    cleaned = value.lower().replace("_", " ").replace("-", " ")
+    return " ".join(cleaned.split())
 
 
 def _find_header(fields: Iterable[str], candidates: tuple[str, ...]) -> str:
@@ -133,6 +140,26 @@ def _find_header(fields: Iterable[str], candidates: tuple[str, ...]) -> str:
         if candidate in normalised:
             return normalised[candidate]
     raise ReadinessError(f"hardware CSV missing required column; tried {candidates}")
+
+
+def _find_header_terms(
+    fields: Iterable[str],
+    required_terms: tuple[str, ...],
+    preferred_terms: tuple[str, ...] = (),
+) -> str:
+    matches: list[tuple[int, str]] = []
+    for field in fields:
+        normalised = _normalise_header(field)
+        if all(term in normalised for term in required_terms):
+            score = sum(term in normalised for term in preferred_terms)
+            matches.append((score, field))
+    if not matches:
+        raise ReadinessError(
+            "hardware CSV missing required column containing terms: "
+            + ", ".join(required_terms)
+        )
+    matches.sort(key=lambda item: (-item[0], item[1]))
+    return matches[0][1]
 
 
 def _parse_float(value: str) -> float | None:
@@ -147,9 +174,16 @@ def _parse_float(value: str) -> float | None:
 
 def hardware_efficiency_preview(path: Path) -> list[dict[str, Any]]:
     fields, rows = _read_csv(path)
-    release_col = _find_header(fields, ("release date",))
-    perf_col = _find_header(fields, ("machine learning performance (top/s)",))
-    price_col = _find_header(fields, ("release price (2024 usd)", "release price (usd)"))
+    release_col = _find_header_terms(fields, ("release", "date"))
+    perf_col = _find_header_terms(
+        fields,
+        ("performance",),
+        ("machine learning", "ml", "top/s", "tops"),
+    )
+    try:
+        price_col = _find_header_terms(fields, ("release", "price", "2024"))
+    except ReadinessError:
+        price_col = _find_header_terms(fields, ("release", "price"))
 
     type_col: str | None = None
     try:
@@ -173,7 +207,11 @@ def hardware_efficiency_preview(path: Path) -> list[dict[str, Any]]:
         observations.append((released, perf / price))
 
     if not observations:
-        raise ReadinessError("no usable GPU performance/price observations in Epoch snapshot")
+        raise ReadinessError(
+            "no usable GPU performance/price observations in Epoch snapshot; "
+            f"resolved columns release={release_col!r}, performance={perf_col!r}, "
+            f"price={price_col!r}, type={type_col!r}"
+        )
 
     monthly: list[tuple[date, float]] = []
     for year in YEARS:
@@ -183,15 +221,19 @@ def hardware_efficiency_preview(path: Path) -> list[dict[str, Any]]:
             if eligible:
                 monthly.append((anchor, max(eligible)))
 
-    baseline = next((value for anchor, value in monthly if anchor == date(2024, 1, 1)), None)
+    baseline = next(
+        (value for anchor, value in monthly if anchor == date(2024, 1, 1)), None
+    )
     if baseline is None or baseline <= 0:
         raise ReadinessError("cannot construct 2024-01 hardware efficiency baseline")
 
     return [
         {
             "month": anchor.isoformat()[:7],
-            "frontier_ml_top_s_per_2024_usd": ratio,
+            "frontier_ml_performance_per_2024_usd": ratio,
             "index_2024_01": ratio / baseline,
+            "performance_column": perf_col,
+            "price_column": price_col,
             "calibration_label": CALIBRATION_LABEL,
         }
         for anchor, ratio in monthly
@@ -200,7 +242,10 @@ def hardware_efficiency_preview(path: Path) -> list[dict[str, Any]]:
 
 def _write_json(path: Path, value: object) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    path.write_text(
+        json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
 
 
 def _write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
@@ -245,6 +290,29 @@ def prepare_readiness(
     }
     _write_json(output_root / "snapshot_metadata.json", manifest)
 
-    gap_report = """# S1.2.5 Schema Gap Report\n\nStatus: GENERATED BEFORE S1.3 POPULATION\n\n## Pricing registry gaps\n\nCurrent S1.1 pricing records are insufficient for historical backtesting because point-in-time evidence needs `variation`, `effective_from`, `effective_to`, `source_kind`, `confidence`, `last_validated_at`, and first-party `source_url` in addition to token price. S1.3 should model these explicitly rather than collapsing a model to one current price record.\n\n## Model/evidence registry gaps\n\nS1.3 needs model public launch date plus an explicit historical snapshot availability/evidence status so that IF-01 can distinguish callable exact snapshots, archived observations, and `HISTORICAL_SNAPSHOT_UNAVAILABLE`. No successor/current-model substitution is allowed.\n\n## External snapshot provenance gaps\n\nExternal datasets require immutable revision/hash metadata. Hugging Face revision SHA can be pinned directly. Epoch's live CSV is mutable, so DACDM must freeze exact bytes with retrieval time and SHA-256.\n\n## Hardware registry gaps\n\nThe final hardware index needs source snapshot identity, formula version, normalization month, interpolation method, and supported date bounds. This preview is exploratory only and does not replace IF-07.\n\n## Confirmatory boundary\n\nNo S1.2.5 output may modify registered hypotheses, thresholds, kill criteria, contamination rules, bootstrap specification, model-tier rules, or the frozen Pilot 01 protocol.\n"""
+    gap_report = """# S1.2.5 Schema Gap Report
+
+Status: GENERATED BEFORE S1.3 POPULATION
+
+## Pricing registry gaps
+
+Current S1.1 pricing records are insufficient for historical backtesting because point-in-time evidence needs `variation`, `effective_from`, `effective_to`, `source_kind`, `confidence`, `last_validated_at`, and first-party `source_url` in addition to token price. S1.3 should model these explicitly rather than collapsing a model to one current price record.
+
+## Model/evidence registry gaps
+
+S1.3 needs model public launch date plus an explicit historical snapshot availability/evidence status so that IF-01 can distinguish callable exact snapshots, archived observations, and `HISTORICAL_SNAPSHOT_UNAVAILABLE`. No successor/current-model substitution is allowed.
+
+## External snapshot provenance gaps
+
+External datasets require immutable revision/hash metadata. Hugging Face revision SHA can be pinned directly. Epoch's live CSV is mutable, so DACDM must freeze exact bytes with retrieval time and SHA-256.
+
+## Hardware registry gaps
+
+The final hardware index needs source snapshot identity, formula version, normalization month, interpolation method, and supported date bounds. This preview is exploratory only and does not replace IF-07.
+
+## Confirmatory boundary
+
+No S1.2.5 output may modify registered hypotheses, thresholds, kill criteria, contamination rules, bootstrap specification, model-tier rules, or the frozen Pilot 01 protocol.
+"""
     (output_root / "schema_gap_report.md").write_text(gap_report, encoding="utf-8")
     return manifest
