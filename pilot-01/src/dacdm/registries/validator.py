@@ -78,16 +78,55 @@ def validate_registry_files(root: Path = REGISTRY_ROOT) -> list[str]:
 
     model_ids = {record.model_id for record in models}
     identity_ids = {record.evidence_id for record in identities}
+    identities_by_id = {record.evidence_id: record for record in identities}
     cutoff_ids = {record.evidence_id for record in cutoffs}
     snapshot_ids = {record.evidence_id for record in snapshots}
     pricing_ids = {record.pricing_record_id for record in prices}
 
     for model in models:
+        referenced_identities: list[ModelIdentityEvidenceRecord] = []
         for evidence_id in model.identity_evidence_ids:
             if evidence_id not in identity_ids:
                 errors.append(
                     f"model {model.model_id}: unresolved model identity evidence {evidence_id}"
                 )
+                continue
+            identity = identities_by_id[evidence_id]
+            referenced_identities.append(identity)
+            if identity.model_id != model.model_id:
+                errors.append(
+                    f"model {model.model_id}: identity evidence {evidence_id} belongs to "
+                    f"{identity.model_id}"
+                )
+
+        supported_identity = any(
+            evidence.model_id == model.model_id
+            and evidence.claim_type == "model_identity"
+            and evidence.claimed_provider_model_name == model.provider_model_name
+            and evidence.status == "supported"
+            for evidence in referenced_identities
+        )
+        if not supported_identity:
+            errors.append(
+                f"model {model.model_id}: canonical registry entry requires supported "
+                "first-party model_identity evidence matching provider_model_name"
+            )
+
+        if model.public_launch_date is not None:
+            supported_launch_date = any(
+                evidence.model_id == model.model_id
+                and evidence.claim_type == "public_launch_date"
+                and evidence.claimed_provider_model_name == model.provider_model_name
+                and evidence.claimed_public_launch_date == model.public_launch_date
+                and evidence.status == "supported"
+                for evidence in referenced_identities
+            )
+            if not supported_launch_date:
+                errors.append(
+                    f"model {model.model_id}: public launch date requires matching "
+                    "supported public_launch_date evidence"
+                )
+
         for evidence_id in model.training_cutoff_evidence_ids:
             if evidence_id not in cutoff_ids:
                 errors.append(
@@ -106,10 +145,6 @@ def validate_registry_files(root: Path = REGISTRY_ROOT) -> list[str]:
         if model.training_cutoff_status == "unknown" and model.training_cutoff_evidence_ids:
             errors.append(
                 f"model {model.model_id}: unknown cutoff must not reference affirmative evidence"
-            )
-        if model.public_launch_date is not None and not model.identity_evidence_ids:
-            errors.append(
-                f"model {model.model_id}: public launch date requires identity evidence"
             )
 
     for identity_evidence in identities:
