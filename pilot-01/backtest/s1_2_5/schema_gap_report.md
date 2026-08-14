@@ -12,11 +12,11 @@ S1.3 needs model public launch date plus an explicit historical snapshot availab
 
 ## External snapshot provenance gaps
 
-External datasets require immutable revision/hash metadata. Hugging Face revision SHA can be pinned directly. Epoch's live CSV is mutable, so DACDM must freeze exact bytes with retrieval time and SHA-256.
+External datasets require immutable revision/hash metadata. Hugging Face revision SHA can be pinned directly. Epoch's live CSV is mutable, so DACDM freezes exact bytes with retrieval time and SHA-256.
 
 ## Hardware registry gaps
 
-The final hardware index needs source snapshot identity, formula version, normalization month, interpolation method, and supported date bounds. This preview is exploratory only and does not replace IF-07.
+The frozen Epoch live CSV exposes nominal `Release price (USD)` but does not expose the inflation-adjusted release-price series used in Epoch's published price-performance trend. Therefore the actual S1.2.5 Epoch snapshot is intentionally only a nominal-price readiness preview. The final IF-07 hardware deflator must separately encode its price-deflation method, source series, formula version, normalization month, interpolation method, and supported date bounds. S1.2.5 must not silently treat nominal release USD as constant 2024 USD.
 
 ## Confirmatory boundary
 

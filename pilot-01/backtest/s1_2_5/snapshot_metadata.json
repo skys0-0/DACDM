@@ -1,6 +1,7 @@
 {
   "calibration_label": "EXPLORATORY_PIPELINE_CALIBRATION_NOT_CONFIRMATORY_EVIDENCE",
   "hardware_months": 36,
+  "hardware_preview_price_basis": "NOMINAL_RELEASE_USD_PREVIEW_NOT_FINAL_IF_07_DEFLATOR",
   "inputs": {
     "ai_price_index_sha256": "93be1cffe6225ee3439510bb2fee50243074b0d8ef63b5e23473c9e96b1dfd9c",
     "epoch_ml_hardware_sha256": "a3cb0d6d51a37b6a6baea58052d61375bc5a4cfbc9551ef9ddb92f85454f4d16",
@@ -24,7 +25,7 @@
       "sha256": "a3cb0d6d51a37b6a6baea58052d61375bc5a4cfbc9551ef9ddb92f85454f4d16",
       "snapshot_id": "2026-08-14"
     },
-    "retrieved_at": "2026-08-14T12:31:17Z"
+    "retrieved_at": "2026-08-14T12:34:33Z"
   },
   "task_count": 10,
   "task_year_cells": 30
