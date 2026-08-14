@@ -47,7 +47,7 @@ def contamination_status(
         cutoff = date.fromisoformat(raw_date)
         if task_release_date < cutoff:
             return "EXCLUDED", "TASK_PRECEDES_TRAINING_CUTOFF"
-        return True and "ELIGIBLE", "TASK_ON_OR_AFTER_TRAINING_CUTOFF"
+        return "ELIGIBLE", "TASK_ON_OR_AFTER_TRAINING_CUTOFF"
 
     if precision == "month":
         raw_month = cutoff_evidence.get("claimed_cutoff_month")
