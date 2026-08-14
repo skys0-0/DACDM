@@ -1,0 +1,38 @@
+{
+  "all_weekly_problem_count": 544,
+  "confirmatory_admitted_task_count": 0,
+  "current_global_contamination_counts": {
+    "ELIGIBLE": 132,
+    "EXCLUDED": 27,
+    "INDETERMINATE": 4
+  },
+  "freeze_date": "2026-08-14",
+  "hard_candidates_by_year": {
+    "2024": 63,
+    "2025": 66,
+    "2026": 34
+  },
+  "hard_metadata_candidate_count": 163,
+  "newest_selected_contest": {
+    "contest_number": 514,
+    "contest_slug": "weekly-contest-514",
+    "contest_start_time_utc": "2026-08-09T02:30:00Z",
+    "problem_count": 4,
+    "release_date": "2026-08-09"
+  },
+  "oldest_selected_contest": {
+    "contest_number": 379,
+    "contest_slug": "weekly-contest-379",
+    "contest_start_time_utc": "2024-01-07T02:30:00Z",
+    "problem_count": 4,
+    "release_date": "2024-01-07"
+  },
+  "oracle_status": "PENDING_IF09",
+  "paid_inference_permitted": false,
+  "phase_label": "S1.3.7_METADATA_CANDIDATE_UNIVERSE_NOT_CONFIRMATORY_ADMISSION",
+  "resource_cap": null,
+  "sampling_rule": "ALL_METADATA_HARD_CANDIDATES_NO_RESOURCE_CAP",
+  "selected_weekly_contest_count": 136,
+  "status": "METADATA_CANDIDATE_UNIVERSE_FROZEN_ORACLE_PENDING",
+  "window_start": "2024-01-01"
+}

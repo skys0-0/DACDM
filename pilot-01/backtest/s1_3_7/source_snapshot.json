@@ -1,0 +1,13 @@
+{
+  "contest_metadata_blob_sha": "3790f81ccf52612d98b546f23b145dbcebaf23f7",
+  "contest_metadata_path": "solution/contest.json",
+  "freeze_date": "2026-08-14",
+  "metadata_use_only": true,
+  "official_contest_url_template": "https://leetcode.com/contest/weekly-contest-{contest_number}/",
+  "official_problem_url_template": "https://leetcode.com/problems/{problem_slug}",
+  "phase_label": "S1.3.7_METADATA_CANDIDATE_UNIVERSE_NOT_CONFIRMATORY_ADMISSION",
+  "source_archive_sha256": null,
+  "source_license": "CC-BY-SA-4.0",
+  "source_repository": "doocs/leetcode",
+  "source_revision": "9f7e84b19e5326cb542e6238ac76e86bab438f0b"
+}
