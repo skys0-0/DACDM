@@ -59,7 +59,11 @@ class TrainingCutoffEvidenceRecord(StrictRecord):
     evidence_id: str = Field(min_length=1)
     model_id: str = Field(min_length=1)
     claim_type: Literal["training_cutoff"]
-    claimed_cutoff: date | None = Field(default=None, strict=False)
+    cutoff_precision: Literal["day", "month", "unknown"]
+    claimed_cutoff_date: date | None = Field(default=None, strict=False)
+    claimed_cutoff_month: str | None = Field(
+        default=None, pattern=r"^[0-9]{4}-(0[1-9]|1[0-2])$"
+    )
     source_type: Literal[
         "official",
         "archived_official",
@@ -73,6 +77,18 @@ class TrainingCutoffEvidenceRecord(StrictRecord):
     evidence_text_or_summary: str = Field(min_length=1)
     confidence: Literal["high", "medium", "low", "unknown"]
     status: Literal["supported", "conflicting", "unknown"]
+
+    @model_validator(mode="after")
+    def cutoff_value_matches_precision(self) -> TrainingCutoffEvidenceRecord:
+        if self.cutoff_precision == "day":
+            if self.claimed_cutoff_date is None or self.claimed_cutoff_month is not None:
+                raise ValueError("day precision requires claimed_cutoff_date only")
+        elif self.cutoff_precision == "month":
+            if self.claimed_cutoff_month is None or self.claimed_cutoff_date is not None:
+                raise ValueError("month precision requires claimed_cutoff_month only")
+        elif self.claimed_cutoff_date is not None or self.claimed_cutoff_month is not None:
+            raise ValueError("unknown precision requires no claimed cutoff value")
+        return self
 
 
 class HistoricalSnapshotEvidenceRecord(StrictRecord):
