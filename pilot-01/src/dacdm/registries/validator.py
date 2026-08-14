@@ -95,14 +95,17 @@ def validate_registry_files(root: Path = REGISTRY_ROOT) -> list[str]:
                 f"model {model.model_id}: unknown cutoff must not reference affirmative evidence"
             )
 
-    for evidence in cutoffs:
-        if evidence.model_id not in model_ids:
-            errors.append(f"evidence {evidence.evidence_id}: unknown model {evidence.model_id}")
-
-    for evidence in snapshots:
-        if evidence.model_id not in model_ids:
+    for cutoff_evidence in cutoffs:
+        if cutoff_evidence.model_id not in model_ids:
             errors.append(
-                f"historical snapshot evidence {evidence.evidence_id}: unknown model {evidence.model_id}"
+                f"evidence {cutoff_evidence.evidence_id}: unknown model {cutoff_evidence.model_id}"
+            )
+
+    for snapshot_evidence in snapshots:
+        if snapshot_evidence.model_id not in model_ids:
+            errors.append(
+                "historical snapshot evidence "
+                f"{snapshot_evidence.evidence_id}: unknown model {snapshot_evidence.model_id}"
             )
 
     for price in prices:
