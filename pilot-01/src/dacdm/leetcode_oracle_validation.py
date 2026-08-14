@@ -6,7 +6,6 @@ import hashlib
 import html
 import json
 import re
-import shutil
 import subprocess
 import tempfile
 from collections import Counter
@@ -214,8 +213,7 @@ def _constraint_values(constraint: BoundConstraint, params: dict[str, Any]) -> l
     if constraint.kind == "index_length":
         if not isinstance(value, (list, tuple)):
             return []
-        lengths = [len(item) for item in value if isinstance(item, (str, list, tuple))]
-        return lengths
+        return [len(item) for item in value if isinstance(item, (str, list, tuple))]
     if constraint.kind == "element":
         if not isinstance(value, (list, tuple)):
             return []
@@ -287,7 +285,8 @@ def _reference_program(row: dict[str, Any]) -> str:
     completion = row.get("completion")
     test = row.get("test")
     entry_point = row.get("entry_point")
-    if not all(isinstance(value, str) and value for value in (prompt, completion, test, entry_point)):
+    values = (prompt, completion, test, entry_point)
+    if not all(isinstance(value, str) and value for value in values):
         raise LeetCodeOracleValidationError(
             f"source row lacks executable reference fields: {row.get('task_id')}"
         )
@@ -403,7 +402,7 @@ def validate_registered_oracles(
 
             description = row.get("problem_description")
             if not isinstance(description, str):
-                coverage = {
+                coverage: dict[str, Any] = {
                     "constraint_count": 0,
                     "mapped_constraint_count": 0,
                     "ordinary_case_supported": False,
