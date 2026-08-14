@@ -1,6 +1,17 @@
 from __future__ import annotations
 
+import calendar
 from datetime import date
+
+
+def subtract_calendar_months(value: date, months: int) -> date:
+    if months < 0:
+        raise ValueError("months cannot be negative")
+    total_months = value.year * 12 + (value.month - 1) - months
+    year, month_index = divmod(total_months, 12)
+    month = month_index + 1
+    day = min(value.day, calendar.monthrange(year, month)[1])
+    return date(year, month, day)
 
 
 def contamination_eligible(
@@ -12,10 +23,10 @@ def contamination_eligible(
             return False, "TASK_PRECEDES_TRAINING_CUTOFF"
         return True, "TASK_ON_OR_AFTER_TRAINING_CUTOFF"
 
-    # Unknown cutoff: exclude tasks released >6 months before public launch.
-    # Six calendar months are represented conservatively as 183 days for S0.
-    delta_days = (model_launch_date - task_release_date).days
-    if delta_days > 183:
+    # Unknown cutoff: exclude tasks released more than six calendar months before launch.
+    # The exact boundary is eligible; no fixed-day approximation is used.
+    boundary = subtract_calendar_months(model_launch_date, 6)
+    if task_release_date < boundary:
         return False, "UNKNOWN_CUTOFF_CONSERVATIVE_EXCLUSION"
     return True, "UNKNOWN_CUTOFF_WITHIN_SIX_MONTH_WINDOW"
 
