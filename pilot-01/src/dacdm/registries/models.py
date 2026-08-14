@@ -3,7 +3,7 @@ from __future__ import annotations
 from datetime import date, datetime
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 
 class StrictRecord(BaseModel):
@@ -31,9 +31,11 @@ class ModelRegistryRecord(StrictRecord):
     provider_model_name: str = Field(min_length=1)
     model_version_or_snapshot: str = Field(min_length=1)
     access_path: str = Field(min_length=1)
+    public_launch_date: date | None = Field(default=None, strict=False)
     training_cutoff_status: Literal["supported", "conflicting", "unknown"]
     training_cutoff_evidence_ids: list[str]
-    pricing_record_id: str
+    historical_snapshot_evidence_ids: list[str]
+    pricing_record_ids: list[str]
     enabled_for_pilot: bool
 
 
@@ -42,7 +44,13 @@ class TrainingCutoffEvidenceRecord(StrictRecord):
     model_id: str = Field(min_length=1)
     claim_type: Literal["training_cutoff"]
     claimed_cutoff: date | None = Field(default=None, strict=False)
-    source_type: Literal["official", "model_card", "paper", "other"]
+    source_type: Literal[
+        "official",
+        "archived_official",
+        "model_card",
+        "paper",
+        "other",
+    ]
     source_locator: str = Field(min_length=1)
     source_title: str = Field(min_length=1)
     retrieved_at: datetime = Field(strict=False)
@@ -51,14 +59,62 @@ class TrainingCutoffEvidenceRecord(StrictRecord):
     status: Literal["supported", "conflicting", "unknown"]
 
 
+class HistoricalSnapshotEvidenceRecord(StrictRecord):
+    evidence_id: str = Field(min_length=1)
+    model_id: str = Field(min_length=1)
+    observation_date: date = Field(strict=False)
+    snapshot_identifier: str | None = None
+    availability_status: Literal[
+        "callable_exact",
+        "archived_observation",
+        "historical_snapshot_unavailable",
+        "unknown",
+    ]
+    source_type: Literal[
+        "official",
+        "archived_official",
+        "benchmark_archive",
+        "paper",
+        "other",
+    ]
+    source_locator: str = Field(min_length=1)
+    source_title: str = Field(min_length=1)
+    retrieved_at: datetime = Field(strict=False)
+    evidence_text_or_summary: str = Field(min_length=1)
+    confidence: Literal["high", "medium", "low", "unknown"]
+
+    @model_validator(mode="after")
+    def exact_snapshot_requires_identifier(self) -> HistoricalSnapshotEvidenceRecord:
+        if self.availability_status == "callable_exact" and not self.snapshot_identifier:
+            raise ValueError("callable_exact historical snapshot requires snapshot_identifier")
+        return self
+
+
 class PricingEvidenceRecord(StrictRecord):
     pricing_record_id: str = Field(min_length=1)
     provider: str = Field(min_length=1)
     model_id: str = Field(min_length=1)
+    variation: Literal["input", "output"]
     currency: Literal["USD"]
-    input_unit_price: float = Field(ge=0)
-    output_unit_price: float = Field(ge=0)
+    unit_price: float = Field(ge=0)
     unit_basis: Literal["1M_tokens"]
-    effective_or_observed_at: datetime = Field(strict=False)
+    effective_from: date = Field(strict=False)
+    effective_to: date | None = Field(default=None, strict=False)
+    source_kind: Literal[
+        "official",
+        "archived_official",
+        "aggregator_with_first_party_source",
+        "other",
+    ]
+    confidence: Literal["high", "medium", "low", "unknown"]
+    source_url: str = Field(min_length=1)
     source_locator: str = Field(min_length=1)
+    last_validated_at: datetime = Field(strict=False)
     retrieved_at: datetime = Field(strict=False)
+    source_dataset_revision: str | None = None
+
+    @model_validator(mode="after")
+    def validity_window_must_be_forward(self) -> PricingEvidenceRecord:
+        if self.effective_to is not None and self.effective_to <= self.effective_from:
+            raise ValueError("effective_to must be later than effective_from")
+        return self
