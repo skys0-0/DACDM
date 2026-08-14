@@ -90,3 +90,4 @@ jobs:
 # External reference code is executed only inside a Docker sandbox with network disabled,
 # read-only rootfs, dropped capabilities, no-new-privileges, resource caps, and an unprivileged user.
 # No paid model API calls are made and no model performance outputs are inspected.
+# Triggered after Pilot 01 CI passed for the S1.3.10 implementation.
