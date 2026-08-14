@@ -1,0 +1,28 @@
+{
+  "candidate_count": 163,
+  "confirmatory_admitted_task_count": 0,
+  "dataset_version": "v0.3.1",
+  "external_dataset_row_count": 2869,
+  "external_source_match_split_counts": {
+    "test": 45,
+    "train": 30
+  },
+  "if09_minimum_registered_tests": 20,
+  "model_results_inspected": false,
+  "next_gate": "S1.3.10_EDGE_CASE_AND_EXECUTABLE_HARNESS_VALIDATION",
+  "paid_inference_permitted": false,
+  "phase_label": "S1.3.9_REGISTERED_ORACLE_CONSTRUCTION",
+  "registered_source_suite_count": 45,
+  "source_file_sha256": {
+    "test": "3ae536cb41342076691730b72424fdfb9264f233e05c81bf37b5f7e227ea1853",
+    "train": "39643214c4c5438945dede95ad1839bc3e69a89ade088c05add3c492ff3cd034"
+  },
+  "source_repository": "newfacade/LeetCodeDataset",
+  "source_revision": "182cd19fd53161efd70a1ef074fe1056b659bfa3",
+  "status": "REGISTERED_EXTERNAL_ORACLE_SOURCES_EDGE_AND_HARNESS_REVIEW_REQUIRED",
+  "task_status_counts": {
+    "BLOCKED_CONTAMINATION": 31,
+    "EXTERNAL_ORACLE_SOURCE_MISSING": 87,
+    "REGISTERED_SOURCE_SUITE_EDGE_REVIEW_REQUIRED": 45
+  }
+}
