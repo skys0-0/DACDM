@@ -1,1 +1,62 @@
-[]
+[
+  {
+    "evidence_id": "cutoff:openai:gpt-4o-2024-05-13:2023-10",
+    "model_id": "openai:gpt-4o-2024-05-13",
+    "claim_type": "training_cutoff",
+    "cutoff_precision": "month",
+    "claimed_cutoff_date": null,
+    "claimed_cutoff_month": "2023-10",
+    "source_type": "model_card",
+    "source_locator": "https://openai.com/index/gpt-4o-system-card/",
+    "source_title": "GPT-4o System Card",
+    "retrieved_at": "2026-08-14T13:25:00Z",
+    "evidence_text_or_summary": "OpenAI states that GPT-4o capabilities were pre-trained using data up to October 2023. The source supports month precision, not a specific day.",
+    "confidence": "high",
+    "status": "supported"
+  },
+  {
+    "evidence_id": "cutoff:openai:gpt-4o-mini-2024-07-18:2023-10",
+    "model_id": "openai:gpt-4o-mini-2024-07-18",
+    "claim_type": "training_cutoff",
+    "cutoff_precision": "month",
+    "claimed_cutoff_date": null,
+    "claimed_cutoff_month": "2023-10",
+    "source_type": "official",
+    "source_locator": "https://developers.openai.com/api/docs/models/gpt-4o-mini",
+    "source_title": "GPT-4o mini Model | OpenAI API",
+    "retrieved_at": "2026-08-14T13:25:00Z",
+    "evidence_text_or_summary": "OpenAI's model documentation lists an Oct 01, 2023 knowledge cutoff for GPT-4o mini. For the Pilot contamination registry, this is conservatively stored at month precision because the broader evidence language is October 2023 and no exact training-data day is inferred.",
+    "confidence": "high",
+    "status": "supported"
+  },
+  {
+    "evidence_id": "cutoff:anthropic:claude-3-5-sonnet-20240620:2024-04",
+    "model_id": "anthropic:claude-3-5-sonnet-20240620",
+    "claim_type": "training_cutoff",
+    "cutoff_precision": "month",
+    "claimed_cutoff_date": null,
+    "claimed_cutoff_month": "2024-04",
+    "source_type": "official",
+    "source_locator": "https://support.anthropic.com/en/articles/8114494-how-up-to-date-is-claude-s-training-data",
+    "source_title": "How up-to-date is Claude's training data?",
+    "retrieved_at": "2026-08-14T13:25:00Z",
+    "evidence_text_or_summary": "Anthropic states that Claude 3.5 Sonnet was trained on data up until April 2024. The source supports month precision, not a specific day.",
+    "confidence": "high",
+    "status": "supported"
+  },
+  {
+    "evidence_id": "cutoff:anthropic:claude-3-5-haiku-20241022:2024-07",
+    "model_id": "anthropic:claude-3-5-haiku-20241022",
+    "claim_type": "training_cutoff",
+    "cutoff_precision": "month",
+    "claimed_cutoff_date": null,
+    "claimed_cutoff_month": "2024-07",
+    "source_type": "official",
+    "source_locator": "https://support.anthropic.com/en/articles/8114494-how-up-to-date-is-claude-s-training-data",
+    "source_title": "How up-to-date is Claude's training data?",
+    "retrieved_at": "2026-08-14T13:25:00Z",
+    "evidence_text_or_summary": "Anthropic states that Claude 3.5 Haiku was trained on data up until July 2024. The source supports month precision, not a specific day.",
+    "confidence": "high",
+    "status": "supported"
+  }
+]
