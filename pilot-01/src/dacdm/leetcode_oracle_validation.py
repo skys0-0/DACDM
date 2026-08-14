@@ -130,14 +130,23 @@ def _load_dataset_rows(
     return index, file_hashes
 
 
+def _integer_power(base: int, exponent: int) -> int:
+    if exponent < 0:
+        raise ValueError("negative exponents are not supported in constraint bounds")
+    result = 1
+    for _ in range(exponent):
+        result *= base
+    return result
+
+
 def _parse_int_token(token: str) -> int:
     compact = re.sub(r"\s+", "", token)
     if "**" in compact:
         base, exponent = compact.split("**", 1)
-        return int(base) ** int(exponent)
+        return _integer_power(int(base), int(exponent))
     if "^" in compact:
         base, exponent = compact.split("^", 1)
-        return int(base) ** int(exponent)
+        return _integer_power(int(base), int(exponent))
     return int(compact)
 
 
