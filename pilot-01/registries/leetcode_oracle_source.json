@@ -1,0 +1,20 @@
+{
+  "source_repository": "newfacade/LeetCodeDataset",
+  "source_revision": "182cd19fd53161efd70a1ef074fe1056b659bfa3",
+  "source_license": "MIT",
+  "dataset_version": "v0.3.1",
+  "paper": "arXiv:2504.14655",
+  "train_path": "data/LeetCodeDataset-v0.3.1-train.jsonl.gz",
+  "train_blob_sha": "4da4a95a79ca9e1af721451ca559df9a1b038468",
+  "test_path": "data/LeetCodeDataset-v0.3.1-test.jsonl.gz",
+  "test_blob_sha": "056d9808e94146f17800c2656f85ec8495fbd9f5",
+  "source_role": "external_generated_test_oracle_source",
+  "freeze_date": "2026-08-14",
+  "limitations": [
+    "The source test suites are externally generated evaluation data, not LeetCode authoritative hidden tests.",
+    "DACDM may register a source suite only when at least 20 distinct deterministic input/output cases can be parsed from the frozen row.",
+    "S1.3.9 stores provenance and hashes rather than redistributing the external test payloads.",
+    "A numerically sufficient source suite does not by itself prove IF-09 ordinary/edge-case coverage; that remains a separate pre-inference gate.",
+    "No model performance results are inspected and no paid model API calls are made in S1.3.9."
+  ]
+}
