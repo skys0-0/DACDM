@@ -17,7 +17,10 @@
     "historical_snapshot_evidence_ids": [
       "snapshot:openai:gpt-4o-2024-05-13:2026-08-14"
     ],
-    "pricing_record_ids": [],
+    "pricing_record_ids": [
+      "price:openai:gpt-4o-2024-05-13:input:2024-05-13",
+      "price:openai:gpt-4o-2024-05-13:output:2024-05-13"
+    ],
     "enabled_for_pilot": false
   },
   {
@@ -38,7 +41,10 @@
     "historical_snapshot_evidence_ids": [
       "snapshot:openai:gpt-4o-mini-2024-07-18:2026-08-14"
     ],
-    "pricing_record_ids": [],
+    "pricing_record_ids": [
+      "price:openai:gpt-4o-mini-2024-07-18:input:2024-07-18",
+      "price:openai:gpt-4o-mini-2024-07-18:output:2024-07-18"
+    ],
     "enabled_for_pilot": false
   },
   {
@@ -59,7 +65,10 @@
     "historical_snapshot_evidence_ids": [
       "snapshot:anthropic:claude-3-5-sonnet-20240620:2026-08-14"
     ],
-    "pricing_record_ids": [],
+    "pricing_record_ids": [
+      "price:anthropic:claude-3-5-sonnet-20240620:input:2024-06-21",
+      "price:anthropic:claude-3-5-sonnet-20240620:output:2024-06-21"
+    ],
     "enabled_for_pilot": false
   },
   {
@@ -80,7 +89,12 @@
     "historical_snapshot_evidence_ids": [
       "snapshot:anthropic:claude-3-5-haiku-20241022:2026-08-14"
     ],
-    "pricing_record_ids": [],
+    "pricing_record_ids": [
+      "price:anthropic:claude-3-5-haiku-20241022:input:2024-11-04",
+      "price:anthropic:claude-3-5-haiku-20241022:output:2024-11-04",
+      "price:anthropic:claude-3-5-haiku-20241022:input:2024-12-03",
+      "price:anthropic:claude-3-5-haiku-20241022:output:2024-12-03"
+    ],
     "enabled_for_pilot": false
   }
 ]
