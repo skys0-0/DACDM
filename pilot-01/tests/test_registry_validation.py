@@ -74,6 +74,24 @@ def _launch(evidence_id: str = "launch-1") -> dict[str, object]:
     }
 
 
+def _cutoff(status: str = "supported") -> dict[str, object]:
+    return {
+        "evidence_id": "cutoff-1",
+        "model_id": "provider:model",
+        "claim_type": "training_cutoff",
+        "cutoff_precision": "month",
+        "claimed_cutoff_date": None,
+        "claimed_cutoff_month": "2025-04",
+        "source_type": "official",
+        "source_locator": "fixture",
+        "source_title": "fixture cutoff",
+        "retrieved_at": "2026-08-14T00:00:00Z",
+        "evidence_text_or_summary": "fixture month precision",
+        "confidence": "high",
+        "status": status,
+    }
+
+
 def test_empty_registry_snapshot_is_structurally_valid(tmp_path: Path) -> None:
     _empty(tmp_path)
     assert validate_registry_files(tmp_path) == []
@@ -105,6 +123,43 @@ def test_unknown_cutoff_is_preserved_without_guessing(tmp_path: Path) -> None:
     _write(tmp_path, "models.json", [model])
     _write(tmp_path, "model_identity_evidence.json", [_identity(), _launch()])
     assert validate_registry_files(tmp_path) == []
+
+
+def test_month_precision_cutoff_is_valid_and_reconciled(tmp_path: Path) -> None:
+    _empty(tmp_path)
+    model = _model(["identity-1", "launch-1"])
+    model["training_cutoff_status"] = "supported"
+    model["training_cutoff_evidence_ids"] = ["cutoff-1"]
+    _write(tmp_path, "models.json", [model])
+    _write(tmp_path, "model_identity_evidence.json", [_identity(), _launch()])
+    _write(tmp_path, "training_cutoff_evidence.json", [_cutoff()])
+    assert validate_registry_files(tmp_path) == []
+
+
+def test_supported_cutoff_requires_supported_evidence(tmp_path: Path) -> None:
+    _empty(tmp_path)
+    model = _model(["identity-1", "launch-1"])
+    model["training_cutoff_status"] = "supported"
+    model["training_cutoff_evidence_ids"] = ["cutoff-1"]
+    _write(tmp_path, "models.json", [model])
+    _write(tmp_path, "model_identity_evidence.json", [_identity(), _launch()])
+    _write(tmp_path, "training_cutoff_evidence.json", [_cutoff(status="unknown")])
+    errors = validate_registry_files(tmp_path)
+    assert any("supported cutoff requires supported" in error for error in errors)
+
+
+def test_month_precision_rejects_invented_day(tmp_path: Path) -> None:
+    _empty(tmp_path)
+    model = _model(["identity-1", "launch-1"])
+    model["training_cutoff_status"] = "supported"
+    model["training_cutoff_evidence_ids"] = ["cutoff-1"]
+    cutoff = _cutoff()
+    cutoff["claimed_cutoff_date"] = "2025-04-30"
+    _write(tmp_path, "models.json", [model])
+    _write(tmp_path, "model_identity_evidence.json", [_identity(), _launch()])
+    _write(tmp_path, "training_cutoff_evidence.json", [cutoff])
+    errors = validate_registry_files(tmp_path)
+    assert any("month precision requires claimed_cutoff_month only" in error for error in errors)
 
 
 def test_canonical_model_requires_supported_matching_identity(tmp_path: Path) -> None:
