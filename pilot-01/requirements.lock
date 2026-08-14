@@ -1,6 +1,7 @@
 # S0 exact environment lock. Update only through an explicit reviewed dependency change.
 pydantic==2.11.7
 PyYAML==6.0.2
+types-PyYAML==6.0.12.20250516
 pytest==8.4.1
 ruff==0.12.4
 mypy==1.17.0
