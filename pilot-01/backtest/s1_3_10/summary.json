@@ -1,0 +1,37 @@
+{
+  "docker_image_frozen_digest": "python@sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134",
+  "docker_image_requested": "python:3.12-slim-bookworm",
+  "edge_evidence_status_counts": {
+    "EDGE_CASE_EVIDENCE_INSUFFICIENT": 17,
+    "SUPPORTED_BY_EXACT_DOCUMENTED_CONSTRAINT_BOUND": 28
+  },
+  "harness_status_counts": {
+    "REFERENCE_FAIL_DETERMINISTIC_TWO_RUNS": 3,
+    "REFERENCE_PASS_DETERMINISTIC_TWO_RUNS": 41,
+    "REFERENCE_TIMEOUT_DETERMINISTIC_TWO_RUNS": 1
+  },
+  "if09_not_ready_task_count": 21,
+  "if09_ready_task_count": 24,
+  "model_results_inspected": false,
+  "next_gate": "S1.3.11_GLOBAL_TASK_UNIVERSE_AND_K4_DENOMINATOR_FREEZE",
+  "paid_inference_permitted": false,
+  "phase_label": "S1.3.10_EDGE_CASE_AND_EXECUTABLE_HARNESS_VALIDATION",
+  "registered_suite_count": 45,
+  "sandbox_policy": {
+    "capabilities": "ALL_DROPPED",
+    "cpus": 1,
+    "memory": "768m",
+    "network": "none",
+    "no_new_privileges": true,
+    "pids_limit": 64,
+    "reference_runs_per_task": 2,
+    "rootfs": "read_only",
+    "tmpfs": "/tmp noexec",
+    "user": "65534:65534"
+  },
+  "status": "TASK_LEVEL_IF09_VALIDATION_COMPLETE_GLOBAL_INFERENCE_GATE_BLOCKED",
+  "task_status_counts": {
+    "TASK_LEVEL_IF09_NOT_READY": 21,
+    "TASK_LEVEL_IF09_READY_GLOBAL_INFERENCE_GATE_BLOCKED": 24
+  }
+}
