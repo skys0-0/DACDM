@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 
 from .protocol import validate_protocol_integrity
+from .readiness import ReadinessError, prepare_readiness
 from .registries import validate_registry_files
 from .registries.benchmark_import import BenchmarkImportError, build_task_registry
 
@@ -36,6 +37,25 @@ def main() -> None:
         default=Path("registries/tasks.json"),
     )
 
+    readiness = sub.add_parser("prepare-backtest-readiness")
+    readiness.add_argument(
+        "--tasks",
+        type=Path,
+        default=Path("registries/tasks.json"),
+    )
+    readiness.add_argument("--ai-price-csv", type=Path, required=True)
+    readiness.add_argument("--epoch-hardware-csv", type=Path, required=True)
+    readiness.add_argument(
+        "--source-metadata",
+        type=Path,
+        required=True,
+    )
+    readiness.add_argument(
+        "--output-root",
+        type=Path,
+        default=Path("backtest/s1_2_5"),
+    )
+
     args = parser.parse_args()
 
     if args.command == "validate-protocol":
@@ -49,3 +69,25 @@ def main() -> None:
             print(f"ERROR: {exc}")
             raise SystemExit(1) from exc
         print(f"Task registry built: {len(records)} records -> {args.output}")
+    elif args.command == "prepare-backtest-readiness":
+        try:
+            metadata = json.loads(args.source_metadata.read_text(encoding="utf-8"))
+            if not isinstance(metadata, dict):
+                raise ReadinessError("source metadata must be a JSON object")
+            manifest = prepare_readiness(
+                args.tasks,
+                args.ai_price_csv,
+                args.epoch_hardware_csv,
+                args.output_root,
+                metadata,
+            )
+        except (ReadinessError, OSError, ValueError, json.JSONDecodeError) as exc:
+            print(f"ERROR: {exc}")
+            raise SystemExit(1) from exc
+        print(
+            "S1.2.5 readiness prepared: "
+            f"{manifest['task_count']} tasks, "
+            f"{manifest['task_year_cells']} task-year cells, "
+            f"{manifest['price_rows']} price rows, "
+            f"{manifest['hardware_months']} hardware months"
+        )
