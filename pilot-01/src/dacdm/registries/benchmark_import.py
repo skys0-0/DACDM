@@ -81,6 +81,15 @@ def _mbpp_payload(row: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _integer_task_id(value: object, benchmark: str) -> int:
+    if isinstance(value, bool) or not isinstance(value, (int, str)):
+        raise BenchmarkImportError(f"{benchmark} task id must be an integer-compatible value")
+    try:
+        return int(value)
+    except ValueError as exc:
+        raise BenchmarkImportError(f"{benchmark} task id is not an integer: {value!r}") from exc
+
+
 def _canonical_task_id(benchmark: str, source_task_id: object) -> str:
     if benchmark == "humaneval":
         value = str(source_task_id)
@@ -88,7 +97,7 @@ def _canonical_task_id(benchmark: str, source_task_id: object) -> str:
             value = value.split("/", 1)[1]
         return f"humaneval:{value}"
     if benchmark == "mbpp":
-        return f"mbpp:{int(source_task_id)}"
+        return f"mbpp:{_integer_task_id(source_task_id, benchmark)}"
     raise BenchmarkImportError(f"unsupported benchmark: {benchmark}")
 
 
@@ -134,7 +143,7 @@ def import_benchmark_source(source: dict[str, Any], source_root: Path) -> list[d
             split = "test"
         elif benchmark == "mbpp":
             payload = _mbpp_payload(row)
-            task_number = int(row["task_id"])
+            task_number = _integer_task_id(row["task_id"], benchmark)
             if 1 <= task_number <= 10:
                 split = "prompting"
             elif 11 <= task_number <= 510:
