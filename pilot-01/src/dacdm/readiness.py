@@ -137,8 +137,9 @@ def _normalise_header(value: str) -> str:
 def _find_header(fields: Iterable[str], candidates: tuple[str, ...]) -> str:
     normalised = {_normalise_header(field): field for field in fields}
     for candidate in candidates:
-        if candidate in normalised:
-            return normalised[candidate]
+        normalised_candidate = _normalise_header(candidate)
+        if normalised_candidate in normalised:
+            return normalised[normalised_candidate]
     raise ReadinessError(f"hardware CSV missing required column; tried {candidates}")
 
 
@@ -172,18 +173,28 @@ def _parse_float(value: str) -> float | None:
         return None
 
 
+def _resolve_epoch_performance_column(fields: list[str]) -> str:
+    preferred = (
+        "Tensor-FP16/BF16 performance (FLOP/s)",
+        "ML OP/s",
+        "Max performance",
+        "Machine learning performance (TOP/s)",
+    )
+    try:
+        return _find_header(fields, preferred)
+    except ReadinessError:
+        return _find_header_terms(
+            fields,
+            ("performance",),
+            ("tensor", "bf16", "machine learning", "ml", "top/s", "tops"),
+        )
+
+
 def hardware_efficiency_preview(path: Path) -> list[dict[str, Any]]:
     fields, rows = _read_csv(path)
     release_col = _find_header_terms(fields, ("release", "date"))
-    perf_col = _find_header_terms(
-        fields,
-        ("performance",),
-        ("machine learning", "ml", "top/s", "tops"),
-    )
-    try:
-        price_col = _find_header_terms(fields, ("release", "price", "2024"))
-    except ReadinessError:
-        price_col = _find_header_terms(fields, ("release", "price"))
+    perf_col = _resolve_epoch_performance_column(fields)
+    price_col = _find_header(fields, ("Release price (USD)",))
 
     type_col: str | None = None
     try:
@@ -230,10 +241,11 @@ def hardware_efficiency_preview(path: Path) -> list[dict[str, Any]]:
     return [
         {
             "month": anchor.isoformat()[:7],
-            "frontier_ml_performance_per_2024_usd": ratio,
+            "frontier_performance_per_nominal_release_usd": ratio,
             "index_2024_01": ratio / baseline,
             "performance_column": perf_col,
             "price_column": price_col,
+            "price_basis": "NOMINAL_RELEASE_USD_PREVIEW_NOT_FINAL_IF_07_DEFLATOR",
             "calibration_label": CALIBRATION_LABEL,
         }
         for anchor, ratio in monthly
@@ -281,6 +293,7 @@ def prepare_readiness(
         "task_year_cells": len(matrix),
         "price_rows": len(prices),
         "hardware_months": len(hardware),
+        "hardware_preview_price_basis": "NOMINAL_RELEASE_USD_PREVIEW_NOT_FINAL_IF_07_DEFLATOR",
         "inputs": {
             "tasks_registry_sha256": sha256_file(tasks_path),
             "ai_price_index_sha256": sha256_file(ai_price_csv),
@@ -304,11 +317,11 @@ S1.3 needs model public launch date plus an explicit historical snapshot availab
 
 ## External snapshot provenance gaps
 
-External datasets require immutable revision/hash metadata. Hugging Face revision SHA can be pinned directly. Epoch's live CSV is mutable, so DACDM must freeze exact bytes with retrieval time and SHA-256.
+External datasets require immutable revision/hash metadata. Hugging Face revision SHA can be pinned directly. Epoch's live CSV is mutable, so DACDM freezes exact bytes with retrieval time and SHA-256.
 
 ## Hardware registry gaps
 
-The final hardware index needs source snapshot identity, formula version, normalization month, interpolation method, and supported date bounds. This preview is exploratory only and does not replace IF-07.
+The frozen Epoch live CSV exposes nominal `Release price (USD)` but does not expose the inflation-adjusted release-price series used in Epoch's published price-performance trend. Therefore the S1.2.5 hardware series is intentionally only a nominal-price readiness preview. The final IF-07 hardware deflator must separately encode its price-deflation method, source series, formula version, normalization month, interpolation method, and supported date bounds. S1.2.5 must not silently treat nominal release USD as constant 2024 USD.
 
 ## Confirmatory boundary
 
