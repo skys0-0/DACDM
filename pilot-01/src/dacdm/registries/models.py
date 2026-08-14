@@ -32,11 +32,27 @@ class ModelRegistryRecord(StrictRecord):
     model_version_or_snapshot: str = Field(min_length=1)
     access_path: str = Field(min_length=1)
     public_launch_date: date | None = Field(default=None, strict=False)
+    identity_evidence_ids: list[str]
     training_cutoff_status: Literal["supported", "conflicting", "unknown"]
     training_cutoff_evidence_ids: list[str]
     historical_snapshot_evidence_ids: list[str]
     pricing_record_ids: list[str]
     enabled_for_pilot: bool
+
+
+class ModelIdentityEvidenceRecord(StrictRecord):
+    evidence_id: str = Field(min_length=1)
+    model_id: str = Field(min_length=1)
+    claim_type: Literal["model_identity", "public_launch_date"]
+    claimed_provider_model_name: str = Field(min_length=1)
+    claimed_public_launch_date: date | None = Field(default=None, strict=False)
+    source_type: Literal["official", "archived_official"]
+    source_locator: str = Field(min_length=1)
+    source_title: str = Field(min_length=1)
+    retrieved_at: datetime = Field(strict=False)
+    evidence_text_or_summary: str = Field(min_length=1)
+    confidence: Literal["high", "medium", "low", "unknown"]
+    status: Literal["supported", "conflicting", "unknown"]
 
 
 class TrainingCutoffEvidenceRecord(StrictRecord):
