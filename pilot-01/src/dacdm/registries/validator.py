@@ -8,6 +8,7 @@ from pydantic import BaseModel, ValidationError
 
 from .models import (
     HistoricalSnapshotEvidenceRecord,
+    ModelIdentityEvidenceRecord,
     ModelRegistryRecord,
     PricingEvidenceRecord,
     TaskRegistryRecord,
@@ -50,6 +51,9 @@ def _duplicates(values: list[str]) -> set[str]:
 def validate_registry_files(root: Path = REGISTRY_ROOT) -> list[str]:
     tasks, errors = _load(root / "tasks.json", TaskRegistryRecord)
     models, model_errors = _load(root / "models.json", ModelRegistryRecord)
+    identities, identity_errors = _load(
+        root / "model_identity_evidence.json", ModelIdentityEvidenceRecord
+    )
     cutoffs, cutoff_errors = _load(
         root / "training_cutoff_evidence.json", TrainingCutoffEvidenceRecord
     )
@@ -57,11 +61,14 @@ def validate_registry_files(root: Path = REGISTRY_ROOT) -> list[str]:
         root / "historical_snapshot_evidence.json", HistoricalSnapshotEvidenceRecord
     )
     prices, price_errors = _load(root / "pricing.json", PricingEvidenceRecord)
-    errors.extend(model_errors + cutoff_errors + snapshot_errors + price_errors)
+    errors.extend(
+        model_errors + identity_errors + cutoff_errors + snapshot_errors + price_errors
+    )
 
     for label, values in (
         ("task_id", [record.task_id for record in tasks]),
         ("model_id", [record.model_id for record in models]),
+        ("model_identity_evidence_id", [record.evidence_id for record in identities]),
         ("training_cutoff_evidence_id", [record.evidence_id for record in cutoffs]),
         ("historical_snapshot_evidence_id", [record.evidence_id for record in snapshots]),
         ("pricing_record_id", [record.pricing_record_id for record in prices]),
@@ -70,11 +77,17 @@ def validate_registry_files(root: Path = REGISTRY_ROOT) -> list[str]:
             errors.append(f"duplicate {label}: {duplicate}")
 
     model_ids = {record.model_id for record in models}
+    identity_ids = {record.evidence_id for record in identities}
     cutoff_ids = {record.evidence_id for record in cutoffs}
     snapshot_ids = {record.evidence_id for record in snapshots}
     pricing_ids = {record.pricing_record_id for record in prices}
 
     for model in models:
+        for evidence_id in model.identity_evidence_ids:
+            if evidence_id not in identity_ids:
+                errors.append(
+                    f"model {model.model_id}: unresolved model identity evidence {evidence_id}"
+                )
         for evidence_id in model.training_cutoff_evidence_ids:
             if evidence_id not in cutoff_ids:
                 errors.append(
@@ -93,6 +106,17 @@ def validate_registry_files(root: Path = REGISTRY_ROOT) -> list[str]:
         if model.training_cutoff_status == "unknown" and model.training_cutoff_evidence_ids:
             errors.append(
                 f"model {model.model_id}: unknown cutoff must not reference affirmative evidence"
+            )
+        if model.public_launch_date is not None and not model.identity_evidence_ids:
+            errors.append(
+                f"model {model.model_id}: public launch date requires identity evidence"
+            )
+
+    for identity_evidence in identities:
+        if identity_evidence.model_id not in model_ids:
+            errors.append(
+                "model identity evidence "
+                f"{identity_evidence.evidence_id}: unknown model {identity_evidence.model_id}"
             )
 
     for cutoff_evidence in cutoffs:
