@@ -1,0 +1,106 @@
+name: Pilot 01 S1.3.13 Freeze Termination Package
+
+on:
+  push:
+    paths:
+      - ".github/workflows/pilot01-s1-3-13-freeze-termination-package.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  freeze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout DACDM branch
+        uses: actions/checkout@v4
+        with:
+          ref: s1-task-evidence-registries
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pilot-01/requirements.lock
+
+      - name: Install locked dependencies and package
+        working-directory: pilot-01
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.lock
+          pip install --no-deps -e .
+
+      - name: Integrity before S1.3.13 freeze
+        working-directory: pilot-01
+        run: |
+          dacdm validate-protocol
+          dacdm validate-registries
+          ruff check src tests
+          mypy src
+          pytest
+
+      - name: Build Pilot 01 pre-inference termination package
+        working-directory: pilot-01
+        run: python scripts/freeze_s1_3_13.py
+
+      - name: Assert termination package scientific boundaries
+        working-directory: pilot-01
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path("results/pilot01-preinference-termination-v1.0")
+          status = json.loads((root / "PACKAGE_STATUS.json").read_text())
+          assessment = json.loads((root / "K4_FINAL_ASSESSMENT.json").read_text())
+          manifest = json.loads((root / "REPRODUCIBILITY_MANIFEST.json").read_text())
+          zenodo = json.loads((root / "ZENODO_METADATA_DRAFT.json").read_text())
+          report = (root / "DACDM_Pilot_01_PreInference_Termination_Report_v1.0.md").read_text()
+
+          assert status["formal_k4_status"] == "K4_TRIGGERED"
+          assert status["termination_required_by_preregistered_k4"] is True
+          assert status["model_results_inspected"] is False
+          assert status["paid_inference_permitted"] is False
+          assert status["zenodo_published"] is False
+
+          assert assessment["denominator_count"] == 1301
+          assert assessment["excluded_count"] == 1165
+          assert assessment["eligible_count"] == 132
+          assert assessment["indeterminate_count"] == 4
+          assert assessment["strict_known_exclusion_fraction"] > assessment["k4_threshold"]
+          assert assessment["k1_evaluated"] is False
+          assert assessment["k2_evaluated"] is False
+          assert assessment["k3_evaluated"] is False
+          assert assessment["h2_model_performance_tested"] is False
+          assert assessment["h4_model_performance_tested"] is False
+
+          guards = manifest["scientific_guards"]
+          assert guards["protocol_amended"] is False
+          assert guards["k4_threshold_changed"] is False
+          assert guards["model_results_inspected"] is False
+          assert guards["paid_model_inference_run"] is False
+          assert guards["zenodo_publication_performed"] is False
+
+          assert zenodo["metadata_draft_not_api_submission"] is True
+          assert "protocol-defined falsification / pre-inference termination" in report
+          assert "not an empirical model-performance test of H2 or H4" in report
+          assert "Data Dictionary" in report
+          PY
+
+      - name: Freeze generated S1.3.13 package
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add pilot-01/results/pilot01-preinference-termination-v1.0
+          if git diff --cached --quiet; then
+            echo "No S1.3.13 package changes to commit"
+            exit 0
+          fi
+          git commit -m "Freeze S1.3.13 Pilot 01 pre-inference termination package"
+          git push origin HEAD:s1-task-evidence-registries
+
+# This workflow packages an already-frozen pre-inference K4 result.
+# It does not run paid model inference, inspect model performance, modify the frozen protocol,
+# change the K4 threshold, or publish to Zenodo.
