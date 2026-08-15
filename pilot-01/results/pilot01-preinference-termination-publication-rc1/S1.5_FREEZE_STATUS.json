@@ -1,0 +1,13 @@
+{
+  "final_pdf_docx_rendered": false,
+  "model_results_inspected": false,
+  "next_gate": "S1.6_ZENODO_DRAFT_DOI_RESERVATION_AND_FINAL_PDF_DOCX_RENDER",
+  "paid_inference_performed": false,
+  "phase_label": "S1.5_PUBLICATION_RELEASE_CANDIDATE_AND_ZENODO_METADATA_FREEZE",
+  "publication_manifest_created": true,
+  "publication_payload_freeze_commit": "996dbb08b87f3c2f6d41b381bcaba9e741e5b0b3",
+  "reserved_doi": null,
+  "s1_4_major_revisions_addressed": true,
+  "status": "RC1_FROZEN_READY_FOR_ZENODO_DRAFT_DOI_RESERVATION",
+  "zenodo_published": false
+}
