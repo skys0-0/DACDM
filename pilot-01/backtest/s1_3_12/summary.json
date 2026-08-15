@@ -1,0 +1,19 @@
+{
+  "conservative_exclusion_fraction": 0.8985395849346657,
+  "denominator_count": 1301,
+  "eligible_count": 132,
+  "excluded_count": 1165,
+  "formal_k4_status": "K4_TRIGGERED",
+  "formal_k4_triggered": true,
+  "indeterminate_count": 4,
+  "k4_threshold": 0.3,
+  "model_results_inspected": false,
+  "model_set_id": "PILOT01_TEST_WINDOW_ANCHOR_SET_V1",
+  "next_gate": "S1.3.13_PILOT_01_PREINFERENCE_TERMINATION_PACKAGE",
+  "paid_inference_permitted": false,
+  "phase_label": "S1.3.12_TEST_WINDOW_MODEL_SET_FREEZE_AND_FINAL_PREINFERENCE_K4_EVALUATION",
+  "selected_model_count": 4,
+  "status": "PILOT01_PREINFERENCE_TERMINATION_REQUIRED_K4_TRIGGERED",
+  "strict_known_exclusion_fraction": 0.8954650269023828,
+  "termination_required_by_preregistered_k4": true
+}
