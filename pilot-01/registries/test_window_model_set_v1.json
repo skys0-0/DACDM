@@ -1,0 +1,21 @@
+{
+  "phase_label": "S1.3.12_TEST_WINDOW_MODEL_SET_FREEZE_AND_FINAL_PREINFERENCE_K4_EVALUATION",
+  "freeze_date": "2026-08-15",
+  "model_set_id": "PILOT01_TEST_WINDOW_ANCHOR_SET_V1",
+  "selection_rule": "ALL_CANONICAL_MODELS_PRESENT_BEFORE_S1_3_12",
+  "selection_rationale": "Freeze every canonical model already present in the validated model registry before S1.3.12. This avoids selecting models according to the K4 outcome. The set is a minimum anchor set for the pre-inference K4 decision; if K4 were not triggered, later confirmatory execution would still require complete tier/availability gates before paid inference.",
+  "model_registry_blob_sha1_before_freeze": "4d2ccff7cc7e923a3f3b09dbff92fe110afc8e48",
+  "selected_model_ids": [
+    "anthropic:claude-3-5-haiku-20241022",
+    "anthropic:claude-3-5-sonnet-20240620",
+    "openai:gpt-4o-2024-05-13",
+    "openai:gpt-4o-mini-2024-07-18"
+  ],
+  "expected_model_count": 4,
+  "global_contamination_rule": "TASK_EXCLUDED_IF_RELEASE_PRECEDES_CUTOFF_OF_ANY_SELECTED_TEST_WINDOW_MODEL",
+  "model_set_expansion_rule": "ADDING_MODELS_CANNOT_REVERSE_AN_ALREADY_EXCLUDED_TASK_UNDER_ANY_MODEL_SEMANTICS",
+  "indeterminate_k4_rule": "A_STRICT_KNOWN_EXCLUSION_FRACTION_ABOVE_0_30_TRIGGERS_K4_WITHOUT_COUNTING_INDETERMINATE_TASKS_AS_EXCLUDED",
+  "k4_threshold": 0.3,
+  "model_results_inspected": false,
+  "paid_inference_permitted": false
+}
