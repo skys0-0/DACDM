@@ -1,0 +1,17 @@
+{
+  "anchor_model_set_changed": false,
+  "candidate": "pilot01-preinference-termination-publication-rc1",
+  "denominator_membership_changed": false,
+  "k4_arithmetic_changed": false,
+  "k4_threshold_changed": false,
+  "model_results_inspected": false,
+  "next_gate": "S1.6_ZENODO_DRAFT_DOI_RESERVATION_AND_FINAL_PDF_DOCX_RENDER",
+  "paid_inference_performed": false,
+  "pdf_docx_final_rendered": false,
+  "phase_label": "S1.5_PUBLICATION_RELEASE_CANDIDATE_AND_ZENODO_METADATA_FREEZE",
+  "reserved_doi": null,
+  "s1_4_major_revisions_addressed": true,
+  "scientific_result_changed": false,
+  "status": "RC1_CREATED_AWAITING_MANIFEST_AND_CI_FREEZE",
+  "zenodo_published": false
+}
