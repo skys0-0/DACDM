@@ -1,0 +1,34 @@
+{
+  "creators": [
+    {
+      "name": "SAN, CHAU HUNG"
+    }
+  ],
+  "description": "Preregistered methodological result from DACDM Pilot 01. The pilot terminated before confirmatory model inference because the frozen K4 contamination criterion was triggered: 1,165 of 1,301 registered tasks were known contamination exclusions (89.55%), above the preregistered 30% threshold. This is a protocol-defined falsification/termination of Pilot 01, not a model-performance refutation of H2/H4.",
+  "keywords": [
+    "DACDM",
+    "AI compute demand",
+    "complexity migration",
+    "benchmark contamination",
+    "preregistration",
+    "negative result",
+    "code generation"
+  ],
+  "license_recommendation": "CC BY 4.0",
+  "metadata_draft_not_api_submission": true,
+  "publication_date": "2026-08-15",
+  "publication_note": "Create a separate Zenodo record after human review; do not overwrite the existing DACDM conceptual-framework record with this methodological result.",
+  "related_research_objects": [
+    {
+      "description": "Existing DACDM v1.0 working-paper package / version DOI",
+      "identifier": "10.5281/zenodo.21930795"
+    },
+    {
+      "description": "Existing DACDM concept DOI",
+      "identifier": "10.5281/zenodo.21930794"
+    }
+  ],
+  "resource_type_recommendation": "publication / report",
+  "title": "DACDM Pilot 01: Pre-Inference Termination under a Preregistered Contamination Criterion",
+  "version": "1.0"
+}

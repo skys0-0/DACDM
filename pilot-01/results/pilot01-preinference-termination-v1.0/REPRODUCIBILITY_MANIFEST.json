@@ -1,0 +1,66 @@
+{
+  "generated_from_commit": "202880b3f6570270ab0a1f3257f680e20e9952a0",
+  "input_files": [
+    {
+      "path": "../protocols/DACDM_Pilot_01_Protocol_v1.0.md",
+      "sha256": "da42b52f4169081d5b89e81986fb6dfe69d34ebfebb63a3bf418ff73c6b55dde",
+      "size_bytes": 11360
+    },
+    {
+      "path": "DACDM_Pilot_01_Implementation_Freeze_v1.0.md",
+      "sha256": "188ad1b5b3b5de479d90c1b3ebb5b54d92a842c8104c0bef2e8cdc9a216f7afd",
+      "size_bytes": 17568
+    },
+    {
+      "path": "DACDM_Pilot_01_SDD_v1.0.md",
+      "sha256": "ed160fd5bc0264979cf13a017466f7d213810a6ee704ce843b6449c99716e980",
+      "size_bytes": 31167
+    },
+    {
+      "path": "registries/k4_denominator_interpretation.json",
+      "sha256": "acd87f36af77623ce3c89cd974520bbbe25d19695677c29e4879c740ecf2467d",
+      "size_bytes": 4399
+    },
+    {
+      "path": "registries/test_window_model_set_v1.json",
+      "sha256": "09194a70a12822d3da261f7089183eafc47649c4cc920a1e234eebe1eeb04022",
+      "size_bytes": 1384
+    },
+    {
+      "path": "backtest/s1_3_10/summary.json",
+      "sha256": "b1c651b0dcef19d2983015c1ab0c9da2c67fcba49444246b775aeae5381caf8d",
+      "size_bytes": 1312
+    },
+    {
+      "path": "backtest/s1_3_11/summary.json",
+      "sha256": "8afb97cdb33a9c54b8079aa26df54c83b547863ad9e6f02aa682a71918cb628c",
+      "size_bytes": 1038
+    },
+    {
+      "path": "backtest/s1_3_12/summary.json",
+      "sha256": "bdb762ce434aad9a61cf60c0e41043e6af03058fa670362e0828ee6eecc9a739",
+      "size_bytes": 758
+    },
+    {
+      "path": "backtest/s1_3_12/model_set_evaluation.json",
+      "sha256": "bec020f5e3df0e12cddb146d07b15d6a693cfdb899fc776c9ad26660cfc3e6d7",
+      "size_bytes": 811
+    },
+    {
+      "path": "backtest/s1_3_12/k4_final_evaluation.json",
+      "sha256": "98d91421e70ba0f5998acbf60ee358edcd4a435b01553765a41129e3666ebd26",
+      "size_bytes": 222952
+    }
+  ],
+  "package_version": "1.0",
+  "phase_label": "S1.3.13_PILOT_01_PREINFERENCE_TERMINATION_PACKAGE",
+  "protocol_git_blob_sha1": "389901146b70684b6c952a8606a5063b972645d4",
+  "s1_3_12_freeze_commit": "34b201ad1e00dec234d27771ce535545d99712a3",
+  "scientific_guards": {
+    "k4_threshold_changed": false,
+    "model_results_inspected": false,
+    "paid_model_inference_run": false,
+    "protocol_amended": false,
+    "zenodo_publication_performed": false
+  }
+}

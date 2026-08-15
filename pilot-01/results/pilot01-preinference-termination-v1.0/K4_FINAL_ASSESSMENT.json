@@ -1,0 +1,33 @@
+{
+  "closure_date": "2026-08-15",
+  "conservative_fraction_counting_indeterminate_as_excluded": 0.8985395849346657,
+  "denominator_count": 1301,
+  "denominator_semantics": "PRE_CONTAMINATION_REGISTERED_TASK_UNIVERSE",
+  "eligible_count": 132,
+  "excluded_count": 1165,
+  "formal_k4_status": "K4_TRIGGERED",
+  "h2_model_performance_tested": false,
+  "h4_model_performance_tested": false,
+  "indeterminate_count": 4,
+  "indeterminate_tasks_needed_to_trigger": false,
+  "interpretive_boundary": "Protocol-defined Pilot 01 falsification/termination via K4; not an empirical model-performance refutation of H2 or H4.",
+  "k1_evaluated": false,
+  "k2_evaluated": false,
+  "k3_evaluated": false,
+  "k4_threshold": 0.3,
+  "model_results_inspected": false,
+  "model_set_id": "PILOT01_TEST_WINDOW_ANCHOR_SET_V1",
+  "operational_outcome": "PREINFERENCE_TERMINATION_REQUIRED",
+  "package_version": "1.0",
+  "paid_inference_permitted": false,
+  "phase_label": "S1.3.13_PILOT_01_PREINFERENCE_TERMINATION_PACKAGE",
+  "pilot": "DACDM Pilot 01 — Code Generation Complexity Compression",
+  "protocol_defined_outcome": "FALSIFICATION_CONDITION_TRIGGERED_K4",
+  "selected_model_ids": [
+    "anthropic:claude-3-5-haiku-20241022",
+    "anthropic:claude-3-5-sonnet-20240620",
+    "openai:gpt-4o-2024-05-13",
+    "openai:gpt-4o-mini-2024-07-18"
+  ],
+  "strict_known_exclusion_fraction": 0.8954650269023828
+}
