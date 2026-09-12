@@ -1,10 +1,10 @@
-from __future__ import annotations
-
 """Build the DOI-bearing S1.6 publication package from the frozen RC1 narrative.
 
 This is deliberately a one-way publication renderer: it reads RC1 and S1.3.13,
 writes only the separate S1.6 directory, and rejects altered scientific invariants.
 """
+
+from __future__ import annotations
 
 import argparse
 import html
@@ -81,7 +81,6 @@ def _write_docx(markdown_path: Path, docx_path: Path, doi: str) -> None:
     try:
         from docx import Document
         from docx.enum.text import WD_ALIGN_PARAGRAPH
-        from docx.oxml import OxmlElement
         from docx.oxml.ns import qn
         from docx.shared import Inches, Pt, RGBColor
     except ImportError as exc:
