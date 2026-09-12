@@ -1,0 +1,44 @@
+{
+  "creators": [
+    {
+      "family_name": "SAN",
+      "given_names": "CHAU HUNG",
+      "name_type": "personal"
+    }
+  ],
+  "draft_form_publication_date_finalization_required": true,
+  "draft_form_publication_date_staging_value": "2026-09-12",
+  "license": "CC-BY-4.0",
+  "phase_label": "S1.6_ZENODO_DRAFT_DOI_RESERVATION_AND_FINAL_PDF_DOCX_RENDER",
+  "publication_date": null,
+  "publication_date_rule": "SET_TO_ACTUAL_DATE_RECORD_IS_FIRST_MADE_PUBLIC",
+  "record_scope": "SEPARATE_PILOT01_METHODOLOGICAL_TERMINATION_RECORD",
+  "related_identifiers": [
+    {
+      "identifier": "10.5281/zenodo.21930795",
+      "relation": "references"
+    },
+    {
+      "identifier": "10.5281/zenodo.21930794",
+      "relation": "references"
+    }
+  ],
+  "reserved_doi": "10.5281/zenodo.22727028",
+  "resource_type": {
+    "subtype": "report",
+    "type": "publication"
+  },
+  "scientific_guards": {
+    "anchor_model_evidence_changed": false,
+    "contamination_status_changed": false,
+    "denominator_membership_changed": false,
+    "k4_arithmetic_changed": false,
+    "k4_threshold_changed": false,
+    "model_results_inspected": false,
+    "paid_model_inference_run": false,
+    "zenodo_publication_performed": false
+  },
+  "title": "DACDM Pilot 01: Pre-Inference Termination under the Preregistered K4 Contamination Criterion",
+  "zenodo_draft_status": "UNPUBLISHED_DRAFT",
+  "zenodo_draft_url": "https://zenodo.org/uploads/22727028"
+}

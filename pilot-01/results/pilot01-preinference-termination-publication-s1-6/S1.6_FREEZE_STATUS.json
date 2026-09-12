@@ -1,0 +1,16 @@
+{
+  "anchor_model_evidence_changed": false,
+  "contamination_status_changed": false,
+  "denominator_membership_changed": false,
+  "final_pdf_docx_rendered": true,
+  "k4_arithmetic_changed": false,
+  "k4_threshold_changed": false,
+  "model_results_inspected": false,
+  "paid_inference_performed": false,
+  "phase_label": "S1.6_ZENODO_DRAFT_DOI_RESERVATION_AND_FINAL_PDF_DOCX_RENDER",
+  "reserved_doi": "10.5281/zenodo.22727028",
+  "scientific_result_changed": false,
+  "status": "S1_6_DRAFT_DOI_RESERVED_FINAL_PACKAGE_RENDERED",
+  "zenodo_draft_url": "https://zenodo.org/uploads/22727028",
+  "zenodo_published": false
+}
