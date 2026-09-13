@@ -1,0 +1,25 @@
+{
+  "best_case_fraction_if_all_leetcode_candidates_were_clean": 0.8747117601844735,
+  "component_counts": {
+    "humaneval": 164,
+    "leetcode_weekly_hard": 163,
+    "mbpp": 974
+  },
+  "current_evidence_eligible_count": 132,
+  "current_evidence_excluded_count": 1165,
+  "current_evidence_excluded_fraction": 0.8954650269023828,
+  "current_evidence_indeterminate_count": 4,
+  "current_evidence_model_count": 4,
+  "current_evidence_would_trigger_k4": true,
+  "denominator_count": 1301,
+  "denominator_semantics": "PRE_CONTAMINATION_REGISTERED_TASK_UNIVERSE",
+  "enabled_test_window_model_count": 0,
+  "formal_k4_status": "K4_UNRESOLVED_MODEL_SET",
+  "interpretation_id": "K4_DENOMINATOR_INTERPRETATION_V1",
+  "k4_threshold": 0.3,
+  "model_results_inspected": false,
+  "next_gate": "S1.3.12_TEST_WINDOW_MODEL_SET_FREEZE_AND_FINAL_PREINFERENCE_K4_EVALUATION",
+  "paid_inference_permitted": false,
+  "phase_label": "S1.3.11_GLOBAL_TASK_UNIVERSE_AND_K4_DENOMINATOR_FREEZE",
+  "status": "K4_DENOMINATOR_FROZEN_FORMAL_K4_UNRESOLVED_MODEL_SET"
+}

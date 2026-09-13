@@ -1,0 +1,16 @@
+{
+  "model_results_inspected": false,
+  "model_set_expansion_monotonicity": "Under the frozen global ANY-model contamination rule, adding another model can only preserve or increase the set of excluded tasks; it cannot make a task already excluded by a selected model eligible.",
+  "model_set_id": "PILOT01_TEST_WINDOW_ANCHOR_SET_V1",
+  "paid_inference_permitted": false,
+  "phase_label": "S1.3.12_TEST_WINDOW_MODEL_SET_FREEZE_AND_FINAL_PREINFERENCE_K4_EVALUATION",
+  "selected_model_count": 4,
+  "selected_model_ids": [
+    "anthropic:claude-3-5-haiku-20241022",
+    "anthropic:claude-3-5-sonnet-20240620",
+    "openai:gpt-4o-2024-05-13",
+    "openai:gpt-4o-mini-2024-07-18"
+  ],
+  "selection_matches_all_preexisting_canonical_models": true,
+  "selection_rule": "ALL_CANONICAL_MODELS_PRESENT_BEFORE_S1_3_12"
+}

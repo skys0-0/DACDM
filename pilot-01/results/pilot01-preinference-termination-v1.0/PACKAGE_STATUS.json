@@ -1,0 +1,10 @@
+{
+  "formal_k4_status": "K4_TRIGGERED",
+  "model_results_inspected": false,
+  "next_gate": "HUMAN_REVIEW_THEN_INDEPENDENT_ZENODO_PUBLICATION_OR_PILOT02_DESIGN",
+  "paid_inference_permitted": false,
+  "phase_label": "S1.3.13_PILOT_01_PREINFERENCE_TERMINATION_PACKAGE",
+  "status": "PILOT01_TERMINATION_PACKAGE_FROZEN_READY_FOR_HUMAN_PUBLICATION_REVIEW",
+  "termination_required_by_preregistered_k4": true,
+  "zenodo_published": false
+}

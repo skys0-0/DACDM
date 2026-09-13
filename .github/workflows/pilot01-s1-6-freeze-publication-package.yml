@@ -1,0 +1,47 @@
+name: Pilot 01 S1.6 Freeze DOI Publication Package
+
+on:
+  push:
+    branches:
+      - s1-task-evidence-registries
+    paths:
+      - ".github/workflows/pilot01-s1-6-freeze-publication-package.yml"
+      - "pilot-01/scripts/build_s1_6_publication_package.py"
+      - "pilot-01/scripts/verify_s1_6_publication_package.py"
+      - "pilot-01/docs/S1.6-ZENODO-DRAFT-DOI-RESERVATION-AND-FINAL-RENDER.md"
+      - "pilot-01/results/pilot01-preinference-termination-publication-s1-6/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-publication-package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: pilot-01
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pilot-01/requirements.lock
+      - name: Install locked Pilot dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.lock
+          pip install --no-deps -e .
+      - name: Integrity and scientific boundary checks
+        run: |
+          dacdm validate-protocol
+          dacdm validate-registries
+          ruff check src tests scripts/build_s1_6_publication_package.py scripts/verify_s1_6_publication_package.py
+          mypy src
+          pytest
+      - name: Verify final S1.6 package
+        run: python scripts/verify_s1_6_publication_package.py
+
+# This workflow never publishes Zenodo, invokes a model API, or changes the frozen S1.3.13 evidence package.

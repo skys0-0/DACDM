@@ -1,0 +1,17 @@
+{
+  "above_30pct_even_under_all_weekly_best_case": true,
+  "all_weekly_best_case_fraction_if_every_weekly_problem_were_clean": 0.6765755053507729,
+  "all_weekly_problem_count_in_window": 544,
+  "best_case_fraction_if_every_hard_candidate_were_clean": 0.8747117601844735,
+  "current_excluded_fraction_under_static_source_denominator": 0.8954650269023828,
+  "interpretation_note": "These calculations test a denominator interpretation that includes the frozen HumanEval/MBPP task sources plus LeetCode metadata candidates. They do not formally evaluate K4 because the protocol does not resolve the denominator ambiguity and LeetCode tasks are not confirmatory-admitted until IF-09 oracles are available. The all-weekly calculation is an intentionally generous upper bound, not a protocol dataset definition.",
+  "leetcode_current_global_contamination_eligible": 132,
+  "leetcode_current_global_contamination_excluded": 27,
+  "leetcode_current_global_contamination_indeterminate": 4,
+  "leetcode_weekly_hard_metadata_candidate_count": 163,
+  "phase_label": "S1.3.7_METADATA_CANDIDATE_UNIVERSE_NOT_CONFIRMATORY_ADMISSION",
+  "static_humaneval_mbpp_task_count": 1138,
+  "static_source_denominator_including_hard_candidates": 1301,
+  "status": "INTERPRETATION_SENSITIVITY_ONLY_NOT_FORMAL_K4_DECISION",
+  "threshold": 0.3
+}

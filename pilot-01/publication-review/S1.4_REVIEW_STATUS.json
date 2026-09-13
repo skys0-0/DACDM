@@ -1,0 +1,24 @@
+{
+  "phase_label": "S1.4_ADVERSARIAL_PUBLICATION_REVIEW",
+  "review_date": "2026-08-15",
+  "reviewed_package_commit": "21380545bf0f2b6878fee164d18603ee96f99b11",
+  "reviewed_package_path": "pilot-01/results/pilot01-preinference-termination-v1.0",
+  "verdict": "MAJOR_REVISIONS_REQUIRED_BEFORE_ZENODO",
+  "release_gate": "BLOCKED_MAJOR_REVISIONS_REQUIRED",
+  "scientific_result_changed": false,
+  "k4_threshold_changed": false,
+  "k4_arithmetic_changed": false,
+  "model_results_inspected": false,
+  "paid_inference_performed": false,
+  "zenodo_published": false,
+  "major_findings": [
+    "K4 denominator semantics were a post-preregistration pre-inference operationalization and must be described as such.",
+    "The exact S1.3.12 anchor model set was not preregistered and was frozen after contamination sensitivity was already known.",
+    "Falsification wording must be presented as protocol terminology, not as substantive H2/H4 model-performance evidence.",
+    "The protocol Data Dictionary contamination-sign conflict must remain visible as a documented limitation.",
+    "Authorship and AI-assistance disclosure must be explicit in the publication candidate.",
+    "The final publication manifest must hash publication outputs and record the final freeze commit.",
+    "Zenodo metadata requires final live-form mapping, actual publication date, split creator names, explicit related-identifier relations, and DOI reservation before PDF generation if the DOI is printed in the file."
+  ],
+  "next_gate": "S1.5_PUBLICATION_RELEASE_CANDIDATE_AND_ZENODO_METADATA_FREEZE"
+}

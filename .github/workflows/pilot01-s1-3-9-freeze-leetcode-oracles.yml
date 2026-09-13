@@ -1,0 +1,86 @@
+name: Pilot 01 S1.3.9 Freeze LeetCode Oracle Sources
+
+on:
+  push:
+    paths:
+      - ".github/workflows/pilot01-s1-3-9-freeze-leetcode-oracles.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  freeze:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout DACDM branch
+        uses: actions/checkout@v4
+        with:
+          ref: s1-task-evidence-registries
+
+      - name: Checkout frozen LeetCodeDataset source
+        uses: actions/checkout@v4
+        with:
+          repository: newfacade/LeetCodeDataset
+          ref: 182cd19fd53161efd70a1ef074fe1056b659bfa3
+          path: leetcode-dataset
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pilot-01/requirements.lock
+
+      - name: Install locked dependencies and package
+        working-directory: pilot-01
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.lock
+          pip install --no-deps -e .
+
+      - name: Integrity before S1.3.9 freeze
+        working-directory: pilot-01
+        run: |
+          dacdm validate-protocol
+          dacdm validate-registries
+          ruff check src tests scripts
+          mypy src
+          pytest
+
+      - name: Verify frozen external dataset revision and blobs
+        run: |
+          test "$(git -C leetcode-dataset rev-parse HEAD)" = "182cd19fd53161efd70a1ef074fe1056b659bfa3"
+          test "$(git -C leetcode-dataset rev-parse HEAD:data/LeetCodeDataset-v0.3.1-train.jsonl.gz)" = "4da4a95a79ca9e1af721451ca559df9a1b038468"
+          test "$(git -C leetcode-dataset rev-parse HEAD:data/LeetCodeDataset-v0.3.1-test.jsonl.gz)" = "056d9808e94146f17800c2656f85ec8495fbd9f5"
+
+      - name: Register S1.3.9 oracle sources
+        working-directory: pilot-01
+        run: python scripts/freeze_s1_3_9.py --source-root ../leetcode-dataset
+
+      - name: Assert pre-inference safety gate
+        working-directory: pilot-01
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          summary = json.loads(Path("backtest/s1_3_9/summary.json").read_text())
+          assert summary["paid_inference_permitted"] is False
+          assert summary["model_results_inspected"] is False
+          assert summary["confirmatory_admitted_task_count"] == 0
+          assert summary["next_gate"] == "S1.3.10_EDGE_CASE_AND_EXECUTABLE_HARNESS_VALIDATION"
+          PY
+
+      - name: Freeze generated S1.3.9 outputs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add pilot-01/registries/leetcode_oracle_registry.json pilot-01/backtest/s1_3_9
+          if git diff --cached --quiet; then
+            echo "No S1.3.9 output changes to commit"
+            exit 0
+          fi
+          git commit -m "Freeze S1.3.9 registered LeetCode oracle sources"
+          git push origin HEAD:s1-task-evidence-registries
+
+# Pre-inference source registration only. No paid model API calls are made.

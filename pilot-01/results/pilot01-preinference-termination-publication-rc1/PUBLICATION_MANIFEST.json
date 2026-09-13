@@ -1,0 +1,47 @@
+{
+  "candidate": "pilot01-preinference-termination-publication-rc1",
+  "manifest_self_hash_policy": "PUBLICATION_MANIFEST.json is not self-hashed because a file cannot contain its own stable cryptographic digest; its exact bytes are frozen by Git in the bot freeze commit.",
+  "next_gate": "S1.6_ZENODO_DRAFT_DOI_RESERVATION_AND_FINAL_PDF_DOCX_RENDER",
+  "payload_files": [
+    {
+      "path": "DACDM_Pilot_01_PreInference_Termination_Report_RC1.md",
+      "sha256": "4dc1f539562ca237ab284c90ec02ce84cf2b8b3437f7b40c21d38ab6af09abd5",
+      "size_bytes": 10143
+    },
+    {
+      "path": "AUTHORSHIP_AND_AI_ASSISTANCE.md",
+      "sha256": "4a2e0050c92694bcdf7040a4c7c6ed2ce61fc95be75209676c8199beeb8e0161",
+      "size_bytes": 1194
+    },
+    {
+      "path": "ZENODO_METADATA_RC1.json",
+      "sha256": "f9c2e5d38d69ce849c1891083de624a7f107f3c05411e21ae9196d013628b91b",
+      "size_bytes": 2830
+    },
+    {
+      "path": "README.md",
+      "sha256": "c3cb25ed71bd199d01c5498fbc7f01ee8b19e52d7a930a9a546fcc1f9bda0bb8",
+      "size_bytes": 1670
+    },
+    {
+      "path": "RC_STATUS.json",
+      "sha256": "90c833a3c6f7125575cc7bdfacfad536e80f55d11dcece46bd8cee2de1ca4dec",
+      "size_bytes": 678
+    }
+  ],
+  "phase_label": "S1.5_PUBLICATION_RELEASE_CANDIDATE_AND_ZENODO_METADATA_FREEZE",
+  "protocol_git_blob_sha1": "389901146b70684b6c952a8606a5063b972645d4",
+  "publication_payload_freeze_commit": "996dbb08b87f3c2f6d41b381bcaba9e741e5b0b3",
+  "s1_3_12_k4_freeze_commit": "34b201ad1e00dec234d27771ce535545d99712a3",
+  "scientific_guards": {
+    "anchor_model_set_changed": false,
+    "denominator_membership_changed": false,
+    "k4_arithmetic_changed": false,
+    "k4_threshold_changed": false,
+    "model_results_inspected": false,
+    "paid_model_inference_run": false,
+    "scientific_result_changed": false,
+    "zenodo_publication_performed": false
+  },
+  "source_evidence_package_freeze_commit": "21380545bf0f2b6878fee164d18603ee96f99b11"
+}

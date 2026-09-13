@@ -1,0 +1,34 @@
+{
+  "current_evidence_registry_sensitivity": {
+    "best_case_fraction_if_all_leetcode_candidates_were_clean": 0.8747117601844735,
+    "conservative_fraction_counting_indeterminate_as_excluded": 0.8985395849346657,
+    "eligible_count": 132,
+    "excluded_count": 1165,
+    "excluded_fraction": 0.8954650269023828,
+    "indeterminate_count": 4,
+    "model_ids": [
+      "anthropic:claude-3-5-haiku-20241022",
+      "anthropic:claude-3-5-sonnet-20240620",
+      "openai:gpt-4o-2024-05-13",
+      "openai:gpt-4o-mini-2024-07-18"
+    ],
+    "static_humaneval_mbpp_excluded_count": 1138,
+    "would_trigger_k4_if_this_model_set_were_frozen": true
+  },
+  "denominator_count": 1301,
+  "denominator_semantics": "PRE_CONTAMINATION_REGISTERED_TASK_UNIVERSE",
+  "enabled_test_window_model_ids": [],
+  "formal_excluded_count": null,
+  "formal_excluded_fraction": null,
+  "formal_indeterminate_count": null,
+  "formal_k4_status": "K4_UNRESOLVED_MODEL_SET",
+  "formal_k4_triggered": null,
+  "global_contamination_semantics": "GLOBAL_TASK_LEVEL_ANY_TEST_WINDOW_MODEL",
+  "interpretation_id": "K4_DENOMINATOR_INTERPRETATION_V1",
+  "model_results_inspected": false,
+  "next_gate": "S1.3.12_TEST_WINDOW_MODEL_SET_FREEZE_AND_FINAL_PREINFERENCE_K4_EVALUATION",
+  "oracle_insufficiency_counted_in_k4_numerator": false,
+  "paid_inference_permitted": false,
+  "phase_label": "S1.3.11_GLOBAL_TASK_UNIVERSE_AND_K4_DENOMINATOR_FREEZE",
+  "threshold": 0.3
+}

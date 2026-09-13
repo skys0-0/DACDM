@@ -1,0 +1,59 @@
+{
+  "authorship_disclosure_file": "AUTHORSHIP_AND_AI_ASSISTANCE.md",
+  "creators": [
+    {
+      "family_name": "SAN",
+      "given_names": "CHAU HUNG",
+      "name_type": "personal"
+    }
+  ],
+  "description": "Methodological termination report from DACDM Pilot 01. The preregistered protocol fixed the contamination rule and K4 threshold but did not explicitly freeze the K4 denominator or exact final model membership. Before confirmatory model-performance inference, S1.3.11 operationalized the denominator as the 1,301-task pre-contamination registered universe and S1.3.12 froze a four-model anchor set. Under those documented pre-inference operationalizations, 1,165 tasks were known contamination exclusions (89.55%), above the preregistered 30% K4 threshold. Pilot 01 therefore terminated before confirmatory inference. The protocol mechanically classifies K4 as a falsification condition; this result is not a model-performance refutation of H2 or H4.",
+  "existing_framework_record_must_not_be_overwritten": true,
+  "keywords": [
+    "DACDM",
+    "AI compute demand",
+    "complexity migration",
+    "benchmark contamination",
+    "preregistration",
+    "methodological termination",
+    "code generation",
+    "research reproducibility"
+  ],
+  "license": "CC-BY-4.0",
+  "live_fields_remaining_before_final_render": [
+    "reserved_doi",
+    "publication_date",
+    "resource_type.subtype",
+    "related_identifiers[].relation"
+  ],
+  "metadata_freeze_id": "PILOT01_ZENODO_METADATA_RC1",
+  "next_gate": "S1.6_ZENODO_DRAFT_DOI_RESERVATION_AND_FINAL_PDF_DOCX_RENDER",
+  "phase_label": "S1.5_PUBLICATION_RELEASE_CANDIDATE_AND_ZENODO_METADATA_FREEZE",
+  "publication_date": null,
+  "publication_date_rule": "SET_TO_ACTUAL_DATE_RECORD_IS_FIRST_MADE_PUBLIC",
+  "record_scope": "SEPARATE_PILOT01_METHODOLOGICAL_TERMINATION_RECORD",
+  "related_identifiers": [
+    {
+      "description": "Existing DACDM v1.0 working-paper package / version DOI",
+      "identifier": "10.5281/zenodo.21930795",
+      "relation": null,
+      "relation_rule": "CONFIRM_EXACT_LIVE_ZENODO_RELATION_AT_DEPOSIT; INTENDED SEMANTICS: DERIVED_FROM_OR_REFERENCES"
+    },
+    {
+      "description": "Existing DACDM concept DOI",
+      "identifier": "10.5281/zenodo.21930794",
+      "relation": null,
+      "relation_rule": "CONFIRM_EXACT_LIVE_ZENODO_RELATION_AT_DEPOSIT; INTENDED SEMANTICS: REFERENCES_RELATED_CONCEPT"
+    }
+  ],
+  "reserved_doi": null,
+  "reserved_doi_rule": "RESERVE_NEW_ZENODO_DOI_BEFORE_FINAL_PDF_DOCX_RENDERING_IF_DOI_IS_PRINTED_IN_FILES",
+  "resource_type": {
+    "live_form_confirmation_required": true,
+    "subtype_preference": "report",
+    "type": "publication"
+  },
+  "title": "DACDM Pilot 01: Pre-Inference Termination under the Preregistered K4 Contamination Criterion",
+  "version": "1.0-rc1",
+  "zenodo_published": false
+}

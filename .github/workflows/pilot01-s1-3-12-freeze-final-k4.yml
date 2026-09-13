@@ -1,0 +1,86 @@
+name: Pilot 01 S1.3.12 Freeze Final K4
+
+on:
+  push:
+    paths:
+      - ".github/workflows/pilot01-s1-3-12-freeze-final-k4.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  freeze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout DACDM branch
+        uses: actions/checkout@v4
+        with:
+          ref: s1-task-evidence-registries
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pilot-01/requirements.lock
+
+      - name: Install locked dependencies and package
+        working-directory: pilot-01
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.lock
+          pip install --no-deps -e .
+
+      - name: Integrity before S1.3.12 freeze
+        working-directory: pilot-01
+        run: |
+          dacdm validate-protocol
+          dacdm validate-registries
+          ruff check src tests scripts/freeze_s1_3_12.py
+          mypy src
+          pytest
+
+      - name: Freeze test-window model set and final pre-inference K4
+        working-directory: pilot-01
+        run: python scripts/freeze_s1_3_12.py
+
+      - name: Assert preregistered K4 termination and closed inference gate
+        working-directory: pilot-01
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          summary = json.loads(Path("backtest/s1_3_12/summary.json").read_text())
+          assert summary["formal_k4_status"] == "K4_TRIGGERED"
+          assert summary["formal_k4_triggered"] is True
+          assert summary["termination_required_by_preregistered_k4"] is True
+          assert summary["denominator_count"] == 1301
+          assert summary["excluded_count"] == 1165
+          assert summary["eligible_count"] == 132
+          assert summary["indeterminate_count"] == 4
+          assert summary["strict_known_exclusion_fraction"] > 0.30
+          assert summary["model_results_inspected"] is False
+          assert summary["paid_inference_permitted"] is False
+          assert summary["next_gate"] == "S1.3.13_PILOT_01_PREINFERENCE_TERMINATION_PACKAGE"
+          PY
+
+      - name: Freeze generated S1.3.12 outputs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            pilot-01/backtest/s1_3_12/model_set_evaluation.json \
+            pilot-01/backtest/s1_3_12/k4_final_evaluation.json \
+            pilot-01/backtest/s1_3_12/summary.json
+          if git diff --cached --quiet; then
+            echo "No S1.3.12 output changes to commit"
+            exit 0
+          fi
+          git commit -m "Freeze S1.3.12 final pre-inference K4 evaluation"
+          git push origin HEAD:s1-task-evidence-registries
+
+# No paid model API calls are made and no model-performance outputs are inspected.
+# K4 is evaluated only from the already-frozen task universe, model/cutoff evidence,
+# and the pre-inference test-window anchor model set.

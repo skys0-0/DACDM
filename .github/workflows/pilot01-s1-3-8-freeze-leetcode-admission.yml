@@ -1,0 +1,98 @@
+name: Pilot 01 S1.3.8 Freeze LeetCode Admission Audit
+
+on:
+  push:
+    paths:
+      - ".github/workflows/pilot01-s1-3-8-freeze-leetcode-admission.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  freeze:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout DACDM branch
+        uses: actions/checkout@v4
+        with:
+          ref: s1-task-evidence-registries
+
+      - name: Checkout frozen LeetCode metadata mirror
+        uses: actions/checkout@v4
+        with:
+          repository: doocs/leetcode
+          ref: 9f7e84b19e5326cb542e6238ac76e86bab438f0b
+          path: pilot-01/.external/leetcode
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pilot-01/requirements.lock
+
+      - name: Install locked dependencies and package
+        working-directory: pilot-01
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.lock
+          pip install --no-deps -e .
+
+      - name: Integrity before S1.3.8 freeze
+        working-directory: pilot-01
+        run: |
+          dacdm validate-protocol
+          dacdm validate-registries
+          ruff check src tests
+          mypy src
+          pytest
+
+      - name: Fetch first-party LeetCode difficulty metadata
+        working-directory: pilot-01
+        run: |
+          RETRIEVED_AT="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          dacdm fetch-leetcode-official-metadata --retrieved-at "$RETRIEVED_AT"
+
+      - name: Audit IF-02 difficulty and IF-09 oracle readiness
+        working-directory: pilot-01
+        run: |
+          dacdm audit-leetcode-admission-readiness \
+            --source-root .external/leetcode
+
+      - name: Assert pre-inference safety gate
+        working-directory: pilot-01
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          summary = json.loads(Path("backtest/s1_3_8/summary.json").read_text())
+          official = json.loads(
+              Path("registries/leetcode_official_problem_metadata.json").read_text()
+          )
+          candidates = json.loads(
+              Path("registries/leetcode_weekly_hard_candidates.json").read_text()
+          )
+          assert len(official) == len(candidates) == 163
+          assert summary["candidate_count"] == 163
+          assert summary["confirmatory_admitted_task_count"] == 0
+          assert summary["paid_inference_permitted"] is False
+          assert summary["next_gate"] == "S1.3.9_REGISTERED_ORACLE_CONSTRUCTION"
+          PY
+
+      - name: Freeze generated S1.3.8 outputs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            pilot-01/registries/leetcode_official_problem_metadata.json \
+            pilot-01/registries/leetcode_difficulty_evidence.json \
+            pilot-01/backtest/s1_3_8
+          if git diff --cached --quiet; then
+            echo "No S1.3.8 output changes to commit"
+            exit 0
+          fi
+          git commit -m "Freeze S1.3.8 LeetCode admission readiness evidence"
+          git push origin HEAD:s1-task-evidence-registries
+
+# No paid model API calls. LeetCode requests are limited to first-party public metadata.

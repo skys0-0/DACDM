@@ -1,0 +1,17 @@
+{
+  "source_repository": "doocs/leetcode",
+  "source_revision": "9f7e84b19e5326cb542e6238ac76e86bab438f0b",
+  "contest_metadata_path": "solution/contest.json",
+  "contest_metadata_blob_sha": "3790f81ccf52612d98b546f23b145dbcebaf23f7",
+  "source_license": "CC-BY-SA-4.0",
+  "freeze_date": "2026-08-14",
+  "source_role": "third_party_metadata_candidate_source",
+  "official_problem_url_template": "https://leetcode.com/problems/{problem_slug}",
+  "official_contest_url_template": "https://leetcode.com/contest/weekly-contest-{contest_number}/",
+  "limitations": [
+    "The doocs/leetcode repository is a third-party mirror, not LeetCode first-party evidence.",
+    "Difficulty labels from this source are used only to construct the S1.3.7 metadata candidate universe.",
+    "Candidates are not confirmatory-admitted until first-party/public difficulty verification and IF-09 executable-oracle requirements are satisfied.",
+    "DACDM does not redistribute LeetCode problem statements in this metadata freeze."
+  ]
+}

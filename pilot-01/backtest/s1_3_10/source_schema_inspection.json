@@ -1,0 +1,1008 @@
+{
+  "contains_test_values": false,
+  "details": [
+    {
+      "canonical_task_id": "leetcode:weekly:409:shortest-distance-after-road-addition-queries-ii",
+      "completion_length": 451,
+      "entry_point": "Solution().shortestDistanceAfterQueries",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 72,
+        "type": "list"
+      },
+      "problem_description_length": 1624,
+      "problem_slug": "shortest-distance-after-road-addition-queries-ii",
+      "prompt_length": 1746,
+      "test_length": 7402
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:410:find-the-count-of-monotonic-pairs-i",
+      "completion_length": 519,
+      "entry_point": "Solution().countOfPairs",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 105,
+        "type": "list"
+      },
+      "problem_description_length": 805,
+      "problem_slug": "find-the-count-of-monotonic-pairs-i",
+      "prompt_length": 1746,
+      "test_length": 10731
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:410:find-the-count-of-monotonic-pairs-ii",
+      "completion_length": 519,
+      "entry_point": "Solution().countOfPairs",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 82,
+        "type": "list"
+      },
+      "problem_description_length": 807,
+      "problem_slug": "find-the-count-of-monotonic-pairs-ii",
+      "prompt_length": 1746,
+      "test_length": 10883
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:411:count-substrings-that-satisfy-k-constraint-ii",
+      "completion_length": 669,
+      "entry_point": "Solution().countKConstraintSubstrings",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 92,
+        "type": "list"
+      },
+      "problem_description_length": 1039,
+      "problem_slug": "count-substrings-that-satisfy-k-constraint-ii",
+      "prompt_length": 1746,
+      "test_length": 11662
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:411:find-the-largest-palindrome-divisible-by-k",
+      "completion_length": 1047,
+      "entry_point": "Solution().largestPalindrome",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 53,
+        "type": "list"
+      },
+      "problem_description_length": 585,
+      "problem_slug": "find-the-largest-palindrome-divisible-by-k",
+      "prompt_length": 1746,
+      "test_length": 4134
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:412:count-almost-equal-pairs-ii",
+      "completion_length": 769,
+      "entry_point": "Solution().countPairs",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 135,
+        "type": "list"
+      },
+      "problem_description_length": 1480,
+      "problem_slug": "count-almost-equal-pairs-ii",
+      "prompt_length": 1746,
+      "test_length": 11417
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:412:final-array-state-after-k-multiplication-operations-ii",
+      "completion_length": 576,
+      "entry_point": "Solution().getFinalState",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 110,
+        "type": "list"
+      },
+      "problem_description_length": 1223,
+      "problem_slug": "final-array-state-after-k-multiplication-operations-ii",
+      "prompt_length": 1746,
+      "test_length": 232
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:413:maximum-xor-score-subarray-queries",
+      "completion_length": 501,
+      "entry_point": "Solution().maximumSubarrayXor",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 59,
+        "type": "list"
+      },
+      "problem_description_length": 1593,
+      "problem_slug": "maximum-xor-score-subarray-queries",
+      "prompt_length": 1746,
+      "test_length": 13748
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:413:select-cells-in-grid-with-maximum-score",
+      "completion_length": 586,
+      "entry_point": "Solution().maxScore",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 97,
+        "type": "list"
+      },
+      "problem_description_length": 752,
+      "problem_slug": "select-cells-in-grid-with-maximum-score",
+      "prompt_length": 1746,
+      "test_length": 11819
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:414:maximum-number-of-moves-to-kill-all-pawns",
+      "completion_length": 1692,
+      "entry_point": "Solution().maxMoves",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 103,
+        "type": "list"
+      },
+      "problem_description_length": 2287,
+      "problem_slug": "maximum-number-of-moves-to-kill-all-pawns",
+      "prompt_length": 1746,
+      "test_length": 13125
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:415:minimum-number-of-valid-strings-to-form-target-ii",
+      "completion_length": 1503,
+      "entry_point": "Solution().minValidStrings",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 169,
+        "type": "list"
+      },
+      "problem_description_length": 1115,
+      "problem_slug": "minimum-number-of-valid-strings-to-form-target-ii",
+      "prompt_length": 1746,
+      "test_length": 16568
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:416:count-substrings-that-can-be-rearranged-to-contain-a-string-ii",
+      "completion_length": 551,
+      "entry_point": "Solution().validSubstringCount",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 68,
+        "type": "list"
+      },
+      "problem_description_length": 814,
+      "problem_slug": "count-substrings-that-can-be-rearranged-to-contain-a-string-ii",
+      "prompt_length": 1746,
+      "test_length": 5555
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:417:find-the-k-th-character-in-string-game-ii",
+      "completion_length": 367,
+      "entry_point": "Solution().kthCharacter",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 102,
+        "type": "list"
+      },
+      "problem_description_length": 1597,
+      "problem_slug": "find-the-k-th-character-in-string-game-ii",
+      "prompt_length": 1746,
+      "test_length": 6170
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:418:construct-2d-grid-matching-graph-layout",
+      "completion_length": 1290,
+      "entry_point": "Solution().constructGridLayout",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 45,
+        "type": "list"
+      },
+      "problem_description_length": 1191,
+      "problem_slug": "construct-2d-grid-matching-graph-layout",
+      "prompt_length": 1746,
+      "test_length": 17505
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:418:sorted-gcd-pair-queries",
+      "completion_length": 463,
+      "entry_point": "Solution().gcdValues",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 85,
+        "type": "list"
+      },
+      "problem_description_length": 1214,
+      "problem_slug": "sorted-gcd-pair-queries",
+      "prompt_length": 1746,
+      "test_length": 21700
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:419:count-the-number-of-winning-sequences",
+      "completion_length": 803,
+      "entry_point": "Solution().countWinningSequences",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 30,
+        "type": "list"
+      },
+      "problem_description_length": 2060,
+      "problem_slug": "count-the-number-of-winning-sequences",
+      "prompt_length": 1746,
+      "test_length": 2215
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:419:find-x-sum-of-all-k-long-subarrays-ii",
+      "completion_length": 1297,
+      "entry_point": "Solution().findXSum",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 196,
+        "type": "list"
+      },
+      "problem_description_length": 1458,
+      "problem_slug": "find-x-sum-of-all-k-long-subarrays-ii",
+      "prompt_length": 1816,
+      "test_length": 27529
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:420:check-if-dfs-strings-are-palindromes",
+      "completion_length": 1314,
+      "entry_point": "Solution().findAnswer",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 95,
+        "type": "list"
+      },
+      "problem_description_length": 1894,
+      "problem_slug": "check-if-dfs-strings-are-palindromes",
+      "prompt_length": 1746,
+      "test_length": 7362
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:421:find-the-number-of-subsequences-with-equal-gcd",
+      "completion_length": 1006,
+      "entry_point": "Solution().subsequencePairCount",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 111,
+        "type": "list"
+      },
+      "problem_description_length": 1174,
+      "problem_slug": "find-the-number-of-subsequences-with-equal-gcd",
+      "prompt_length": 1746,
+      "test_length": 10181
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:421:total-characters-in-string-after-transformations-ii",
+      "completion_length": 1526,
+      "entry_point": "Solution().lengthAfterTransformations",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 112,
+        "type": "list"
+      },
+      "problem_description_length": 2097,
+      "problem_slug": "total-characters-in-string-after-transformations-ii",
+      "prompt_length": 1746,
+      "test_length": 18036
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:422:count-number-of-balanced-permutations",
+      "completion_length": 781,
+      "entry_point": "Solution().countBalancedPermutations",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 113,
+        "type": "list"
+      },
+      "problem_description_length": 1013,
+      "problem_slug": "count-number-of-balanced-permutations",
+      "prompt_length": 1746,
+      "test_length": 7422
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:423:count-k-reducible-numbers-less-than-n",
+      "completion_length": 1048,
+      "entry_point": "Solution().countKReducibleNumbers",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 37,
+        "type": "list"
+      },
+      "problem_description_length": 1164,
+      "problem_slug": "count-k-reducible-numbers-less-than-n",
+      "prompt_length": 1746,
+      "test_length": 3605
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:423:sum-of-good-subsequences",
+      "completion_length": 409,
+      "entry_point": "Solution().sumOfGoodSubsequences",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 124,
+        "type": "list"
+      },
+      "problem_description_length": 785,
+      "problem_slug": "sum-of-good-subsequences",
+      "prompt_length": 1746,
+      "test_length": 11589
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:425:maximize-sum-of-weights-after-edge-removals",
+      "completion_length": 724,
+      "entry_point": "Solution().maximizeSumOfWeights",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 76,
+        "type": "list"
+      },
+      "problem_description_length": 1315,
+      "problem_slug": "maximize-sum-of-weights-after-edge-removals",
+      "prompt_length": 1746,
+      "test_length": 13221
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:426:maximize-the-number-of-target-nodes-after-connecting-trees-ii",
+      "completion_length": 950,
+      "entry_point": "Solution().maxTargetNodes",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 63,
+        "type": "list"
+      },
+      "problem_description_length": 1906,
+      "problem_slug": "maximize-the-number-of-target-nodes-after-connecting-trees-ii",
+      "prompt_length": 1746,
+      "test_length": 16835
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:427:maximum-area-rectangle-with-point-constraints-ii",
+      "completion_length": 1223,
+      "entry_point": "Solution().maxRectangleArea",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 131,
+        "type": "list"
+      },
+      "problem_description_length": 1366,
+      "problem_slug": "maximum-area-rectangle-with-point-constraints-ii",
+      "prompt_length": 1746,
+      "test_length": 15016
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:428:minimum-operations-to-make-character-frequencies-equal",
+      "completion_length": 1539,
+      "entry_point": "Solution().makeStringGood",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 40,
+        "type": "list"
+      },
+      "problem_description_length": 919,
+      "problem_slug": "minimum-operations-to-make-character-frequencies-equal",
+      "prompt_length": 1746,
+      "test_length": 2688
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:429:smallest-substring-with-identical-characters-i",
+      "completion_length": 631,
+      "entry_point": "Solution().minLength",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 120,
+        "type": "list"
+      },
+      "problem_description_length": 877,
+      "problem_slug": "smallest-substring-with-identical-characters-i",
+      "prompt_length": 1746,
+      "test_length": 8384
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:429:smallest-substring-with-identical-characters-ii",
+      "completion_length": 631,
+      "entry_point": "Solution().minLength",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 128,
+        "type": "list"
+      },
+      "problem_description_length": 876,
+      "problem_slug": "smallest-substring-with-identical-characters-ii",
+      "prompt_length": 1746,
+      "test_length": 9785
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:430:count-the-number-of-arrays-with-k-matching-adjacent-elements",
+      "completion_length": 1383,
+      "entry_point": "Solution().countGoodArrays",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 158,
+        "type": "list"
+      },
+      "problem_description_length": 917,
+      "problem_slug": "count-the-number-of-arrays-with-k-matching-adjacent-elements",
+      "prompt_length": 1816,
+      "test_length": 67
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:432:count-non-decreasing-subarrays-after-k-operations",
+      "completion_length": 876,
+      "entry_point": "Solution().countNonDecreasingSubarrays",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 135,
+        "type": "list"
+      },
+      "problem_description_length": 1364,
+      "problem_slug": "count-non-decreasing-subarrays-after-k-operations",
+      "prompt_length": 1746,
+      "test_length": 11744
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:434:frequencies-of-shortest-supersequences",
+      "completion_length": 2078,
+      "entry_point": "Solution().supersequences",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 147,
+        "type": "list"
+      },
+      "problem_description_length": 1324,
+      "problem_slug": "frequencies-of-shortest-supersequences",
+      "prompt_length": 1816,
+      "test_length": 62520
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:435:maximum-difference-between-even-and-odd-frequency-ii",
+      "completion_length": 1157,
+      "entry_point": "Solution().maxDifference",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 137,
+        "type": "list"
+      },
+      "problem_description_length": 1025,
+      "problem_slug": "maximum-difference-between-even-and-odd-frequency-ii",
+      "prompt_length": 1746,
+      "test_length": 8144
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:435:minimum-increments-for-target-multiples-in-an-array",
+      "completion_length": 1314,
+      "entry_point": "Solution().minimumIncrements",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 159,
+        "type": "list"
+      },
+      "problem_description_length": 954,
+      "problem_slug": "minimum-increments-for-target-multiples-in-an-array",
+      "prompt_length": 1746,
+      "test_length": 12226
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:436:count-substrings-divisible-by-last-digit",
+      "completion_length": 538,
+      "entry_point": "Solution().countSubstrings",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 113,
+        "type": "list"
+      },
+      "problem_description_length": 955,
+      "problem_slug": "count-substrings-divisible-by-last-digit",
+      "prompt_length": 1746,
+      "test_length": 6840
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:436:maximize-the-minimum-game-score",
+      "completion_length": 925,
+      "entry_point": "Solution().maxScore",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 97,
+        "type": "list"
+      },
+      "problem_description_length": 1474,
+      "problem_slug": "maximize-the-minimum-game-score",
+      "prompt_length": 1746,
+      "test_length": 9867
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:437:length-of-longest-v-shaped-diagonal-segment",
+      "completion_length": 1091,
+      "entry_point": "Solution().lenOfVDiagonal",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 76,
+        "type": "list"
+      },
+      "problem_description_length": 1740,
+      "problem_slug": "length-of-longest-v-shaped-diagonal-segment",
+      "prompt_length": 1746,
+      "test_length": 20179
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:438:check-if-digits-are-equal-in-string-after-operations-ii",
+      "completion_length": 976,
+      "entry_point": "Solution().hasSameDigits",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 108,
+        "type": "list"
+      },
+      "problem_description_length": 1164,
+      "problem_slug": "check-if-digits-are-equal-in-string-after-operations-ii",
+      "prompt_length": 1746,
+      "test_length": 5901
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:438:maximize-the-distance-between-points-on-a-square",
+      "completion_length": 2046,
+      "entry_point": "Solution().maxDistance",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 66,
+        "type": "list"
+      },
+      "problem_description_length": 1324,
+      "problem_slug": "maximize-the-distance-between-points-on-a-square",
+      "prompt_length": 1746,
+      "test_length": 22974
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:439:lexicographically-smallest-generated-string",
+      "completion_length": 1449,
+      "entry_point": "Solution().generateString",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 266,
+        "type": "list"
+      },
+      "problem_description_length": 1331,
+      "problem_slug": "lexicographically-smallest-generated-string",
+      "prompt_length": 1746,
+      "test_length": 16933
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:440:maximize-subarrays-after-removing-one-conflicting-pair",
+      "completion_length": 1228,
+      "entry_point": "Solution().maxSubarrays",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 77,
+        "type": "list"
+      },
+      "problem_description_length": 1463,
+      "problem_slug": "maximize-subarrays-after-removing-one-conflicting-pair",
+      "prompt_length": 1746,
+      "test_length": 13207
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:441:count-beautiful-numbers",
+      "completion_length": 1092,
+      "entry_point": "Solution().beautifulNumbers",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 95,
+        "type": "list"
+      },
+      "problem_description_length": 496,
+      "problem_slug": "count-beautiful-numbers",
+      "prompt_length": 1746,
+      "test_length": 4868
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:442:minimum-operations-to-make-array-elements-zero",
+      "completion_length": 514,
+      "entry_point": "Solution().minOperations",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 97,
+        "type": "list"
+      },
+      "problem_description_length": 1668,
+      "problem_slug": "minimum-operations-to-make-array-elements-zero",
+      "prompt_length": 1746,
+      "test_length": 11308
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:443:longest-palindrome-after-substring-concatenation-ii",
+      "completion_length": 826,
+      "entry_point": "Solution().longestPalindrome",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 122,
+        "type": "list"
+      },
+      "problem_description_length": 978,
+      "problem_slug": "longest-palindrome-after-substring-concatenation-ii",
+      "prompt_length": 1746,
+      "test_length": 7185
+    },
+    {
+      "canonical_task_id": "leetcode:weekly:443:minimum-operations-to-make-elements-within-k-subarrays-equal",
+      "completion_length": 2782,
+      "entry_point": "Solution().minOperations",
+      "has_completion": true,
+      "has_problem_description": true,
+      "has_prompt": true,
+      "has_test": true,
+      "input_output_shape": {
+        "first": {
+          "input": "str",
+          "output": "str"
+        },
+        "len": 82,
+        "type": "list"
+      },
+      "problem_description_length": 1361,
+      "problem_slug": "minimum-operations-to-make-elements-within-k-subarrays-equal",
+      "prompt_length": 1746,
+      "test_length": 10418
+    }
+  ],
+  "field_presence_counts": {
+    "completion": 45,
+    "difficulty": 45,
+    "entry_point": 45,
+    "estimated_date": 45,
+    "input_output": 45,
+    "problem_description": 45,
+    "prompt": 45,
+    "query": 45,
+    "question_id": 45,
+    "response": 45,
+    "starter_code": 45,
+    "tags": 45,
+    "task_id": 45,
+    "test": 45
+  },
+  "input_output_shape_distribution": {
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 102, \"type\": \"list\"}": 1,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 103, \"type\": \"list\"}": 1,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 105, \"type\": \"list\"}": 1,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 108, \"type\": \"list\"}": 1,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 110, \"type\": \"list\"}": 1,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 111, \"type\": \"list\"}": 1,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 112, \"type\": \"list\"}": 1,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 113, \"type\": \"list\"}": 2,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 120, \"type\": \"list\"}": 1,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 122, \"type\": \"list\"}": 1,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 124, \"type\": \"list\"}": 1,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 128, \"type\": \"list\"}": 1,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 131, \"type\": \"list\"}": 1,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 135, \"type\": \"list\"}": 2,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 137, \"type\": \"list\"}": 1,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 147, \"type\": \"list\"}": 1,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 158, \"type\": \"list\"}": 1,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 159, \"type\": \"list\"}": 1,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 169, \"type\": \"list\"}": 1,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 196, \"type\": \"list\"}": 1,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 266, \"type\": \"list\"}": 1,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 30, \"type\": \"list\"}": 1,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 37, \"type\": \"list\"}": 1,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 40, \"type\": \"list\"}": 1,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 45, \"type\": \"list\"}": 1,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 53, \"type\": \"list\"}": 1,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 59, \"type\": \"list\"}": 1,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 63, \"type\": \"list\"}": 1,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 66, \"type\": \"list\"}": 1,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 68, \"type\": \"list\"}": 1,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 72, \"type\": \"list\"}": 1,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 76, \"type\": \"list\"}": 2,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 77, \"type\": \"list\"}": 1,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 82, \"type\": \"list\"}": 2,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 85, \"type\": \"list\"}": 1,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 92, \"type\": \"list\"}": 1,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 95, \"type\": \"list\"}": 2,
+    "{\"first\": {\"input\": \"str\", \"output\": \"str\"}, \"len\": 97, \"type\": \"list\"}": 3
+  },
+  "purpose": "schema inspection only; no model results and no paid inference",
+  "registered_suite_count": 45
+}

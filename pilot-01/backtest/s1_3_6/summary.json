@@ -1,0 +1,18 @@
+{
+  "admissible_model_task_year_pairs": 0,
+  "calibration_label": "EXPLORATORY_PIPELINE_CALIBRATION_NOT_CONFIRMATORY_EVIDENCE",
+  "cell_status_counts": {
+    "BLOCKED_CONTAMINATION_CURRENT_MODEL_REGISTRY": 30
+  },
+  "detail_status_counts": {
+    "CONTAMINATION_EXCLUDED": 120
+  },
+  "k4_risk_note": "The current static HumanEval/MBPP registry shows contamination exclusion against the currently verified model cutoffs. This is a pre-inference risk signal, not the registered final K4 decision because the protocol task universe also requires the timestamp-filtered LeetCode Hard set and the model registry is not yet complete.",
+  "k4_status": "NOT_FORMALLY_EVALUATED_PREINFERENCE_AUDIT_ONLY",
+  "model_count": 4,
+  "model_task_year_pairs": 120,
+  "paid_inference_gate": "BLOCKED",
+  "ready_for_paid_inference_cells": 0,
+  "sample_task_count": 10,
+  "sample_task_year_cells": 30
+}

@@ -1,0 +1,31 @@
+{
+  "admission_status_counts": {
+    "BLOCKED_CONTAMINATION": 31,
+    "BLOCKED_ORACLE_CONSTRUCTION_REQUIRED": 132
+  },
+  "candidate_count": 163,
+  "confirmatory_admitted_task_count": 0,
+  "contamination_counts": {
+    "ELIGIBLE": 132,
+    "EXCLUDED": 27,
+    "INDETERMINATE": 4
+  },
+  "difficulty_evidence_counts": {
+    "SUPPORTED": 163
+  },
+  "if09_minimum_registered_tests": 20,
+  "model_results_inspected": false,
+  "next_gate": "S1.3.9_REGISTERED_ORACLE_CONSTRUCTION",
+  "oracle_status_counts": {
+    "TEST_ORACLE_INSUFFICIENT_CURRENT_FROZEN_EVIDENCE": 163
+  },
+  "paid_inference_permitted": false,
+  "phase_label": "S1.3.8_DIFFICULTY_VERIFICATION_AND_IF09_ORACLE_FEASIBILITY",
+  "public_statement_example_count_distribution": {
+    "2": 69,
+    "3": 81,
+    "4": 12,
+    "5": 1
+  },
+  "status": "DIFFICULTY_VERIFIED_ORACLE_CONSTRUCTION_REQUIRED"
+}

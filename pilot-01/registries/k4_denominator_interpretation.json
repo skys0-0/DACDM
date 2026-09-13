@@ -1,0 +1,98 @@
+{
+  "interpretation_id": "K4_DENOMINATOR_INTERPRETATION_V1",
+  "phase_label": "S1.3.11_GLOBAL_TASK_UNIVERSE_AND_K4_DENOMINATOR_FREEZE",
+  "freeze_date": "2026-08-15",
+  "status": "FROZEN_PREINFERENCE_IMPLEMENTATION_INTERPRETATION",
+  "protocol_amendment": false,
+  "authority_order": [
+    "protocols/DACDM_Pilot_01_Protocol_v1.0.md",
+    "pilot-01/DACDM_Pilot_01_Implementation_Freeze_v1.0.md",
+    "pilot-01/DACDM_Pilot_01_SDD_v1.0.md"
+  ],
+  "authority_evidence": [
+    {
+      "path": "../protocols/DACDM_Pilot_01_Protocol_v1.0.md",
+      "git_blob_sha1": "389901146b70684b6c952a8606a5063b972645d4",
+      "required_phrases": [
+        "A task is **excluded** if its release date precedes the **training cutoff date** of any model used in the test window.",
+        "More than 30% of tasks in the dataset are flagged for data contamination (excluded)",
+        "Post-hoc adjustments to the kill criteria or minimum effect threshold are **expressly forbidden**."
+      ]
+    },
+    {
+      "path": "DACDM_Pilot_01_Implementation_Freeze_v1.0.md",
+      "git_blob_sha1": "6fd4ff6c7f368710c21ed5b3d6433b0677383ff1",
+      "required_phrases": [
+        "If this document conflicts with the frozen Pilot Protocol, the Protocol wins.",
+        "Use **all eligible Hard problems** in the registered observation window rather than researcher-selected examples."
+      ]
+    },
+    {
+      "path": "DACDM_Pilot_01_SDD_v1.0.md",
+      "git_blob_sha1": "f157652d8d58427f730bb30798a924fee650a222",
+      "required_phrases": [
+        "If an implementation choice conflicts with the frozen protocol, **the protocol wins**.",
+        "The contamination engine executes **before inference inclusion**.",
+        "The pipeline automatically computes the contamination-exclusion share and exposes the value to the kill-criteria module.",
+        "report K4 mechanically; preserve exclusions; do not weaken the rule post hoc."
+      ]
+    }
+  ],
+  "k4_threshold": 0.3,
+  "selected_interpretation": {
+    "denominator_semantics": "PRE_CONTAMINATION_REGISTERED_TASK_UNIVERSE",
+    "task_unit": "UNIQUE_CANONICAL_TASK_ID",
+    "contamination_scope": "GLOBAL_TASK_LEVEL_ANY_TEST_WINDOW_MODEL",
+    "numerator_semantics": "TASKS_GLOBALLY_EXCLUDED_FOR_CONTAMINATION_ONLY",
+    "oracle_failure_in_k4_numerator": false,
+    "oracle_failure_in_denominator": true,
+    "indeterminate_treatment": "REPORT_SEPARATELY_NOT_EXCLUDED_UNTIL_RESOLVED",
+    "leetcode_frame": "ALL_FROZEN_2024_01_01_TO_2026_08_14_WEEKLY_CONTEST_HARD_METADATA_CANDIDATES",
+    "leetcode_resource_cap_for_k4_denominator": null,
+    "inference_resource_cap_changes_k4_denominator": false,
+    "post_contamination_or_post_oracle_survivors_may_define_denominator": false
+  },
+  "denominator_components": [
+    {
+      "source": "humaneval",
+      "registry": "tasks.json",
+      "expected_count": 164
+    },
+    {
+      "source": "mbpp",
+      "registry": "tasks.json",
+      "expected_count": 974
+    },
+    {
+      "source": "leetcode_weekly_hard",
+      "registry": "leetcode_weekly_hard_candidates.json",
+      "expected_count": 163
+    }
+  ],
+  "expected_denominator_count": 1301,
+  "test_window_model_set_semantics": {
+    "membership_flag": "models.json:enabled_for_pilot=true",
+    "freeze_requirement": "MODEL_SET_MUST_BE_EXPLICITLY_FROZEN_BEFORE_FORMAL_NUMERIC_K4_DECISION_OR_PAID_INFERENCE",
+    "current_registry_state_expected": "NO_ENABLED_MODELS",
+    "current_evidence_models_are_sensitivity_only_until_enabled": true
+  },
+  "rejected_interpretations": [
+    {
+      "id": "POST_CONTAMINATION_SURVIVORS",
+      "reason": "Would remove contamination-excluded tasks from the denominator used to measure the contamination-exclusion share, making K4 partly self-erasing."
+    },
+    {
+      "id": "POST_ORACLE_IF09_READY_ONLY",
+      "reason": "Would condition K4 on a later oracle-admission gate and exclude contaminated tasks before the K4 share is measured."
+    },
+    {
+      "id": "OBSERVED_MODEL_RESULT_DATASET_ONLY",
+      "reason": "Would define the denominator after inference outcomes and conflict with the pre-inference contamination gate and no-post-hoc-reinterpretation requirements."
+    }
+  ],
+  "decision_boundary": {
+    "formal_k4_can_be_triggered_only_when_test_window_model_set_is_nonempty_and_frozen": true,
+    "until_then_status": "K4_UNRESOLVED_MODEL_SET",
+    "paid_inference_permitted_while_unresolved": false
+  }
+}
