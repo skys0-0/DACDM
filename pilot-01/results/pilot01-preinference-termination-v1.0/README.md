@@ -16,5 +16,5 @@ The package is a methodological/negative result. It records a **protocol-defined
 pre-inference termination** while explicitly stating that H2/H4 did not receive a confirmatory
 model-performance test in Pilot 01.
 
-Generated from source commit `202880b3f6570270ab0a1f3257f680e20e9952a0`. No paid model inference is performed by this
+Generated from source commit `e8350442e0a27af69bb08fdf750536fbf17b3259`. No paid model inference is performed by this
 package build, and no Zenodo publication is performed automatically.

@@ -5,7 +5,7 @@
 **Closure date:** 2026-08-15  
 **Conceptual originator:** CHAU HUNG SAN / 辛秋雄  
 **Research status:** Preregistered pre-inference termination / methodological result  
-**Source commit used to generate this package:** `202880b3f6570270ab0a1f3257f680e20e9952a0`
+**Source commit used to generate this package:** `e8350442e0a27af69bb08fdf750536fbf17b3259`
 
 ## Abstract
 
