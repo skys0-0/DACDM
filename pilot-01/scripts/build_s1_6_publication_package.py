@@ -11,7 +11,6 @@ import html
 import hashlib
 import json
 import re
-import shutil
 import zipfile
 from datetime import date
 from pathlib import Path
@@ -342,7 +341,7 @@ def main() -> None:
     _write_utf8_lf(metadata_path, json.dumps(metadata, ensure_ascii=False, indent=2, sort_keys=True) + "\n")
 
     disclosure = RC_ROOT / "AUTHORSHIP_AND_AI_ASSISTANCE.md"
-    shutil.copy2(disclosure, OUT_ROOT / disclosure.name)
+    _write_utf8_lf(OUT_ROOT / disclosure.name, disclosure.read_text(encoding="utf-8"))
     docx_path = OUT_ROOT / "DACDM_Pilot_01_PreInference_Termination_Report_v1.0.docx"
     _write_docx(final_md, docx_path, args.doi)
     pdf_path = OUT_ROOT / "DACDM_Pilot_01_PreInference_Termination_Report_v1.0.pdf"
