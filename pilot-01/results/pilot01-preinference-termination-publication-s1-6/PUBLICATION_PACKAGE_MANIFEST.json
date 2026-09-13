@@ -3,23 +3,23 @@
   "payload_files": [
     {
       "path": "DACDM_Pilot_01_PreInference_Termination_Report_v1.0.md",
-      "sha256": "ec0d2fcd7ca3effeda886685c28814c1057ad125e8aa70d76623f50384cda4ac",
-      "size_bytes": 10647
+      "sha256": "09d1b855075785130492ca9c8980c374d075f14f03d15e36d98ffd68a5e74437",
+      "size_bytes": 10514
     },
     {
       "path": "DACDM_Pilot_01_PreInference_Termination_Report_v1.0.docx",
-      "sha256": "98c8f3b73e6034b622cfe1dfffce2a50b09e60abc4dc89cd660150dbec149c4f",
+      "sha256": "e328f3ad6a016409e9a89ffe94e0cf0ac4009962200f5e6964003796ac68d92f",
       "size_bytes": 41857
     },
     {
       "path": "DACDM_Pilot_01_PreInference_Termination_Report_v1.0.pdf",
-      "sha256": "46bf51842048f87fad8f55303cfde4b379d43a7b74b82a95d41ddb46c72ea05d",
+      "sha256": "63f4c0cc6f71c2e9a5fda905287631cf53d7b7976318b31b7de57c517dae6d76",
       "size_bytes": 21210
     },
     {
       "path": "ZENODO_METADATA.json",
-      "sha256": "2650714c53330f548ad39a3c09c2d6535feb42d833a30a36cefe92fd4b96f579",
-      "size_bytes": 1478
+      "sha256": "ed48183eeef3fb6551e3264c7066d68f3309f724175a93e01118c037a73b418f",
+      "size_bytes": 1434
     },
     {
       "path": "AUTHORSHIP_AND_AI_ASSISTANCE.md",
@@ -28,13 +28,13 @@
     },
     {
       "path": "README.md",
-      "sha256": "e986e8a4f48df92f501f2ca79ef75a4205519ac6f37244762a6aca6d27e9d9c0",
-      "size_bytes": 294
+      "sha256": "5d059db76c12fab7398a5f31784316b4b57ef38ab1ff242fe84a35a6695e570d",
+      "size_bytes": 289
     },
     {
       "path": "S1.6_FREEZE_STATUS.json",
-      "sha256": "496644f8f591bda4df27693b804ea01d396a8a0154ab95e5288dd8af5fa27e66",
-      "size_bytes": 635
+      "sha256": "388bffc5ddd49257603ff1361bdf0a4574b1bfbe9ec2ca483e6ac79bbde88c50",
+      "size_bytes": 619
     }
   ],
   "phase_label": "S1.6_ZENODO_DRAFT_DOI_RESERVATION_AND_FINAL_PDF_DOCX_RENDER",

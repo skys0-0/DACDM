@@ -40,6 +40,11 @@ def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def _write_utf8_lf(path: Path, content: str) -> None:
+    """Write reproducible text bytes regardless of the builder's host platform."""
+    path.write_text(content, encoding="utf-8", newline="\n")
+
+
 def _require_frozen_guards() -> None:
     k4 = _load_json(SOURCE_ROOT / "K4_FINAL_ASSESSMENT.json")
     if k4.get("formal_k4_status") != "K4_TRIGGERED":
@@ -253,7 +258,7 @@ def _render_pdf(markdown_path: Path, pdf_path: Path, doi: str) -> None:
 
 def _write_checksums(paths: list[Path], output: Path) -> None:
     rows = [f"{_sha256(path)}  {path.name}" for path in paths]
-    output.write_text("\n".join(rows) + "\n", encoding="utf-8")
+    _write_utf8_lf(output, "\n".join(rows) + "\n")
 
 
 def main() -> None:
@@ -302,7 +307,7 @@ def main() -> None:
     # committing Markdown's trailing-space hard-break convention.
     report_text = report_text.replace("  \n", "<br>\n")
     final_md = OUT_ROOT / "DACDM_Pilot_01_PreInference_Termination_Report_v1.0.md"
-    final_md.write_text(report_text, encoding="utf-8")
+    _write_utf8_lf(final_md, report_text)
 
     metadata = {
         "phase_label": PHASE,
@@ -334,7 +339,7 @@ def main() -> None:
         },
     }
     metadata_path = OUT_ROOT / "ZENODO_METADATA.json"
-    metadata_path.write_text(json.dumps(metadata, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    _write_utf8_lf(metadata_path, json.dumps(metadata, ensure_ascii=False, indent=2, sort_keys=True) + "\n")
 
     disclosure = RC_ROOT / "AUTHORSHIP_AND_AI_ASSISTANCE.md"
     shutil.copy2(disclosure, OUT_ROOT / disclosure.name)
@@ -344,12 +349,12 @@ def main() -> None:
     _render_pdf(final_md, pdf_path, args.doi)
 
     readme = OUT_ROOT / "README.md"
-    readme.write_text(
+    _write_utf8_lf(
+        readme,
         "# DACDM Pilot 01 S1.6 publication package\n\n"
         f"Reserved DOI: `{args.doi}`. Zenodo status: **unpublished draft**.\n\n"
         "This package is derived from the frozen RC1 publication candidate. It is separate from "
         "and does not modify `pilot-01/results/pilot01-preinference-termination-v1.0/`.\n",
-        encoding="utf-8",
     )
     status = {
         "phase_label": PHASE,
@@ -368,7 +373,7 @@ def main() -> None:
         "paid_inference_performed": False,
     }
     status_path = OUT_ROOT / "S1.6_FREEZE_STATUS.json"
-    status_path.write_text(json.dumps(status, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    _write_utf8_lf(status_path, json.dumps(status, ensure_ascii=False, indent=2, sort_keys=True) + "\n")
 
     payload_paths = [final_md, docx_path, pdf_path, metadata_path, OUT_ROOT / disclosure.name, readme, status_path]
     manifest = {
@@ -386,7 +391,7 @@ def main() -> None:
         "scientific_guards": metadata["scientific_guards"],
     }
     manifest_path = OUT_ROOT / "PUBLICATION_PACKAGE_MANIFEST.json"
-    manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    _write_utf8_lf(manifest_path, json.dumps(manifest, ensure_ascii=False, indent=2, sort_keys=True) + "\n")
     checksums = OUT_ROOT / "SHA256SUMS.txt"
     _write_checksums(payload_paths + [manifest_path], checksums)
 
@@ -394,9 +399,7 @@ def main() -> None:
     with zipfile.ZipFile(archive, "w", compression=zipfile.ZIP_DEFLATED) as package:
         for path in payload_paths + [manifest_path, checksums]:
             package.write(path, path.name)
-    (OUT_ROOT / "ZIP_SHA256.txt").write_text(
-        f"{_sha256(archive)}  {archive.name}\n", encoding="utf-8"
-    )
+    _write_utf8_lf(OUT_ROOT / "ZIP_SHA256.txt", f"{_sha256(archive)}  {archive.name}\n")
 
 
 if __name__ == "__main__":
